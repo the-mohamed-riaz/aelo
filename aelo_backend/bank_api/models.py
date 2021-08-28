@@ -11,15 +11,6 @@ from django.utils import timezone
 
 # to get user received traction:
 
-"""
-amt, 
-type(debit{add}, credit{sub}),
-2nd_party_name(sender/receiver),
-category_of_transcation({family,friends,food,outings,medicines,travel,maintenance,rent,bills,tax,shopping,repaying_debts,investment,luxury,purchase,miscellaneous,pets,games,charity_works,gifts,icome}),
-transfer_date, transfer_time, time_stamp
-type_of_payment{cash,upi,bank_transfer,voucher,Check,Others,miscellaneous}, upi:{gpay,paytm,amazon_pay,phone_pay,Others}
-"""
-
 
 def get_defaults(val):
     if(val == 'hour'):
