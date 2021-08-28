@@ -21,8 +21,11 @@ type_of_payment{cash,upi,bank_transfer,voucher,Check,Others,miscellaneous}, upi:
 """
 
 
-def get_current_hour():
-    return int(datetime.datetime.now().hour())
+def get_defaults(val):
+    if(val == 'hour'):
+        return str(datetime.datetime.now)[11:13]
+    elif(val == 'date'):
+        return str(datetime.datetime.now)[:10]
 
 
 class BankTranscations(models.Model):
@@ -46,28 +49,28 @@ class BankTranscations(models.Model):
          ('grocceries', 'Groceries'), ('cloths', 'Cloths'), ('jewellery', 'Jewellery'))),
         ('Repayment', (('loan', 'Loan'), ('emi', 'EMI'))),
         ('investment', 'Investment'),
-        ('Purchase', ('vehicle', ('bike', 'Bike'), ('car', 'Car'),
+        ('Purchase', (('bike', 'Bike'), ('car', 'Car'),
          ('cycle', 'Cycle'), ('other', 'Others'))),
         ('pets', 'Pets'),
         ('games', 'Games'),
         ('charity_works', 'Charity works'),
         ('gifts', 'Gifts'), ('income', 'Income')
     ]
-    PAYMENT_MODES = ['Cash', 'UPI', 'Bank transfer', 'Vouchers',
-                     'Cheque', 'Others', 'Cash backs', 'Miscellaneous']
+    PAYMENT_MODES = [('cash', 'Cash'), ('upi', 'UPI'), ('bank_transfer', 'Bank transfer'), ('vouchers', 'Vouchers'),
+                     ('cheque', 'Cheque'), ('others', 'Others'), ('cash_backs', 'Cash backs'), ('miscellaneous', 'Miscellaneous')]
     amout = models.DecimalField(
         verbose_name='Money/Amount in INR', blank=False, null=False, decimal_places=1, max_digits=20)
-    type_of_trans = models.CharField(
-        choices=TRANS_CHOICE, null=True, blank=True)
-    cat_of_trans = models.CharField(
-        choices=TRANS_CATEGORY, blank=True, null=True)
+    type_of_trans = models.CharField(max_length=100,
+                                     choices=TRANS_CHOICE, null=True, blank=True)
+    cat_of_trans = models.CharField(max_length=200,
+                                    choices=TRANS_CATEGORY, blank=True, null=True)
     trans_date = models.DateField(
-        verbose_name="Transaction Date", default=timezone.now().date, null=False, blank=False)
+        verbose_name="Transaction Date", default=get_defaults('date'), null=False, blank=False)
     trans_hour = models.IntegerField(
-        blank=False, null=True,  verbose_name="Transaction Hour", default=get_current_hour)
+        blank=False, null=True,  verbose_name="Transaction Hour", default=get_defaults('hour'))
     created = models.DateTimeField(
         verbose_name="Timestamp of transaction entry", auto_now_add=True)
     modified = models.DateTimeField(
         verbose_name="Timestamp of transaction entry", auto_now=True)
-    payment_mode = models.CharField(
-        verbose_name="Payment Mode", choices=PAYMENT_MODES, null=False, blank=False)
+    payment_mode = models.CharField(max_length=40,
+                                    verbose_name="Payment Mode", choices=PAYMENT_MODES, null=False, blank=False)
