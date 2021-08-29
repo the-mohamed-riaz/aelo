@@ -1,10 +1,17 @@
 from django.db import models
 from django.db.models import fields
-from rest_framework.serializers import Serializer
+from rest_framework import serializers
 from bank_api.models import *
+from django.contrib.auth.models import User
 
 
-class TestingSerializer(Serializer):
+class TestingSerializer(serializers.ModelSerializer):
     class Meta():
-        models = BankTranscations
-        fields = "__all__"
+        model = BankTranscations
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = User
+        fields = '__all__'
