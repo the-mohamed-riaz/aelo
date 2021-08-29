@@ -1,2 +1,2 @@
 import datetime
-print(datetime.datetime.now())
+print(str(str(datetime.datetime.now())[:10]))

@@ -14,15 +14,17 @@ from django.utils import timezone
 
 def get_defaults(val):
     if(val == 'hour'):
-        return str(datetime.datetime.now)[11:13]
+        # print("Current time: ", str(str(datetime.datetime.now)[11:13]))
+        return str(str(datetime.datetime.now())[11:13])
     elif(val == 'date'):
-        return str(datetime.datetime.now)[:10]
+        # print("Current date: ", str(str(datetime.datetime.now)[:10]))
+        return str(str(datetime.datetime.now())[:10])
 
 
 class BankTranscations(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.PROTECT, blank=False, null=False)
-    TRANS_CHOICE = [('debit', 'Income/Debit'), ('credit', 'Expence/Credit')]
+    TRANS_CHOICE = [('debit', 'Expense/Debit'), ('credit', 'Income/Credit')]
     TRANS_CATEGORY = [
         ('family', 'Family'),
         ('friends', 'Friends'),
@@ -56,7 +58,7 @@ class BankTranscations(models.Model):
     cat_of_trans = models.CharField(max_length=200,
                                     choices=TRANS_CATEGORY, blank=True, null=True)
     trans_date = models.DateField(
-        verbose_name="Transaction Date", default=get_defaults('date'), null=False, blank=False)
+        verbose_name="Transaction Date", default=get_defaults('date'), null=True, blank=False)
     trans_hour = models.IntegerField(
         blank=False, null=True,  verbose_name="Transaction Hour", default=get_defaults('hour'))
     created = models.DateTimeField(

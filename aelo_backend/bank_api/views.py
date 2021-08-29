@@ -12,13 +12,17 @@ from bank_api.serializers import *
 #     serializer_class = TestingSerializer
 
 class Testing(generics.ListCreateAPIView):
-    queryset = BankTranscations.objects.all()
+    # queryset = BankTranscations.objects.all()
     serializer_class = TestingSerializer
     permission_classes = []
+
+    def get(self, request, *args, **kwargs):
+        print("\n\nrequest: ", request)
+        request = User.objects.all()
+        return self.list(request, *args, **kwargs)
 
 
 class User_registration(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
-    print(serializer_class.data)
