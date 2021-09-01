@@ -2,7 +2,6 @@ from typing import Generic
 from django.shortcuts import render
 from rest_framework import viewsets, mixins, generics
 from bank_api.models import *
-from django.contrib.auth.models import User
 from bank_api.serializers import *
 # Create your views here.
 
@@ -11,15 +10,17 @@ from bank_api.serializers import *
 #     queryset = BankTranscations.objects.all()
 #     serializer_class = TestingSerializer
 
-class Testing(generics.ListCreateAPIView):
-    # queryset = BankTranscations.objects.all()
-    serializer_class = TestingSerializer
+class User_trans_summary(generics.ListAPIView):
+    serializer_class = User_trans_summary_serializer
     permission_classes = []
 
-    def get(self, request, *args, **kwargs):
-        print("\n\nrequest: ", request)
-        request = User.objects.all()
-        return self.list(request, *args, **kwargs)
+    def get_queryset(self):
+        r_user = self.request.query_params.get('user')
+        user_obj = User.objects.filter(username=r_user).values('id')
+        print("\n\n User:", r_user, "\n\n id:", user_obj)
+        queryset = BankTranscations.objects.all().filter(
+            user=user_obj[0]['id'])
+        return queryset
 
 
 class User_registration(generics.ListCreateAPIView):

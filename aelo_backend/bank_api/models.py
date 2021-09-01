@@ -1,8 +1,9 @@
+import datetime
+import uuid
+
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.base import Model
-from django.contrib.auth.models import User
-from django.db.models.fields import BLANK_CHOICE_DASH
-import datetime
 from django.utils import timezone
 
 # to get user bank balance:
@@ -19,6 +20,24 @@ def get_defaults(val):
     elif(val == 'date'):
         # print("Current date: ", str(str(datetime.datetime.now)[:10]))
         return str(str(datetime.datetime.now())[:10])
+
+
+class User(AbstractUser):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField(blank=False, default=True, null=False)
+    username = models.CharField(unique=True, max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField(blank=False, default=True, null=False)
+    is_active = models.BooleanField(blank=False, default=True, null=False)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    first_name = models.CharField(max_length=150)
+    id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,
+                          editable=False, primary_key=True)
+
+    class Meta:
+        db_table = 'auth_user'
 
 
 class BankTranscations(models.Model):
@@ -51,7 +70,7 @@ class BankTranscations(models.Model):
     ]
     PAYMENT_MODES = [('cash', 'Cash'), ('upi', 'UPI'), ('bank_transfer', 'Bank transfer'), ('vouchers', 'Vouchers'),
                      ('cheque', 'Cheque'), ('others', 'Others'), ('cash_backs', 'Cash backs'), ('miscellaneous', 'Miscellaneous')]
-    amout = models.DecimalField(
+    amount = models.DecimalField(
         verbose_name='Money/Amount in INR', blank=False, null=False, decimal_places=1, max_digits=20)
     type_of_trans = models.CharField(max_length=100,
                                      choices=TRANS_CHOICE, null=True, blank=True)
