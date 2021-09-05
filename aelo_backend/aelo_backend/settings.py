@@ -26,9 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'bank_api'
 ]
+# 'rest_framework.authtoken',
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -95,12 +95,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Authentication for whole app
 # """
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',
+#     ]
+# }
 
 # """
 

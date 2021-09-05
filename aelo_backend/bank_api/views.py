@@ -1,13 +1,6 @@
-from typing import Generic
-
-from django.shortcuts import render
-from rest_framework import generics, mixins, viewsets, status
-from rest_framework.authentication import (BasicAuthentication,
-                                           SessionAuthentication)
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics,  status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from bank_api.models import *
 from bank_api.serializers import *
@@ -19,8 +12,6 @@ from bank_api.serializers import *
 
 class User_trans_summary(generics.ListAPIView):
     serializer_class = User_trans_summary_serializer
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         r_user = self.request.query_params.get('user')
@@ -31,15 +22,14 @@ class User_trans_summary(generics.ListAPIView):
         return queryset
 
 
-# @authentication_classes([])
-# @permission_classes([])
 @api_view(['POST'])
 def login_view(request):
+    print("\n\npre serialized data: ", request.data)
     serializer = Login_serializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    print("\n\nserialized data: ", serializer.data)
+    print("\n\nserialized data: ", serializer.validated_data)
     # token = Token.objects.create(user=)
-    content = serializer.data
+    content = serializer.validated_data
     return Response(content, status=status.HTTP_200_OK)
 
 
