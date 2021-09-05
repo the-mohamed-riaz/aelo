@@ -4,6 +4,11 @@ from rest_framework import serializers
 from bank_api.models import *
 
 
+class Login_serializer(serializers.Serializer):
+    username = serializers.CharField(max_length=50)
+    password = serializers.CharField(max_length=50)
+
+
 class User_trans_summary_serializer(serializers.ModelSerializer):
     class Meta():
         model = BankTranscations

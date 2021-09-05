@@ -27,12 +27,12 @@ class User(AbstractUser):
     last_login = models.DateTimeField(blank=True, null=True)
     is_superuser = models.BooleanField(blank=False, default=True, null=False)
     username = models.CharField(unique=True, max_length=150)
-    last_name = models.CharField(max_length=150)
+    first_name = models.CharField(max_length=150, blank=False, null=False)
+    last_name = models.CharField(max_length=150, blank=True, null=True)
     email = models.CharField(max_length=254)
     is_staff = models.BooleanField(blank=False, default=True, null=False)
     is_active = models.BooleanField(blank=False, default=True, null=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    first_name = models.CharField(max_length=150)
     id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,
                           editable=False, primary_key=True)
 

@@ -9,6 +9,7 @@ from bank_api.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', User_registration.as_view(), name='user registeration'),
+    path('login/', login_view, name='user-login'),
     path('testing/', User_trans_summary.as_view(), name='testing'),
 ]
 
