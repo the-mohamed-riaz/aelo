@@ -9,6 +9,11 @@ class Login_serializer(serializers.Serializer):
     password = serializers.CharField(max_length=50)
 
 
+class Token_serializer(serializers.Serializer):
+    username = serializers.CharField(max_length=50)
+    token = serializers.CharField()
+
+
 class User_trans_summary_serializer(serializers.ModelSerializer):
     class Meta():
         model = BankTranscations

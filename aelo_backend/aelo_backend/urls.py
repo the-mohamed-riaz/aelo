@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from rest_framework import routers
+from rest_framework.authtoken import views
 from bank_api.views import *
 
 # router = routers.SimpleRouter()
@@ -9,7 +9,7 @@ from bank_api.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', User_registration.as_view(), name='user registeration'),
-    path('login/', login_view),
+    path('login-token/', login_token),
     path('testing/', User_trans_summary.as_view(), name='testing'),
 ]
 
