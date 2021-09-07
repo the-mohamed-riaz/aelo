@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.serializers import Serializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 from bank_api.models import *
 from bank_api.serializers import *
 from django.contrib.auth.hashers import check_password
@@ -42,23 +44,25 @@ def login_token(request):
     return Response(output_serializer.validated_data, status=status.HTTP_200_OK)
 
 
-class LoginToken(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        username = serializer.validated_data['username']
-        print("\n\nusername:", username)
-        token, created = Token.objects.get_or_create(user=username)
-        return Response({
-            'token': token.key,
-            'username': username,
-            'created': created
-        }, status=status.HTTP_201_CREATED)
+# class LoginToken(ObtainAuthToken):
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             data=request.data, context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+#         username = serializer.validated_data['username']
+#         print("\n\nusername:", username)
+#         token, created = Token.objects.get_or_create(user=username)
+#         return Response({
+#             'token': token.key,
+#             'username': username,
+#             'created': created
+#         }, status=status.HTTP_201_CREATED)
 
 
 class User_trans_summary(generics.ListAPIView):
     serializer_class = User_trans_summary_serializer
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         r_user = self.request.query_params.get('user')
