@@ -49,8 +49,13 @@ class User(AbstractUser):
     class Meta:
         db_table = 'auth_user'
 
+    def __str__(self):
+        return self.username
+
 
 class BankTranscations(models.Model):
+    id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,
+                          editable=False, primary_key=True)
     user = models.ForeignKey(
         User, on_delete=models.PROTECT, blank=False, null=False)
     TRANS_CHOICE = [('debit', 'Expense/Debit'), ('credit', 'Income/Credit')]
