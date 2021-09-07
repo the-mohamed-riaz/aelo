@@ -21,6 +21,18 @@ class User_trans_summary_serializer(serializers.ModelSerializer):
                   'trans_date', 'trans_hour', 'payment_mode', 'user']
 
 
+class Add_trans_serializer(serializers.ModelSerializer):
+    class Meta():
+        model = BankTranscations
+        fields = ['id', 'amount', 'type_of_trans', 'cat_of_trans',
+                  'trans_date', 'trans_hour', 'payment_mode', 'user']
+
+        #   work to get uuid of user name
+
+    def create(self):
+        print(self.data)
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta():
         model = User

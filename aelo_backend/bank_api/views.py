@@ -53,7 +53,7 @@ def login_token(request):
 
 
 class Add_Trans(generics.CreateAPIView):
-    serializer_class = User_trans_summary_serializer
+    serializer_class = Add_trans_serializer
     authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
