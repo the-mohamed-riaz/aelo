@@ -11,9 +11,15 @@ from bank_api.models import *
 from bank_api.serializers import *
 from django.contrib.auth.hashers import check_password
 
-# class Testing(mixins.ListModelMixin, viewsets.GenericViewSet):
-#     queryset = BankTranscations.objects.all()
-#     serializer_class = TestingSerializer
+
+# Create / register a new user
+
+class User_registration(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = []
+
+# Generate token to user / user login
 
 
 @api_view(['POST'])
@@ -43,20 +49,8 @@ def login_token(request):
     output_serializer.is_valid(raise_exception=True)
     return Response(output_serializer.validated_data, status=status.HTTP_200_OK)
 
-
-# class LoginToken(ObtainAuthToken):
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.serializer_class(
-#             data=request.data, context={'request': request})
-#         serializer.is_valid(raise_exception=True)
-#         username = serializer.validated_data['username']
-#         print("\n\nusername:", username)
-#         token, created = Token.objects.get_or_create(user=username)
-#         return Response({
-#             'token': token.key,
-#             'username': username,
-#             'created': created
-#         }, status=status.HTTP_201_CREATED)
+# Give list of transaction for authenticated user
+# only get request allowed, takes user as input parameter
 
 
 class User_trans_summary(generics.ListAPIView):
@@ -71,20 +65,3 @@ class User_trans_summary(generics.ListAPIView):
         queryset = BankTranscations.objects.all().filter(
             user=user_obj[0]['id'])
         return queryset
-
-
-# @api_view(['POST'])
-# def login_view(request):
-#     # print("\n\npre serialized data: ", request.data)
-#     serializer = Login_serializer(data=request.data)
-#     serializer.is_valid(raise_exception=True)
-#     # print("\n\nserialized data: ", serializer.validated_data)
-#     content = serializer.validated_data
-#     print("User name: ", content.get('username'))
-#     return Response(content, status=status.HTTP_200_OK)
-
-
-class User_registration(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = []
