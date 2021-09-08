@@ -58,13 +58,16 @@ class Add_Trans(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
 
-    # def get_queryset(self):
-    #     r_user = self.request.query_params.get('user')
-    #     user_obj = User.objects.filter(username=r_user).values('id')
-    #     print("\n\n User:", r_user, "\n\n id:", user_obj)
-    #     queryset = BankTranscations.objects.all().filter(
-    #         user=user_obj[0]['id'])
-    #     return queryset
+    def get_queryset(self):
+        #     r_user = self.request.query_params.get('user')
+        #     user_obj = User.objects.filter(username=r_user).values('id')
+        #     print("\n\n User:", r_user, "\n\n id:", user_obj)
+        #     queryset = BankTranscations.objects.all().filter(
+        #         user=user_obj[0]['id'])
+        serializer = self.serializer_class
+        serializer.is_valid(raise_exception=True)
+        queryset = serializer.data
+        return queryset
 
 
 # Give list of transaction for authenticated user
