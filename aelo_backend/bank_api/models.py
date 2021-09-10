@@ -86,7 +86,7 @@ class BankTranscations(models.Model):
     PAYMENT_MODES = [('cash', 'Cash'), ('upi', 'UPI'), ('bank_transfer', 'Bank transfer'), ('vouchers', 'Vouchers'),
                      ('cheque', 'Cheque'), ('others', 'Others'), ('cash_backs', 'Cash backs'), ('miscellaneous', 'Miscellaneous')]
     amount = models.DecimalField(
-        verbose_name='Money/Amount in INR', blank=False, null=False, decimal_places=1, max_digits=20)
+        verbose_name='Money/Amount in INR', blank=False, null=False, decimal_places=3, max_digits=19)
     type_of_trans = models.CharField(max_length=100,
                                      choices=TRANS_CHOICE, null=True, blank=True)
     cat_of_trans = models.CharField(max_length=200,

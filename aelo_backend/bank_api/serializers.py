@@ -30,21 +30,6 @@ class Add_trans_serializer(serializers.Serializer):
     trans_hour = serializers.CharField()
     payment_mode = serializers.CharField()
 
-    def create(self, validated_data):
-        validated_data['user'] = User.objects.all().filter(
-            username=validated_data['username']).first()
-        obj = BankTranscations.objects.create(
-            user=validated_data['user'],
-            amount=validated_data['amount'],
-            type_of_trans=validated_data['type_of_trans'],
-            cat_of_trans=validated_data['cat_of_trans'],
-            trans_date=validated_data['trans_date'],
-            trans_hour=validated_data['trans_hour'],
-            payment_mode=validated_data['payment_mode'],
-        )
-        obj.save()
-        return validated_data
-
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta():

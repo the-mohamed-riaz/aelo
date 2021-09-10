@@ -1,5 +1,5 @@
 from decimal import Context
-from rest_framework import generics,  status
+from rest_framework import generics, status, views
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -52,22 +52,28 @@ def login_token(request):
 # Adds new transaction
 
 
-class Add_Trans(generics.CreateAPIView):
-    serializer_class = Add_trans_serializer
-    authentication_classes = [TokenAuthentication, BasicAuthentication]
+class Add_Trans(views.APIView):
+    authentication_classes = [TokenAuthentication,  BasicAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
 
-    def get_queryset(self):
-        #     r_user = self.request.query_params.get('user')
-        #     user_obj = User.objects.filter(username=r_user).values('id')
-        #     print("\n\n User:", r_user, "\n\n id:", user_obj)
-        #     queryset = BankTranscations.objects.all().filter(
-        #         user=user_obj[0]['id'])
-        serializer = self.serializer_class
+    def post(self, request, *args, **kwargs):
+        serializer = Add_trans_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        queryset = serializer.data
-        return queryset
+        datas = serializer.validated_data
+        datas['user'] = User.objects.all().filter(
+            username=datas['username']).first()
+        obj = BankTranscations.objects.create(
+            user=datas['user'],
+            amount=datas['amount'],
+            type_of_trans=datas['type_of_trans'],
+            cat_of_trans=datas['cat_of_trans'],
+            trans_date=datas['trans_date'],
+            trans_hour=datas['trans_hour'],
+            payment_mode=datas['payment_mode'],
+        )
+        obj.save()
+        print("\n\ndict:", obj.__dict__)
+        return Response(obj.__dict__['id'], status.HTTP_201_CREATED)
 
 
 # Give list of transaction for authenticated user
