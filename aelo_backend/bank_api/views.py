@@ -93,9 +93,10 @@ class Edit_Trans(views.APIView):
     authentication_classes = [TokenAuthentication,  BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def put(self, request, trans_id):
+    def put(self, request):
+        print("trans ID:", request.data['trans_id'])
         saved_trans = get_object_or_404(
-            BankTranscations.objects.all(), trans_id=trans_id)
+            BankTranscations.objects.all(), id=request.data['trans_id'])
         data = request.data.get('details')
         serializer = Add_trans_serializer(
             instance=saved_trans, data=data, partial=True)
