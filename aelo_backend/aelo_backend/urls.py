@@ -11,6 +11,8 @@ urlpatterns = [
     path('register/', User_registration.as_view(), name='user registeration'),
     path('login-token/', login_token),
     path('add/', Add_Trans.as_view(), name="Add new transaction"),
+    path('delete/', Delete_Trans.as_view(), name="Delete a transaction"),
+    path('edit/', Edit_Trans.as_view(), name="Edit a transaction"),
     path('history/', User_trans_summary.as_view(), name='testing'),
 ]
 

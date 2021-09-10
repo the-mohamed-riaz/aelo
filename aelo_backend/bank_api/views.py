@@ -10,6 +10,7 @@ from rest_framework.authentication import BasicAuthentication, TokenAuthenticati
 from bank_api.models import *
 from bank_api.serializers import *
 from django.contrib.auth.hashers import check_password
+from django.shortcuts import get_object_or_404
 
 
 # Create / register a new user
@@ -75,11 +76,31 @@ class Add_Trans(views.APIView):
         print("\n\ndict:", obj.__dict__)
         return Response(obj.__dict__['id'], status.HTTP_201_CREATED)
 
+# should be authenticated to delete trans
+
+
+class Delete_Trans(views.APIView):
+    authentication_classes = [TokenAuthentication,  BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request):
         trans_id = request.data['trans_id']
         BankTranscations.objects.filter(id=trans_id).delete()
         return Response('Deleted', status.HTTP_200_OK)
 
+
+class Edit_Trans(views.APIView):
+    authentication_classes = [TokenAuthentication,  BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, trans_id):
+        saved_trans = get_object_or_404(
+            BankTranscations.objects.all(), trans_id=trans_id)
+        data = request.data.get('details')
+        serializer = Add_trans_serializer(
+            instance=saved_trans, data=data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            saved_trans = serializer.save()
 
 # Give list of transaction for authenticated user
 # only get request allowed, takes user as input parameter
