@@ -75,6 +75,11 @@ class Add_Trans(views.APIView):
         print("\n\ndict:", obj.__dict__)
         return Response(obj.__dict__['id'], status.HTTP_201_CREATED)
 
+    def delete(self, request):
+        trans_id = request.data['trans_id']
+        BankTranscations.objects.filter(id=trans_id).delete()
+        return Response('Deleted', status.HTTP_200_OK)
+
 
 # Give list of transaction for authenticated user
 # only get request allowed, takes user as input parameter
