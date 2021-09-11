@@ -11,9 +11,10 @@ from bank_api.models import *
 from bank_api.serializers import *
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import get_object_or_404
-
+from rest_framework.parsers import JSONParser
 
 # Create / register a new user
+
 
 class User_registration(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -94,14 +95,17 @@ class Edit_Trans(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
-        print("trans ID:", request.data['trans_id'])
-        saved_trans = get_object_or_404(
-            BankTranscations.objects.all(), id=request.data['trans_id'])
-        data = request.data.get('details')
-        serializer = Add_trans_serializer(
-            instance=saved_trans, data=data, partial=True)
+        trans_id = request.data['trans_id']
+        try:
+            saved_trans = BankTranscations.objects.get(id=trans_id)
+        except:
+            return Response("Invalid transaction id", status.HTTP_400_BAD_REQUEST)
+        serializer = User_trans_summary_serializer(
+            instance=saved_trans, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             saved_trans = serializer.save()
+        _data = serializer.data
+        return Response(_data, status.HTTP_200_OK)
 
 # Give list of transaction for authenticated user
 # only get request allowed, takes user as input parameter

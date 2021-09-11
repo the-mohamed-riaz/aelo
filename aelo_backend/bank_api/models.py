@@ -92,9 +92,9 @@ class BankTranscations(models.Model):
     cat_of_trans = models.CharField(max_length=200,
                                     choices=TRANS_CATEGORY, blank=True, null=True)
     trans_date = models.DateField(
-        verbose_name="Transaction Date", default=get_defaults('date'), null=True, blank=False)
+        verbose_name="Transaction Date", null=True, blank=False)
     trans_hour = models.IntegerField(
-        blank=False, null=True,  verbose_name="Transaction Hour", default=get_defaults('hour'))
+        blank=False, null=True,  verbose_name="Transaction Hour")
     created = models.DateTimeField(
         verbose_name="Timestamp of transaction entry", auto_now_add=True)
     modified = models.DateTimeField(

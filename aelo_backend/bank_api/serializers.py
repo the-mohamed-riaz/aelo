@@ -1,4 +1,5 @@
 # from django.contrib.auth.models import User
+from django.db.models import fields
 from rest_framework import serializers
 
 from bank_api.models import *
