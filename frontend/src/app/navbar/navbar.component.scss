@@ -3,43 +3,47 @@
     height: calc(100vh - 1rem);
     margin: 0.5rem;
     position: fixed;
-    border: 1px solid red;
+    background-color: rgb(230, 230, 230);
     .logo {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         width: 100%;
-        height: 90px;
+        height: 100px;
     }
     .content {
-        box-sizing: content-box;
         width: 100%;
-        height: calc(100% - 90px);
-        border: 1px solid brown;
+        height: calc(100% - 100px);
+        // border: 1px solid brown;
+        box-sizing: content-box;
         .nav-item {
             width: 100%;
-            height: 45px;
+            height: 50px;
             display: flex;
             flex-direction: row;
             align-items: center;
-            box-sizing: content-box;
             .nav-hover-eff {
                 width: 5px;
                 height: 100%;
-                margin: 0 3px;
-                border: 1px solid blue;
+                margin-right: 3px;
+                // border: 1px solid blue;
             }
             .nav-icon {
                 margin: 0 3px;
                 width: 35px;
                 height: 100%;
-                border: 1px solid black;
+                // border: 1px solid black;
             }
             .nav-text {
-                margin: 3px;
+                margin-left: 3px;
                 width: 100%;
                 height: 100%;
-                border: 1px solid green;
+                // border: 1px solid green;
+            }
+        }
+        .nav-item:hover {
+            .nav-hover-eff {
+                background-color: rgb(50, 50, 50);
             }
         }
     }
