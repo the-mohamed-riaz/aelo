@@ -1,0 +1,51 @@
+.blackboard {
+    width: 360px;
+    height: 325px;
+    margin: 1rem 5px;
+    background-color: black;
+    * {
+        color: white;
+        font-weight: 300;
+        margin: 0.5rem;
+    }
+    .title {
+        height: 40px;
+        border: 1px solid rosybrown;
+        h1 {
+            align-items: center;
+            font-size: 20px;
+        }
+    }
+    .addButton {
+        height: 100%;
+        width: 100%;
+        .iconHolder {
+            flex-direction: row;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            .invert {
+                color: black;
+                background-color: white;
+            }
+            .icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // width: 100% !important;
+                // height: 100% !important;
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+                border-radius: 49.9%;
+            }
+        }
+        .btn {
+            width: auto;
+            height: auto;
+            padding: 12px 3rem;
+            border: 1px solid orange;
+        }
+    }
+}
