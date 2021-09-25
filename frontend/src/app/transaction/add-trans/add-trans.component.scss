@@ -10,10 +10,15 @@
     }
     .title {
         height: 40px;
-        border: 1px solid rosybrown;
+        border-bottom: 1px solid rgba(110, 110, 110, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 2rem 0;
         h1 {
             align-items: center;
             font-size: 20px;
+            margin-top: 1rem;
         }
     }
     .addButton {

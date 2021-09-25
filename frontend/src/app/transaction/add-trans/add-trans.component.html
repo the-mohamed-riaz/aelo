@@ -1,13 +1,23 @@
 <div class="blackboard">
     <div class="title">
         <h1>Add a transaction</h1>
-        <hr>
     </div>
-    <div class="addButton">
-        <div class="iconHolder">
+    <form class="ui form">
+        <div class="field">
+            <label for="trans_choice">Transaction mode</label>
+            <input type="text" id="trans_choice">
+
+        </div>
+        <div class="field">
+            <semantic-dd [id_]="'x1'" [dd_name]="'trans_choice'"></semantic-dd>
+        </div>
+        <div class="field">
+            <semantic-dd [id_]="'x2'" [dd_name]="'trans_category'"></semantic-dd>
+        </div>
+        <!-- <div class="iconHolder">
             <i class="add invert icon"></i>
         </div>
-        <button class="btn">Add</button>
-    </div>
+        <button class="btn">Add</button> -->
+    </form>
 
 </div>
