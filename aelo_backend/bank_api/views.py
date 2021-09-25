@@ -117,7 +117,7 @@ class User_trans_summary(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        r_user = self.request.query_params.get('user')
+        r_user = self.request.query_params.get('user_id')
         user_obj = User.objects.filter(username=r_user).values('id')
         print("\n\n User:", r_user, "\n\n id:", user_obj)
         queryset = BankTranscations.objects.all().filter(

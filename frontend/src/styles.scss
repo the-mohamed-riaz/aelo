@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 /* Importing Bootstrap SCSS file. */
+
 @import '~bootstrap/scss/bootstrap';
+.no-pad {
+    padding: 0 !important;
+    // padding: 0;
+}
+
+.no-mar {
+    margin: 0 !important;
+    // margin: 0;
+}

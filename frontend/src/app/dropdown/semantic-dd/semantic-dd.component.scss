@@ -1,3 +1,9 @@
+label {
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 12px !important;
+    font-weight: 300 !important;
+}
+
 select {
     background-color: rgba(48, 48, 48, 0.8) !important;
     color: white !important;
@@ -13,6 +19,6 @@ select {
 }
 
 :host {
-    margin: 0 !important;
-    padding: 0 !important;
+    padding: 0px !important;
+    margin: 0px !important;
 }

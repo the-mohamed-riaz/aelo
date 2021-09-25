@@ -35,12 +35,12 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class User(AbstractUser):
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.BooleanField(blank=False, default=True, null=False)
+    is_superuser = models.BooleanField(blank=False, default=False, null=False)
     username = models.CharField(unique=True, max_length=150)
     first_name = models.CharField(max_length=150, blank=False, null=False)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     email = models.CharField(max_length=254)
-    is_staff = models.BooleanField(blank=False, default=True, null=False)
+    is_staff = models.BooleanField(blank=False, default=False, null=False)
     is_active = models.BooleanField(blank=False, default=True, null=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,

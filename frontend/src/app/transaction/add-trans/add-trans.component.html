@@ -2,17 +2,14 @@
     <div class="title">
         <h1>Add a transaction</h1>
     </div>
-    <form class="ui form">
+    <form class="ui inverted form">
         <div class="field">
-            <label for="trans_choice">Transaction mode</label>
-            <input type="text" id="trans_choice">
-
+            <label for="amount">Amount</label>
+            <input id="amount" type="number">
         </div>
-        <div class="field">
-            <semantic-dd [id_]="'x1'" [dd_name]="'trans_choice'"></semantic-dd>
-        </div>
-        <div class="field">
-            <semantic-dd [id_]="'x2'" [dd_name]="'trans_category'"></semantic-dd>
+        <div class="two fields">
+            <semantic-dd style="margin-right: 3px !important;" [id_]="'x1'" [dd_name]="'trans_choice'"></semantic-dd>
+            <semantic-dd style="margin-left: 3px !important;" [id_]="'x2'" [dd_name]="'trans_category'"></semantic-dd>
         </div>
         <!-- <div class="iconHolder">
             <i class="add invert icon"></i>

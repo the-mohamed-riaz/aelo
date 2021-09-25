@@ -3,6 +3,7 @@
     height: 325px;
     margin: 1rem 5px;
     background-color: black;
+    border-radius: 3px;
     * {
         color: white;
         font-weight: 300;
@@ -19,6 +20,13 @@
             align-items: center;
             font-size: 20px;
             margin-top: 1rem;
+        }
+    }
+    .ui.form {
+        label {
+            color: rgba(255, 255, 255, 0.55) !important;
+            font-size: 12px !important;
+            font-weight: 300 !important;
         }
     }
     .addButton {
