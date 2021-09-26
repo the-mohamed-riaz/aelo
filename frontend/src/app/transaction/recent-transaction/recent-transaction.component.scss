@@ -1,0 +1,58 @@
+.background {
+    background-color: transparent;
+    color: #222222;
+    border: 1px solid green;
+    min-width: 450px;
+    max-width: 60%;
+    .heading {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        div:first-child {
+            margin-left: 5px;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        div:last-child {
+            margin-right: 5px;
+            font-size: 12px;
+            color: grey;
+        }
+    }
+    .contents {
+        display: grid;
+        margin: 1rem 5px 8px;
+        width: auto;
+        grid-template-areas: "icn cmt amt" "icn dt amt";
+        grid-template-columns: 4rem auto 4rem;
+        border: 1px solid firebrick;
+        box-sizing: content-box;
+        .icn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-area: icn;
+            border: 1px solid red;
+        }
+        .comment {
+            padding-left: 0.75rem;
+            grid-area: cmt;
+            font-size: 1rem;
+            font-weight: 600;
+            // width: 100%;
+        }
+        .dt {
+            padding-left: 0.75rem;
+            // width: 100%;
+            grid-area: dt;
+        }
+        .amt {
+            border: 1px solid blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-area: amt;
+        }
+    }
+}

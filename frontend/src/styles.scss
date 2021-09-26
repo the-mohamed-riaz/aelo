@@ -4,6 +4,12 @@
 /* Importing Bootstrap SCSS file. */
 
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+* {
+    font-family: 'Montserrat', sans-serif;
+    ;
+}
+
 .no-pad {
     padding: 0 !important;
     // padding: 0;
