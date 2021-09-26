@@ -5,11 +5,37 @@
     <form class="ui inverted form">
         <div class="field">
             <label for="amount">Amount</label>
-            <input id="amount" type="number">
+            <input id="amount" type="number" min="0">
         </div>
         <div class="two fields">
             <semantic-dd style="margin-right: 3px !important;" [id_]="'x1'" [dd_name]="'trans_choice'"></semantic-dd>
             <semantic-dd style="margin-left: 3px !important;" [id_]="'x2'" [dd_name]="'trans_category'"></semantic-dd>
+        </div>
+        <div class="field">
+            <label for="payment_time">Time payment was made</label>
+            <div id="payment_time" class="inline two fields">
+                <!-- Default unchecked -->
+                <div class="field" (click)="logThis('now'+randId)">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" [id]="'now'+ randId" name="defaultExampleRadios" mdbInput>
+                        <label class="custom-control-label cursor-p w-100" [for]="'now'+ randId">Just now</label>
+                    </div>
+                </div>
+
+                <!-- Default checked -->
+                <div class="field" (click)="logThis('custome'+randId)">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" [id]="'custom'+ randId" name="defaultExampleRadios" checked mdbInput>
+                        <label class="custom-control-label cursor-p w-100" [for]="'custom'+ randId">Custom time</label>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <input type="datetime-local">
+            </div>
+        </div>
+        <div class="field">
+            <semantic-dd style="margin:0 0 8px 0 !important;" [id_]="'x3'" [dd_name]="'payment_modes'"></semantic-dd>
         </div>
         <!-- <div class="iconHolder">
             <i class="add invert icon"></i>
