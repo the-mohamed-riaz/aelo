@@ -3,16 +3,18 @@
         <div>Transactions</div>
         <div>date</div>
     </div>
-    <div class="contents">
-        <div class="icn">
-            icon
+    <ng-container *ngFor="let item of data">
+        <div class="contents">
+            <div class="icn">
+                <i [class]="item.icon + ' icon'"></i>
+            </div>
+            <div class="comment">
+                {{item.comment}}
+            </div>
+            <div class="dt">
+                {{item.timeStamp}}
+            </div>
+            <div class="amt">{{item.amount}}</div>
         </div>
-        <div class="comment">
-            Lorem ipsum dolor sit amet.
-        </div>
-        <div class="dt">
-            date
-        </div>
-        <div class="amt">$asdf</div>
-    </div>
+    </ng-container>
 </div>

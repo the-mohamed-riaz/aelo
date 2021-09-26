@@ -22,18 +22,27 @@
     }
     .contents {
         display: grid;
-        margin: 1rem 5px 8px;
+        margin: 8px 5px;
         width: auto;
         grid-template-areas: "icn cmt amt" "icn dt amt";
-        grid-template-columns: 4rem auto 4rem;
-        border: 1px solid firebrick;
+        grid-template-columns: 3rem auto 4rem;
         box-sizing: content-box;
+        padding: 0.5rem 0;
         .icn {
+            width: 3rem;
+            height: 3rem;
             display: flex;
             justify-content: center;
             align-items: center;
             grid-area: icn;
-            border: 1px solid red;
+            background-color: #DDDD;
+            border-radius: 50%;
+            .icon {
+                text-align: center;
+                padding-left: 4px;
+                font-size: 1.25rem;
+                opacity: 0.6;
+            }
         }
         .comment {
             padding-left: 0.75rem;
@@ -44,15 +53,17 @@
         }
         .dt {
             padding-left: 0.75rem;
+            font-size: 10px;
+            color: #585858;
             // width: 100%;
             grid-area: dt;
         }
         .amt {
-            border: 1px solid blue;
             display: flex;
             justify-content: center;
             align-items: center;
             grid-area: amt;
+            font-weight: 700;
         }
     }
 }
