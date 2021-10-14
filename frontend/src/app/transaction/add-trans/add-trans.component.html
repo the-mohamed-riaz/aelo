@@ -8,8 +8,14 @@
             <input id="amount" type="number" min="0">
         </div>
         <div class="two fields">
-            <semantic-dd style="margin-right: 3px !important;" [id_]="'x1'" [dd_name]="'trans_choice'"></semantic-dd>
-            <semantic-dd style="margin-left: 3px !important;" [id_]="'x2'" [dd_name]="'trans_category'"></semantic-dd>
+            <div class="field">
+                <!-- style="margin-right: 3px !important;" -->
+                <semantic-dd [id_]="'x1'" [dd_name]="'trans_choice'"></semantic-dd>
+            </div>
+            <div class="field">
+                <!-- style="margin-left: 3px !important;" -->
+                <semantic-dd [id_]="'x2'" [dd_name]="'trans_category'"></semantic-dd>
+            </div>
         </div>
         <div class="field">
             <label for="payment_time">Time payment was made</label>
