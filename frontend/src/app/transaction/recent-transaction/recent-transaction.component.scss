@@ -2,8 +2,9 @@
     background-color: transparent;
     color: #222222;
     border: 1px solid green;
-    min-width: 450px;
-    max-width: 60%;
+    // min-width: 450px;
+    // max-width: 60%;
+    height: 100%;
     .heading {
         margin-top: 1rem;
         display: flex;
@@ -22,7 +23,7 @@
     }
     .contents {
         display: grid;
-        margin: 8px 5px;
+        margin: 10px 5px;
         width: auto;
         grid-template-areas: "icn cmt amt" "icn dt amt";
         grid-template-columns: 3rem auto 4rem;
