@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AddTransComponent implements OnInit {
 
   randId: string;
+  customDate = true;
   constructor() {
     this.randId = 'id_' + this.gen_RandId();
   }
@@ -21,5 +22,10 @@ export class AddTransComponent implements OnInit {
   }
   logThis(val: string) {
     console.log(val);
+    if(val.split('_')[0] === "nowid") {
+      this.customDate = false;
+    } else {
+      this.customDate = true;
+    }
   }
 }
