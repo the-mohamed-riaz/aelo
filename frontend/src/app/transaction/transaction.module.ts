@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { TransactionRoutingModule } from './transaction-routing.module';
+import { NgModule } from '@angular/core';
+import { CardsModule } from '../cards/cards.module';
+import { DropdownModule } from '../dropdown/dropdown.module';
 import { AddTransComponent } from './add-trans/add-trans.component';
 import { HomeComponent } from './home/home.component';
-import { DropdownModule } from '../dropdown/dropdown.module';
 import { RecentTransactionComponent } from './recent-transaction/recent-transaction.component';
+import { TransactionRoutingModule } from './transaction-routing.module';
+
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { RecentTransactionComponent } from './recent-transaction/recent-transact
     CommonModule,
     TransactionRoutingModule,
     DropdownModule,
+    CardsModule
   ],
   exports: [
     HomeComponent,
