@@ -20,6 +20,7 @@ export class AddTransComponent implements OnInit {
     let id = Math.random() * 1000;
     return Math.round(id)
   }
+  
   logThis(val: string) {
     console.log(val);
     if(val.split('_')[0] === "nowid") {

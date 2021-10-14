@@ -19,6 +19,14 @@
     .div2 {
         margin: 8px;
         grid-area: 2 / 1 / 4 / 4;
+        .title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .content {
+            font-size: 12px;
+            font-weight: 300;
+        }
     }
     .div3 {
         grid-area: 4 / 1 / 5 / 4;
