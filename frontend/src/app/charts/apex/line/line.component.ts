@@ -59,7 +59,6 @@ export class LineComponent implements OnInit {
       title: {
         text: "",
         align: "left",
-
       },
       grid: {
         show:false,
