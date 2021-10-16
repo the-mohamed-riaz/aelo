@@ -3,10 +3,20 @@
         <div class="row">
             <!-- Brand Box -->
             <div class="col-sm-6 brand">
-                <a href="#" class="logo">MR <span>.</span></a>
+                <a href="#" class="logo">
+                    <!-- <div class="c1">
+                        Made with ❤ from
+                    </div>
+                    <div class="c2">
+                        Mohamed Riaz
+                    </div> -->
+                    <div>
+                        <img src="../../../assets/logo.svg" alt="">
+                    </div>
+                </a>
                 <div class="heading">
                     <h2>Aelo</h2>
-                    <p>Never miss a penny</p>
+                    <p>The book of penny</p>
                 </div>
                 <div class="success-msg">
                     <p>Great! You are one of our members now</p>
@@ -18,7 +28,7 @@
             <div class="col-sm-6 form">
                 <!-- Login Form -->
                 <div class="login form-peice switched">
-                    <form class="login-form" action="#" method="post">
+                    <form class="login-form">
                         <div class="form-group">
                             <label for="loginemail">Email Adderss</label>
                             <input type="email" name="loginemail" id="loginemail" required>
@@ -31,7 +41,7 @@
 
                         <div class="CTA">
                             <input type="submit" value="Login">
-                            <a href="#" class="switch">I'm New</a>
+                            <a class="switch">I'm New</a>
                         </div>
                     </form>
                 </div>
@@ -43,30 +53,30 @@
                     <form class="signup-form" action="#" method="post">
 
                         <div class="form-group">
-                            <label for="name" [ngClass]="{'active': focusOn === 'name'}">Full Name</label>
+                            <label for="name">Full Name</label>
                             <input type="text" (focus)="callFocus($event)" name="username" id="name" class="name" autocomplete="name">
                             <span class="error"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="email" [ngClass]="{'active': focusOn === 'regEmail'}">Email Adderss</label>
+                            <label for="email">Email Adderss</label>
                             <input type="email" (focus)="callFocus($event)" name="emailAdress" id="regEmail" class="email" autocomplete="email">
                             <span class="error"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="phone" [ngClass]="{'active': focusOn === 'phone'}">Phone Number - <small>Optional</small></label>
+                            <label for="phone">Phone Number - <small>Optional</small></label>
                             <input type="text" (focus)="callFocus($event)" name="phone" id="phone" autocomplete="tel-local">
                         </div>
 
                         <div class="form-group">
-                            <label for="password" [ngClass]="{'active': focusOn === 'password'}">Password</label>
+                            <label for="password">Password</label>
                             <input type="password" (focus)="callFocus($event)" name="password" id="password" class="pass" autocomplete="new-password">
                             <span class="error"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="passwordCon" [ngClass]="{'active': focusOn === 'passwordCon'}">Confirm Password</label>
+                            <label for="passwordCon">Confirm Password</label>
                             <input type="password" (focus)="callFocus($event)" name="passwordCon" id="passwordCon" class="passConfirm" autocomplete="new-password">
                             <span class="error"></span>
                         </div>

@@ -38,6 +38,7 @@
                             "node_modules/semantic-ui-css/semantic.css"
                         ],
                         "scripts": [
+                            "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/apexcharts/dist/apexcharts.min.js"
                         ]
                     },

@@ -39,7 +39,6 @@ section#formHolder {
 // Brand Area
 .brand {
     padding: 20px;
-    background-color: rgb(53, 52, 52);
     background-size: cover;
     background-position: center center;
     color: #fff;
@@ -59,20 +58,30 @@ section#formHolder {
         position: absolute;
         top: 0;
         left: 0;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgb(52, 51, 56);
         z-index: -1;
     }
     a.logo {
-        color: $primaryColor;
-        font-size: 20px;
-        font-weight: 700;
+        // color: $primaryColor;
+        color: rgb(168, 168, 168);
+        font-weight: 500;
+        font-size: 14px;
         text-decoration: none;
         line-height: 1em;
-        span {
-            font-size: 30px;
-            color: #fff;
-            transform: translateX(-5px);
-            display: inline-block;
+        div {
+            background: white;
+            border-radius: 50%;
+            height: 45px;
+            width: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                width: 26px;
+                height: 26px;
+                position: relative;
+                left: -3px;
+            }
         }
     }
     .heading {
@@ -94,6 +103,7 @@ section#formHolder {
             margin-bottom: 0;
         }
         p {
+            color: rgb(169, 209, 87);
             font-size: 15px;
             font-weight: 300;
             text-transform: uppercase;
