@@ -12,4 +12,17 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  links = [
+    {
+      icon: "dollar sign",
+      text:"Transaction",
+      link:"/transaction"
+    },
+    {
+      icon: "chart area",
+      text: "Analytics",
+      link:"/analytics"
+    }
+  ]
+
 }

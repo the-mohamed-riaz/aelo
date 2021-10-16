@@ -1,10 +1,15 @@
 <div class="nav-layout">
-    <div class="logo">riaz</div>
+    <div class="logo">
+        <img src="../../assets/logo.svg" alt="R logo">
+        <p>Where's my penny?</p>
+    </div>
     <div class="content">
-        <div class="nav-item">
-            <div class="nav-hover-eff"></div>
-            <div class="nav-icon"><i class="tty icon"></i></div>
-            <div class="nav-text">Lorem ipsum dolor</div>
-        </div>
+        <ng-container *ngFor="let item of links">
+            <div class="nav-item" [routerLink]="item.link">
+                <div class="nav-hover-eff"></div>
+                <div class="nav-icon"><i [class]="item.icon  + ' icon'"></i></div>
+                <div class="nav-text">{{item.text}}</div>
+            </div>
+        </ng-container>
     </div>
 </div>
