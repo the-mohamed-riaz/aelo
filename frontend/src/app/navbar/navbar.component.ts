@@ -14,6 +14,11 @@ export class NavbarComponent implements OnInit {
 
   links = [
     {
+      icon: "user",
+      text:"Login",
+      link:"/login"
+    },
+    {
       icon: "dollar sign",
       text:"Transaction",
       link:"/transaction"
