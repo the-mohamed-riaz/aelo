@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { DropdownsService } from './DefaultValues/dropdowns.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './auth/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,8 @@ import { LoginComponent } from './auth/login/login.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DropdownsService
