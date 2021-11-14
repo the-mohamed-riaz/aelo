@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from 'jquery';
+import { environment } from './../../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -10,6 +12,7 @@ import * as $ from 'jquery';
 export class LoginComponent implements OnInit {
 
     newUser = true;
+    url = "";
 
     // usernameError = true;
     // emailError = true;
@@ -30,7 +33,9 @@ export class LoginComponent implements OnInit {
         // }, [FormValidators.passwordsMatch(this.registrationForm.value('password'))]);
     });
 
-    constructor() {
+    constructor(public http: HttpClient) {
+        this.url = environment.rootUrl;
+        console.log("current url: ", this.url);
     }
 
     callFocus(val: any) {
@@ -38,65 +43,56 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        $(document).ready(function () {
+        // $(document).ready(function () {
+        //     'use strict';
+        //     // Detect browser for css purpose
+        //     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        //         $('.form form label').addClass('fontSwitch');
+        //     }
 
-            'use strict';
+        //     // Label effect
+        //     $('input').focus(function () {
+        //         $(this).siblings('label').addClass('active');
+        //     });
 
-            var usernameError = true,
-                emailError = true,
-                passwordError = true,
-                passConfirm = true;
+        //     // form switch
+        //     $('a.switch').click(function (e) {
+        //         $(this).toggleClass('active');
+        //         e.preventDefault();
 
-            // Detect browser for css purpose
-            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-                $('.form form label').addClass('fontSwitch');
-            }
+        //         if ($('a.switch').hasClass('active')) {
+        //             $(this).parents('.form-peice').addClass('switched').siblings('.form-peice').removeClass('switched');
+        //         } else {
+        //             $(this).parents('.form-peice').removeClass('switched').siblings('.form-peice').addClass('switched');
+        //         }
+        //     });
 
-            // Label effect
-            $('input').focus(function () {
-
-                $(this).siblings('label').addClass('active');
-            });
-
-            // form switch
-            $('a.switch').click(function (e) {
-                $(this).toggleClass('active');
-                e.preventDefault();
-
-                if ($('a.switch').hasClass('active')) {
-                    $(this).parents('.form-peice').addClass('switched').siblings('.form-peice').removeClass('switched');
-                } else {
-                    $(this).parents('.form-peice').removeClass('switched').siblings('.form-peice').addClass('switched');
-                }
-            });
-
-
-            // Form submit
-            // $('form.signup-form').submit(function (event) {
-            //     event.preventDefault();
-
-            //     if (usernameError == true || emailError == true || passwordError == true || passConfirm == true) {
-            //         $('.name, .email, .pass, .passConfirm').blur();
-            //     } else {
-            //         $('.signup, .login').addClass('switched');
-
-            //         setTimeout(function () { $('.signup, .login').hide(); }, 700);
-            //         setTimeout(function () { $('.brand').addClass('active'); }, 300);
-            //         setTimeout(function () { $('.heading').addClass('active'); }, 600);
-            //         setTimeout(function () { $('.success-msg p').addClass('active'); }, 900);
-            //         setTimeout(function () { $('.success-msg a').addClass('active'); }, 1050);
-            //         setTimeout(function () { $('.form').hide(); }, 700);
-            //     }
-            // });
-
-            // Reload page
-            $('a.profile').on('click', function () {
-                location.reload();
-            });
+        //     // Reload page
+        //     $('a.profile').on('click', function () {
+        //         location.reload();
+        //     });
+        // });
+    }
 
 
-        });
+    // Form submit
+    register_user() {
 
+        this.http.post(this.url + 'register/', this.registrationForm.value).subscribe();
+
+        console.log(this.url + 'register/', this.registrationForm.value);
+        // .subscribe(
+        //     data => console.log("Register :", data),
+        //     err => console.log("Register :", err),
+        // );
+    }
+
+    login_user() {
+        this.http.post(this.url + 'login-token/', this.loginForm.value).subscribe();
+        // .subscribe(
+        //     data => console.log("Login :", data),
+        //     err => console.log("Login :", err),
+        // );
     }
 
 }

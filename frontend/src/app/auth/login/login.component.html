@@ -36,11 +36,11 @@
 
                         <div class="form-group">
                             <label for="loginPassword">Password</label>
-                            <input type="password" formControlName="password" name="loginPassword" id="loginPassword" required>
+                            <input type="password" formControlName="password" name="loginPassword" (submit)="login_user()" id="loginPassword" required>
                         </div>
 
                         <div class="CTA">
-                            <input type="submit" value="Login">
+                            <input type="button" (click)="login_user()" value="Login">
                             <a class="switch" (click)="newUser=true">I'm New</a>
                         </div>
                     </form>
@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="CTA">
-                            <input type="submit" value="Signup Now" id="submit">
+                            <input type="button" (click)="register_user()" value="Signup Now" id="register_user">
                             <a class="switch" (click)="newUser=false">I have an account</a>
                         </div>
                     </form>

@@ -1,22 +1,25 @@
 from decimal import Context
-from rest_framework import generics, status, views
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
-from rest_framework.serializers import Serializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import BasicAuthentication, TokenAuthentication
-from bank_api.models import *
-from bank_api.serializers import *
+
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import get_object_or_404
+from rest_framework import generics, status, views
+from rest_framework.authentication import (BasicAuthentication,
+                                           TokenAuthentication)
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.serializers import Serializer
+
+from bank_api.models import *
+from bank_api.serializers import *
 
 # Create / register a new user
 
 
-class User_registration(generics.ListCreateAPIView):
+class User_registration(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
