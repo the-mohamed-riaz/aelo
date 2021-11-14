@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import { environment } from './../../../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +12,7 @@ import { environment } from './../../../environments/environment';
 })
 export class LoginComponent implements OnInit {
 
-    newUser = true;
+    newUser = false;
     url = "";
 
     // usernameError = true;
@@ -75,12 +76,18 @@ export class LoginComponent implements OnInit {
     }
 
 
+
     // Form submit
     register_user() {
 
-        this.http.post(this.url + 'register/', this.registrationForm.value).subscribe();
+        // let header = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        let header = new HttpHeaders({ 'Content-Type': 'application/json' });
+        // header.set('Access-Control-Allow-Origin', 'localhost:4200');
+        // header.set('Access-Control-Allow-Origin', '*');
 
-        console.log(this.url + 'register/', this.registrationForm.value);
+        this.http.post(this.url + 'register/', JSON.stringify({ ...this.registrationForm.value }), { headers: header }).subscribe();
+
+        console.log(this.url + 'register/', this.registrationForm.value, { headers: header });
         // .subscribe(
         //     data => console.log("Register :", data),
         //     err => console.log("Register :", err),
@@ -88,7 +95,10 @@ export class LoginComponent implements OnInit {
     }
 
     login_user() {
-        this.http.post(this.url + 'login-token/', this.loginForm.value).subscribe();
+        // let header = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        let header = new HttpHeaders({ 'Content-Type': 'application/json' });
+        // header.set('Access-Control-Allow-Origin', '*');
+        this.http.post(this.url + 'login-token/', JSON.stringify({ ...this.loginForm.value }), { headers: header }).subscribe();
         // .subscribe(
         //     data => console.log("Login :", data),
         //     err => console.log("Login :", err),
