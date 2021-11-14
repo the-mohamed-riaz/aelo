@@ -30,13 +30,25 @@
                 <div class="login form-peice switched">
                     <form class="login-form" [formGroup]="loginForm">
                         <div class="form-group">
-                            <label for="loginemail">Email Adderss</label>
-                            <input type="email" name="loginemail" formControlName="username" id="loginemail" required>
+                            <!-- <label for="loginemail">Email Adderss</label>
+                            <input type="email" name="loginemail" formControlName="username" id="loginemail" required> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email id</mat-label>
+                                <input matInput placeholder="abc@gmail.com">
+                                <mat-icon matSuffix>icon</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
                         </div>
 
                         <div class="form-group">
-                            <label for="loginPassword">Password</label>
-                            <input type="password" formControlName="password" name="loginPassword" (submit)="login_user()" id="loginPassword" required>
+                            <!-- <label for="loginPassword">Password</label>
+                            <input type="password" formControlName="password" name="loginPassword" (submit)="login_user()" id="loginPassword" required> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email id</mat-label>
+                                <input matInput placeholder="abc@gmail.com">
+                                <mat-icon matSuffix>icon</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
                         </div>
 
                         <div class="CTA">
@@ -52,26 +64,50 @@
                 <div class="signup form-peice">
                     <form class="signup-form" action="#" method="post" [formGroup]="registrationForm">
                         <div class="form-group">
-                            <label for="name">Full Name</label>
+                            <!-- <label for="name">Full Name</label>
                             <input type="text" (focus)="callFocus($event)" name="username" id="name" formControlName="full_name" class="name" autocomplete="name">
-                            <span class="error"></span>
+                            <span class="error"></span> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email id</mat-label>
+                                <input matInput placeholder="abc@gmail.com">
+                                <mat-icon matSuffix>icon</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email Adderss</label>
+                            <!-- <label for="email">Email Adderss</label>
                             <input type="email" (focus)="callFocus($event)" formControlName="email" name="emailAdress" id="regEmail" class="email" autocomplete="email">
-                            <span class="error"></span>
+                            <span class="error"></span> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email id</mat-label>
+                                <input matInput placeholder="abc@gmail.com">
+                                <mat-icon matSuffix>icon</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
                         </div>
 
                         <div class="form-group">
-                            <label for="phone">Phone Number - <small>Optional</small></label>
-                            <input type="text" (focus)="callFocus($event)" formControlName="phone" name="phone" id="phone" autocomplete="tel-local">
+                            <!-- <label for="phone">Phone Number - <small>Optional</small></label>
+                            <input type="text" (focus)="callFocus($event)" formControlName="phone" name="phone" id="phone" autocomplete="tel-local"> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email id</mat-label>
+                                <input matInput placeholder="abc@gmail.com">
+                                <mat-icon matSuffix>icon</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
                         </div>
 
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <!-- <label for="password">Password</label>
                             <input type="password" (focus)="callFocus($event)" formControlName="password" name="password" id="password" class="pass" autocomplete="new-password">
-                            <span class="error"></span>
+                            <span class="error"></span> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email id</mat-label>
+                                <input matInput placeholder="abc@gmail.com">
+                                <mat-icon matSuffix>icon</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
                         </div>
 
                         <div class="form-group">
