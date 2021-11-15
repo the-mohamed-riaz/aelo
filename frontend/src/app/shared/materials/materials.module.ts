@@ -97,6 +97,7 @@ const libs = [
   declarations: [],
   imports: [
     CommonModule
-  ], exports: [...libs]
+  ],
+  exports: [...libs]
 })
 export class MaterialsModule { }

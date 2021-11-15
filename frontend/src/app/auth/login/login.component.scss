@@ -1,3 +1,32 @@
+.matField {
+    width: calc(100% - 2rem);
+    margin: 0px 1rem !important;
+}
+
+.parentContainer {
+    position: relative;
+    .formsContainer {
+        display: flex;
+        flex-direction: row;
+        width: calc(100vw - 2rem);
+        height: 100%;
+        justify-content: space-between;
+        align-items: center;
+        form {
+            width: 50%;
+            border: 1px solid red;
+        }
+    }
+    .hideBG {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 51%;
+        background: rgb(255, 255, 255);
+    }
+}
+
 $mainFont: 'Raleway',
 sans-serif;
 $subFont: 'Montserrat',

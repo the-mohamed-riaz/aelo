@@ -1,6 +1,9 @@
-<div class="d-flex flex-row justify-content-between">
+<div class="d-flex flex-row justify-content-between" *ngIf="loggedIn">
     <r-navbar></r-navbar>
     <div class="outletContainer">
         <router-outlet></router-outlet>
     </div>
+</div>
+<div *ngIf="!loggedIn">
+    <app-login></app-login>
 </div>

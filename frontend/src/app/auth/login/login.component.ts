@@ -8,9 +8,22 @@ import { HttpHeaders } from '@angular/common/http';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
+
+    loginFormElement = [
+        { labelName: "Email id", placeholder: "", iconName: "email", type: "email", fcName: "email" },
+        { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
+    ];
+    regFormElement = [
+        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "full_name" },
+        { labelName: "Email", placeholder: "", iconName: "mail", type: "email", fcName: "email" },
+        { labelName: "Mobile number", placeholder: "", iconName: "call", type: "tel", fcName: "mobile" },
+        { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
+        { labelName: "Confirm password", placeholder: "", iconName: "password", type: "text", fcName: "confirm_password" },
+    ];
 
     newUser = false;
     url = "";
@@ -22,13 +35,13 @@ export class LoginComponent implements OnInit {
     focusOn: string | null = null;
 
     loginForm = new FormGroup({
-        username: new FormControl(null, [Validators.required]),
+        email: new FormControl(null, [Validators.required]),
         password: new FormControl(null, [Validators.required]),
     });
     registrationForm = new FormGroup({
         full_name: new FormControl(null, [Validators.required]),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        phone: new FormControl(null, [Validators.required]),
+        mobile: new FormControl(null, [Validators.required]),
         password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
         confirm_password: new FormControl(null, [Validators.required]),
         // }, [FormValidators.passwordsMatch(this.registrationForm.value('password'))]);
