@@ -176,6 +176,22 @@ section#formHolder {
     }
 }
 
+.btnsContainer {
+    position: relative;
+    width: 100%;
+    .btn {
+        position: absolute;
+        right: 22%;
+        bottom: 1.5rem;
+        padding: 0.3rem 1.75rem;
+        border: none;
+    }
+    .signup {
+        // background-color: #bbbbbb !important;
+        background-color: #f95959 !important;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         overflow: hidden;

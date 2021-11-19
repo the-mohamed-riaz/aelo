@@ -15,7 +15,6 @@
                 <mat-icon matSuffix>{{item.iconName}}</mat-icon>
             </mat-form-field>
             <div (click)="switchForms()" class="switch">Already a user? Sign in</div>
-
         </form>
     </div>
     <div class="hideBG">
@@ -29,3 +28,14 @@
         </div>
     </div>
 </div>
+<div class="btnsContainer">
+    <button *ngIf="newUser" (click)="login_user()" class="btn btn-primary">Login</button>
+    <button *ngIf="!newUser" (click)="register_user()" class="btn btn-primary signup">Sign Up</button>
+</div>
+
+<!-- <div class="mx-4 mt-3">
+    {{loginForm.value | json}}
+</div>
+<div class="mx-4 mt-3">
+    {{registrationForm.value | json}}
+</div> -->
