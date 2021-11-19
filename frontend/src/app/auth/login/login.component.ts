@@ -16,8 +16,9 @@ export class LoginComponent implements OnInit {
         { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
     ];
     regFormElement = [
-        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "full_name" },
+        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "username" },
         { labelName: "Email", placeholder: "", iconName: "mail", type: "email", fcName: "email" },
+        { labelName: "User name", placeholder: "", iconName: "3p", type: "text", fcName: "username" },
         { labelName: "Mobile number", placeholder: "", iconName: "call", type: "tel", fcName: "mobile" },
         { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
         { labelName: "Confirm password", placeholder: "", iconName: "password", type: "text", fcName: "confirm_password" },
@@ -26,10 +27,6 @@ export class LoginComponent implements OnInit {
     newUser = false;
     url = "";
 
-    // usernameError = true;
-    // emailError = true;
-    // passwordError = true;
-    // passConfirm = true;
     focusOn: string | null = null;
 
     loginForm = new FormGroup({
@@ -38,6 +35,7 @@ export class LoginComponent implements OnInit {
     });
     registrationForm = new FormGroup({
         full_name: new FormControl(null, [Validators.required]),
+        username: new FormControl(null, [Validators.required]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         mobile: new FormControl(null, [Validators.required]),
         password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
@@ -64,24 +62,23 @@ export class LoginComponent implements OnInit {
     register_user() {
 
         // let header = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        let header = new HttpHeaders({ 'Content-Type': 'application/json' });
+        // let header = new HttpHeaders({ 'Content-Type': 'application/json' });
         // header.set('Access-Control-Allow-Origin', 'localhost:4200');
         // header.set('Access-Control-Allow-Origin', '*');
 
-        this.http.post(this.url + 'register/', JSON.stringify({ ...this.registrationForm.value }), { headers: header }).subscribe();
-
-        console.log(this.url + 'register/', this.registrationForm.value, { headers: header });
-        // .subscribe(
-        //     data => console.log("Register :", data),
-        //     err => console.log("Register :", err),
-        // );
+        // this.http.post(this.url + 'register/', JSON.stringify({ ...this.registrationForm.value }), { headers: header }).subscribe();
+        this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe();
     }
 
     login_user() {
         // let header = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         let header = new HttpHeaders({ 'Content-Type': 'application/json' });
         // header.set('Access-Control-Allow-Origin', '*');
-        this.http.post(this.url + 'login-token/', JSON.stringify({ ...this.loginForm.value }), { headers: header }).subscribe();
+        this.http.post(this.url + 'login-token/', { 'password': this.loginForm.controls.password.value, 'username': this.loginForm.controls.username.value, 'full_name': this.loginForm.controls.full_name.value, 'email': this.loginForm.controls.email.value }, { headers: header }).subscribe(
+            (data) => {
+                console.log(data);
+            }
+        );
         // .subscribe(
         //     data => console.log("Login :", data),
         //     err => console.log("Login :", err),
@@ -92,4 +89,13 @@ export class LoginComponent implements OnInit {
         this.newUser = !this.newUser;
         console.log(this.newUser);
     }
+}
+
+export function export_form_data(val: { username: string, password: string, fullname: string, email: string }) {
+    const formData = new FormData();
+    for (const [key, value] of Object.entries(val)) {
+        formData.append(key, value);
+        console.log(key, value);
+    }
+    return formData;
 }
