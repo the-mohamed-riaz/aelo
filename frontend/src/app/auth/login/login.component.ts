@@ -118,4 +118,8 @@ export class LoginComponent implements OnInit {
         // );
     }
 
+    switchForms() {
+        this.newUser = !this.newUser;
+        console.log(this.newUser);
+    }
 }

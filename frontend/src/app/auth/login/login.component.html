@@ -1,21 +1,31 @@
 <div class="parentContainer">
-    <div class="formsContainer">
+    <div class="formsContainer" [ngClass]="{'reverseFlex': newUser}">
         <form class="mt-3 mx-lg-4 mx-sm-2" [formGroup]="loginForm">
             <mat-form-field appearance="standard" class="matField" *ngFor="let item of loginFormElement">
                 <mat-label>{{item.labelName}}</mat-label>
                 <input matInput [placeholder]="item.placeholder" [type]="item.type" [formControlName]="item.fcName">
                 <mat-icon matSuffix>{{item.iconName}}</mat-icon>
             </mat-form-field>
+            <div (click)="switchForms()" class="switch">New user? Register here</div>
         </form>
-        <form class="mt-3 mx-lg-4 mx-sm-2" [formGroup]="loginForm">
+        <form class="mt-3 mx-lg-4 mx-sm-2" [formGroup]="registrationForm">
             <mat-form-field appearance="standard" class="matField" *ngFor="let item of regFormElement">
                 <mat-label>{{item.labelName}}</mat-label>
                 <input matInput [placeholder]="item.placeholder" [type]="item.type" [formControlName]="item.fcName">
                 <mat-icon matSuffix>{{item.iconName}}</mat-icon>
             </mat-form-field>
+            <div (click)="switchForms()" class="switch">Already a user? Sign in</div>
+
         </form>
     </div>
     <div class="hideBG">
-        <h1>Aelo</h1>
+        <div class="brand">
+            <div class="rLogo"><img src="../../../assets/logo.svg" alt="Mohamed Riaz logo"></div>
+            <div class="aeloT">AELO</div>
+            <div class="aeloC">Transaction made simpler</div>
+            <!-- <div class="imgContainer"> -->
+            <!-- <img src="../../../assets/monsters.png" alt=""> -->
+            <!-- </div> -->
+        </div>
     </div>
 </div>
