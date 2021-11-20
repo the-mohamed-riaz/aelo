@@ -3,6 +3,10 @@
     margin: 0px 1rem !important;
 }
 
+.caps::first-letter {
+    text-transform: capitalize;
+}
+
 .parentContainer {
     position: relative;
     overflow: hidden;

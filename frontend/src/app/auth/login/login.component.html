@@ -13,6 +13,9 @@
                 <mat-label>{{item.labelName}}</mat-label>
                 <input matInput [placeholder]="item.placeholder" [type]="item.type" [formControlName]="item.fcName">
                 <mat-icon matSuffix>{{item.iconName}}</mat-icon>
+                <mat-hint *ngIf="submission!==null && submission!=='success' && submission[item.fcName]" align="end" class="caps">
+                    {{submission[item.fcName]}}
+                </mat-hint>
             </mat-form-field>
             <div (click)="switchForms()" class="switch">Already a user? Sign in</div>
         </form>
@@ -39,3 +42,6 @@
 <div class="mx-4 mt-3">
     {{registrationForm.value | json}}
 </div> -->
+<div class="mx-4 mt-3">
+    {{registrationForm.errors | json}}
+</div>

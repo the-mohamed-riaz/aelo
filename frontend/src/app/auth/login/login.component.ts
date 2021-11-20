@@ -3,6 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from './../../../environments/environment';
 
+export interface $reg_err_response {
+    fullname?: string | any;
+    email?: string | any;
+    username?: string | any;
+    mobile?: string | any;
+    password?: string | any;
+}
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -16,7 +24,7 @@ export class LoginComponent implements OnInit {
         { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
     ];
     regFormElement = [
-        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "username" },
+        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "full_name" },
         { labelName: "Email", placeholder: "", iconName: "mail", type: "email", fcName: "email" },
         { labelName: "User name", placeholder: "", iconName: "3p", type: "text", fcName: "username" },
         { labelName: "Mobile number", placeholder: "", iconName: "call", type: "tel", fcName: "mobile" },
@@ -56,18 +64,22 @@ export class LoginComponent implements OnInit {
 
     }
 
+    submission: null | string | $reg_err_response | any = null;
 
 
     // Form submit
     register_user() {
-
-        // let header = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        // let header = new HttpHeaders({ 'Content-Type': 'application/json' });
-        // header.set('Access-Control-Allow-Origin', 'localhost:4200');
-        // header.set('Access-Control-Allow-Origin', '*');
-
-        // this.http.post(this.url + 'register/', JSON.stringify({ ...this.registrationForm.value }), { headers: header }).subscribe();
-        this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe();
+        this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe(
+            (next) => {
+                this.submission = "success";
+            },
+            (err) => {
+                console.log(err.error);
+                this.submission = err.error;
+                // let [[key, value]] = Object.entries(err.error);
+                this.registrationForm.setErrors(err.error);
+            }
+        );
     }
 
     login_user() {
