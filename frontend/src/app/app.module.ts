@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -25,10 +26,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialsModule
+    MaterialsModule,
   ],
   providers: [
-    DropdownsService
+    DropdownsService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

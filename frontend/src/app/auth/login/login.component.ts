@@ -1,6 +1,8 @@
+import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { map } from 'jquery';
 import { environment } from './../../../environments/environment';
 
 export interface $reg_err_response {
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
 
 
     loginFormElement = [
-        { labelName: "Email id", placeholder: "", iconName: "email", type: "email", fcName: "email" },
+        { labelName: "User name", placeholder: "", iconName: "email", type: "text", fcName: "username" },
         { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
     ];
     regFormElement = [
@@ -32,26 +34,25 @@ export class LoginComponent implements OnInit {
         { labelName: "Confirm password", placeholder: "", iconName: "password", type: "text", fcName: "confirm_password" },
     ];
 
-    newUser = false;
+    newUser = true;
     url = "";
 
     focusOn: string | null = null;
 
     loginForm = new FormGroup({
-        email: new FormControl(null, [Validators.required]),
+        username: new FormControl(null, [Validators.required]),
         password: new FormControl(null, [Validators.required]),
     });
     registrationForm = new FormGroup({
         full_name: new FormControl(null, [Validators.required]),
         username: new FormControl(null, [Validators.required]),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        mobile: new FormControl(null, [Validators.required]),
+        mobile: new FormControl(null),
         password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-        confirm_password: new FormControl(null, [Validators.required]),
-        // }, [FormValidators.passwordsMatch(this.registrationForm.value('password'))]);
+        confirm_password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     });
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, private cookie: CookieService) {
         this.url = environment.rootUrl;
         console.log("current url: ", this.url);
     }
@@ -69,37 +70,41 @@ export class LoginComponent implements OnInit {
 
     // Form submit
     register_user() {
-        this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe(
-            (next) => {
+        if (this.registrationForm.value.password === this.registrationForm.value.confirm_password) {
+            this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe(
+                (next) => {
+                    this.submission = "success";
+                },
+                (err) => {
+                    console.log(err.error);
+                    this.submission = err.error;
+                    this.registrationForm.setErrors(err.error);
+                }
+            );
+        } else {
+            this.submission = "failed"
+            this.registrationForm.setErrors({ confirm_password: "Password matching failed!" });
+        };
+    }
+
+    login_user() {
+        this.http.post(this.url + 'login-token/', export_form_data(this.loginForm.value)).subscribe(
+            (next: { username: string, token: string } | any) => {
                 this.submission = "success";
+                this.cookie.set('tkn', next.token)
+                console.log(next);
             },
             (err) => {
                 console.log(err.error);
                 this.submission = err.error;
-                // let [[key, value]] = Object.entries(err.error);
-                this.registrationForm.setErrors(err.error);
+                this.loginForm.setErrors(err.error);
             }
         );
-    }
-
-    login_user() {
-        // let header = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        let header = new HttpHeaders({ 'Content-Type': 'application/json' });
-        // header.set('Access-Control-Allow-Origin', '*');
-        this.http.post(this.url + 'login-token/', { 'password': this.loginForm.controls.password.value, 'username': this.loginForm.controls.username.value, 'full_name': this.loginForm.controls.full_name.value, 'email': this.loginForm.controls.email.value }, { headers: header }).subscribe(
-            (data) => {
-                console.log(data);
-            }
-        );
-        // .subscribe(
-        //     data => console.log("Login :", data),
-        //     err => console.log("Login :", err),
-        // );
     }
 
     switchForms() {
         this.newUser = !this.newUser;
-        console.log(this.newUser);
+        // console.log(this.newUser);
     }
 }
 

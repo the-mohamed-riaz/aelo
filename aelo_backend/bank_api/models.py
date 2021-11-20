@@ -39,9 +39,10 @@ class User(AbstractUser):
     username = models.CharField(unique=True, max_length=150)
     full_name = models.CharField(max_length=150, blank=False, null=False)
     # last_name = models.CharField(max_length=150, blank=True, null=True)
-    email = models.CharField(max_length=254)
+    email = models.CharField(max_length=254, unique=True)
     is_staff = models.BooleanField(blank=False, default=False, null=False)
     is_active = models.BooleanField(blank=False, default=True, null=False)
+    mobile = models.IntegerField(blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,
                           editable=False, primary_key=True)

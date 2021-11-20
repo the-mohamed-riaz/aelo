@@ -10,6 +10,8 @@
 .parentContainer {
     position: relative;
     overflow: hidden;
+    height: 100vh;
+    overflow: hidden;
     .formsContainer {
         display: flex;
         flex-direction: row;
@@ -101,44 +103,6 @@
     }
 }
 
-$mainFont: 'Raleway',
-sans-serif;
-$subFont: 'Montserrat',
-sans-serif;
-// Color Scheme
-$primaryColor: #f95959;
-$secondaryColor: #f7edd5;
-$inputColor: #bbbbbb;
-// General Style
-body {
-    font-family: $subFont;
-    background: $secondaryColor;
-}
-
-.container {
-    max-width: 900px;
-}
-
-a {
-    display: inline-block;
-    text-decoration: none;
-}
-
-input {
-    outline: none !important;
-}
-
-h1 {
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-    font-weight: 700;
-}
-
-section#formHolder {
-    padding: 50px 0;
-}
-
 // Brand Area
 .brand {
     top: 11%;
@@ -180,20 +144,24 @@ section#formHolder {
     }
 }
 
-.btnsContainer {
-    position: relative;
-    width: 100%;
-    .btn {
-        position: absolute;
-        right: 22%;
-        bottom: 1.5rem;
-        padding: 0.3rem 1.75rem;
-        border: none;
-    }
-    .signup {
-        // background-color: #bbbbbb !important;
-        background-color: #f95959 !important;
-    }
+.btn {
+    // position: absolute;
+    // right: 22%;
+    // bottom: 1.5rem;
+    padding: 0.3rem 1.75rem;
+    border: none;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+
+.signup {
+    // background-color: #bbbbbb !important;
+    background-color: #f95959 !important;
+}
+
+.login {
+    bottom: 5rem !important;
 }
 
 @media (max-width: 768px) {
