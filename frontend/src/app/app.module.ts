@@ -8,9 +8,10 @@ import { DropdownsService } from './DefaultValues/dropdowns.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { LoginInterceptor } from './interceptor/login.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CookieService } from 'ngx-cookie-service';
     MaterialsModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
     DropdownsService,
     CookieService
   ],
