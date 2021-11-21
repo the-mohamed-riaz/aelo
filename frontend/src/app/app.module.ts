@@ -1,3 +1,4 @@
+import { ModulesLoaderGuard } from './guard/modules-loader.guard';
 import { MaterialsModule } from './shared/materials/materials.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +32,7 @@ import { LoginInterceptor } from './interceptor/login.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
+    ModulesLoaderGuard,
     DropdownsService,
     CookieService
   ],
