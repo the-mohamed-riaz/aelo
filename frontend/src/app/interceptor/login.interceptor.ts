@@ -17,7 +17,7 @@ export class LoginInterceptor implements HttpInterceptor {
 
     // If we have a token, we set it to the header
     request = request.clone({
-      setHeaders: { Authorization: `Token ${this.cookie.get('tkn')}` }
+      setHeaders: { Authorization: `Token ${this.cookie.check('tkn') ? this.cookie.get('tkn') : ''}` }
     });
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {

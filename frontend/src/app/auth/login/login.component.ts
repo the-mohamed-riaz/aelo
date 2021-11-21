@@ -92,7 +92,8 @@ export class LoginComponent implements OnInit {
         this.http.post(this.url + 'login-token/', export_form_data(this.loginForm.value)).subscribe(
             (next: { username: string, token: string } | any) => {
                 this.submission = "success";
-                this.cookie.set('tkn', next.token)
+                this.cookie.set('tkn', next.token);
+                this.cookie.set('username', next.username);
                 console.log(next);
                 this.route.navigateByUrl('/transaction')
             },

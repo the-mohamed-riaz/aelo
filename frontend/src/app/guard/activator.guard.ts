@@ -32,7 +32,6 @@ export class ActivatorGuard implements CanActivate {
 
 export function getTokenParams(username: string, token: string): HttpParams {
   let params: HttpParams | null = null;
-  params = new HttpParams().set('username', username ? username : '');
-  params = new HttpParams().set('token', token ? token : '');
+  params = new HttpParams().set('username', username ? username : '',).append('token', token ? token : '');
   return params;
 }
