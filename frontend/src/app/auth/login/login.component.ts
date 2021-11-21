@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit {
         confirm_password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     });
 
-    constructor(public http: HttpClient, private cookie: CookieService) {
+    constructor(public http: HttpClient, private cookie: CookieService, private route: Router) {
         this.url = environment.rootUrl;
         console.log("current url: ", this.url);
     }
@@ -93,6 +94,7 @@ export class LoginComponent implements OnInit {
                 this.submission = "success";
                 this.cookie.set('tkn', next.token)
                 console.log(next);
+                this.route.navigateByUrl('/transaction')
             },
             (err) => {
                 console.log(err.error);

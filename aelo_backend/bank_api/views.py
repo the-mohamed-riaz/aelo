@@ -61,7 +61,7 @@ def login_token(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def verify_token(request):
-    data = request.data
+    data = request.query_params
     serial = Token_serializer(data=data)
     serial.is_valid(raise_exception=True)
     try:

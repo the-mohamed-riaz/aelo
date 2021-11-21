@@ -15,19 +15,15 @@ export class LoginInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.cookie.check('tkn')) {
-      // If we have a token, we set it to the header
-      request = request.clone({
-        setHeaders: { Authorization: `Authorization token ${this.cookie.get('tkn')}` }
-      });
-    } else {
-      this.route.navigateByUrl('http://localhost:4200/transaction')
-    }
-
+    // If we have a token, we set it to the header
+    request = request.clone({
+      setHeaders: { Authorization: `Token ${this.cookie.get('tkn')}` }
+    });
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           console.log("letting pass in interceptor");
+          console.log("interceptor event: \n", event);
         }
         return event;
       }),
@@ -38,6 +34,7 @@ export class LoginInterceptor implements HttpInterceptor {
           status: error.status
         };
         console.log("Error catched by interceptor\n", data);
+        this.cookie.delete('tkn');
         return throwError(error);
       })
     )

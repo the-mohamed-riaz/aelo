@@ -26,6 +26,7 @@ import { TransactionRoutingModule } from './transaction-routing.module';
   exports: [
     HomeComponent,
     AddTransComponent,
+    TransactionRoutingModule
   ]
 })
 export class TransactionModule { }
