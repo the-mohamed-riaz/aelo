@@ -1,7 +1,7 @@
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CanLoad, Route, UrlSegment, UrlTree } from '@angular/router';
+import { CanLoad, Route, UrlSegment, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { getTokenParams } from './activator.guard';
 
@@ -9,7 +9,7 @@ import { getTokenParams } from './activator.guard';
   providedIn: 'root'
 })
 export class ModulesLoaderGuard implements CanLoad {
-  constructor(private http: HttpClient, private cookie: CookieService) { }
+  constructor(private http: HttpClient, private cookie: CookieService, private route: Router) { }
 
   response: boolean | string | any = false;
 
@@ -20,7 +20,7 @@ export class ModulesLoaderGuard implements CanLoad {
     this.http.get('http://localhost:8000/verify-token/', { params: getTokenParams(this.cookie.get('username'), this.cookie.get('tkn')) }).subscribe(
       (next) => {
         this.response = true;
-        // console.log("state: ", state, "route :", route);
+        console.log("From modules loader:\n", "segments: ", segments, "route :", route);
       },
       (err) => {
         this.response = false;

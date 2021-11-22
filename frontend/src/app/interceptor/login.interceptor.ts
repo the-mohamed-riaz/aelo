@@ -15,10 +15,15 @@ export class LoginInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // If we have a token, we set it to the header
-    request = request.clone({
-      setHeaders: { Authorization: `Token ${this.cookie.check('tkn') ? this.cookie.get('tkn') : ''}` }
-    });
+    // If we have a token, we set it to the header Authorization:Token
+    if (this.cookie.check('tkn')) {
+      request = request.clone({
+        setHeaders: { Authorization: `Token ${this.cookie.get('tkn')}` }
+      });
+    } else {
+      request = request;
+      this.route.navigateByUrl('/login')
+    }
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

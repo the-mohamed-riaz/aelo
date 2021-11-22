@@ -23,16 +23,16 @@ export class LoginComponent implements OnInit {
 
 
     loginFormElement = [
-        { labelName: "User name", placeholder: "", iconName: "email", type: "text", fcName: "username" },
-        { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
+        { labelName: "User name", placeholder: "", iconName: "email", type: "text", fcName: "username", autocomplete: "on" },
+        { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password", autocomplete: "current-password" },
     ];
     regFormElement = [
-        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "full_name" },
-        { labelName: "Email", placeholder: "", iconName: "mail", type: "email", fcName: "email" },
-        { labelName: "User name", placeholder: "", iconName: "3p", type: "text", fcName: "username" },
-        { labelName: "Mobile number", placeholder: "", iconName: "call", type: "tel", fcName: "mobile" },
-        { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password" },
-        { labelName: "Confirm password", placeholder: "", iconName: "password", type: "text", fcName: "confirm_password" },
+        { labelName: "Full name", placeholder: "", iconName: "account_circle", type: "text", fcName: "full_name", autocomplete: "on" },
+        { labelName: "Email", placeholder: "", iconName: "mail", type: "email", fcName: "email", autocomplete: "on" },
+        { labelName: "User name", placeholder: "", iconName: "3p", type: "text", fcName: "username", autocomplete: "on" },
+        { labelName: "Mobile number", placeholder: "", iconName: "call", type: "tel", fcName: "mobile", autocomplete: "on" },
+        { labelName: "Password", placeholder: "", iconName: "password", type: "password", fcName: "password", autocomplete: "new-password" },
+        { labelName: "Confirm password", placeholder: "", iconName: "password", type: "text", fcName: "confirm_password", autocomplete: "on" },
     ];
 
     newUser = true;
