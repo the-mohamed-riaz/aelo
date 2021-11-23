@@ -32,11 +32,11 @@ import { MaterialsModule } from './shared/materials/materials.module';
     MaterialsModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
     ActivatorGuard,
     ModulesLoaderGuard,
     DropdownsService,
-    CookieService
+    CookieService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

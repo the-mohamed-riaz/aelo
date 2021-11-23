@@ -1,9 +1,11 @@
-<div class="d-flex flex-row justify-content-between" *ngIf="loggedIn">
-    <r-navbar></r-navbar>
-    <div class="outletContainer">
-        <router-outlet></router-outlet>
+<ng-container *ngIf="checkStatus() !== '/login' ">
+    <div class="d-flex flex-row justify-content-between">
+        <r-navbar></r-navbar>
+        <div class="outletContainer">
+            <router-outlet></router-outlet>
+        </div>
     </div>
-</div>
-<div *ngIf="!loggedIn">
-    <app-login></app-login>
+</ng-container>
+<div *ngIf="checkStatus() === '/login'">
+    <router-outlet></router-outlet>
 </div>
