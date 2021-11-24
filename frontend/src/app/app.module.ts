@@ -14,12 +14,14 @@ import { ModulesLoaderGuard } from './guard/modules-loader.guard';
 import { LoginInterceptor } from './interceptor/login.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MaterialsModule } from './shared/materials/materials.module';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

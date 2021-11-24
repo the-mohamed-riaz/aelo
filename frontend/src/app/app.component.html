@@ -1,4 +1,7 @@
-<ng-container *ngIf="checkStatus() !== '/login' ">
+<div *ngIf="checkStatus() === '/login' || checkStatus() === '/'">
+    <router-outlet></router-outlet>
+</div>
+<ng-container *ngIf="checkStatus() !== '/login' && checkStatus() !== '/' ">
     <div class="d-flex flex-row justify-content-between">
         <r-navbar></r-navbar>
         <div class="outletContainer">
@@ -6,6 +9,3 @@
         </div>
     </div>
 </ng-container>
-<div *ngIf="checkStatus() === '/login'">
-    <router-outlet></router-outlet>
-</div>

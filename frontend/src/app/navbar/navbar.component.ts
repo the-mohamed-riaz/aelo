@@ -15,18 +15,18 @@ export class NavbarComponent implements OnInit {
   links = [
     {
       icon: "user",
-      text:"Login",
-      link:"/login"
+      text: "Log out",
+      link: "/logout"
     },
     {
       icon: "dollar sign",
-      text:"Transaction",
-      link:"/transaction"
+      text: "Transaction",
+      link: "/transaction"
     },
     {
       icon: "chart area",
       text: "Analytics",
-      link:"/analytics"
+      link: "/analytics"
     }
   ]
 
