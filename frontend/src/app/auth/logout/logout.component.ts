@@ -14,7 +14,7 @@ export class LogoutComponent implements OnInit {
       this.cookie.delete('tkn');
       this.cookie.delete('user');
     };
-    // setTimeout(() => this.route.navigateByUrl('/login'), 2000);
+    setTimeout(() => this.route.navigateByUrl('/login'), 2500);
   }
 
   ngOnInit(): void {
