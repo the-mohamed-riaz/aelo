@@ -1,8 +1,9 @@
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
+  // encapsulation: ViewEncapsulation.None,
   selector: 'add-trans',
   templateUrl: './add-trans.component.html',
   styleUrls: ['./add-trans.component.scss']

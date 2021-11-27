@@ -1,19 +1,32 @@
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick,
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline,
+::ng-deep .mat-form-field-label {
+    color: orange !important;
+}
+
+::ng-deep .mat-input-element::placeholder {
+    color: rgba(255, 166, 0, 0.4);
+}
+
 .blackboard {
     // width: 420px;
     // height: 325px;
     height: auto;
     padding: 0 0 5px 0;
-    background-color: black;
     border-radius: 8px;
     padding-bottom: 8px;
-    color: white;
+    background-color: black;
+    // color: rgb(101, 52, 116);
+    color: orange;
+    // color: orangered;
     font-weight: 300;
     * {
         margin: 0 0.75rem;
     }
     .title {
         height: 40px;
-        border-bottom: 1px solid rgba(110, 110, 110, 0.5);
+        // border-bottom: 1px solid rgba(110, 110, 110, 0.5);
+        border-bottom: 1px solid rgba(101, 52, 116, 0.5);
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -24,26 +37,26 @@
             margin-top: 0.5rem;
         }
     }
-    .ui.form {
-        .field {
-            margin: .35rem 0;
-        }
-        .fields {
-            margin: 0;
-            padding: 0;
-            .field:first-child {
-                padding-left: 0 !important;
-            }
-            .field:last-child {
-                padding-right: 0 !important;
-            }
-        }
-        label {
-            color: rgba(255, 255, 255, 0.75) !important;
-            font-size: 12px !important;
-            font-weight: 400 !important;
-        }
-    }
+    // .ui.form {
+    //     .field {
+    //         margin: .35rem 0;
+    //     }
+    //     .fields {
+    //         margin: 0;
+    //         padding: 0;
+    //         .field:first-child {
+    //             padding-left: 0 !important;
+    //         }
+    //         .field:last-child {
+    //             padding-right: 0 !important;
+    //         }
+    //     }
+    //     label {
+    //         color: rgba(255, 255, 255, 0.75) !important;
+    //         font-size: 12px !important;
+    //         font-weight: 400 !important;
+    //     }
+    // }
     .addButton {
         height: 100%;
         width: 100%;
@@ -77,3 +90,12 @@
         }
     }
 }
+
+// ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+//     background-color: white !important;
+// }
+// ::ng-deep .mat-form-field-underline {
+//     // border: none !important;
+//     background-color: orange !important;
+//     background: orange !important;
+// }
