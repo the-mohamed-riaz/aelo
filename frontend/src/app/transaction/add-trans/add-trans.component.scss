@@ -1,7 +1,15 @@
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick,
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline,
 ::ng-deep .mat-form-field-label {
-    color: #757575;
+    color: #404040;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-focused * {
+    color: #1e8d7b !important;
 }
 
 ::ng-deep mat-label {
@@ -23,7 +31,7 @@
     color: #EEEEEE;
     font-weight: 300;
     * {
-        margin: 0 0.75rem;
+        // margin: 0 0.75rem;
     }
     .title {
         height: 40px;
