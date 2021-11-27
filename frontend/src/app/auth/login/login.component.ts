@@ -77,6 +77,8 @@ export class LoginComponent implements OnInit {
             this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe(
                 (next) => {
                     this.submission = "success";
+                    window.alert("User registered sucessfully! Please login to continue");
+                    this.switchForms();
                 },
                 (err) => {
                     console.log(err.error);

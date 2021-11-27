@@ -215,6 +215,12 @@
     }
 }
 
+@media (max-width: 1366px) {
+    .parentContainer {
+        transform: scale(0.93);
+    }
+}
+
 @media (max-width: 480px) {
     section#formHolder .form {
         width: 100vw;
@@ -224,5 +230,3 @@
         font-size: 50px !important;
     }
 }
-
-;
