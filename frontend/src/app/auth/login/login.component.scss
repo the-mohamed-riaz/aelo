@@ -13,6 +13,7 @@
     height: 100vh;
     overflow: hidden;
     .formsContainer {
+        margin: 11% auto;
         display: flex;
         flex-direction: row;
         // flex-direction: row-reverse;
@@ -20,7 +21,6 @@
         height: auto;
         justify-content: space-between;
         align-items: center;
-        margin: 11% auto;
         form {
             width: 50%;
             .switch {
@@ -218,6 +218,13 @@
 @media (max-width: 1366px) {
     .parentContainer {
         transform: scale(0.93);
+        .formsContainer {
+            margin: 3% auto;
+        }
+    }
+    .brand {
+        top: 2.5%;
+        bottom: 2.5%;
     }
 }
 
