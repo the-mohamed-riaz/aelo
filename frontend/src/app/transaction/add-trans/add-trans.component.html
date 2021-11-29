@@ -17,9 +17,9 @@
                 <mat-option value="credit">Credited (income)</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>Category of transaction</mat-label>
-            <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
+            <input matInput placeholder="Choose from the options below" class="w-100">
             <mat-select>
                 <mat-option value="family">Family</mat-option>
                 <mat-option value="friends">Friends</mat-option>
@@ -29,7 +29,21 @@
                 <mat-option value="shoping">Shoping</mat-option>
                 <mat-option value="fuel">Fuel</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <!-- <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Number</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of cat_opts" [value]="option.value">
+                    {{option.name}}
+                </mat-option>
+                <mat-option (click)="editOptions(cat_opts)">-- Edit options --</mat-option>
+            </mat-autocomplete>
+        </mat-form-field> -->
+
+        <editable-dd></editable-dd>
+
         <mat-form-field appearance="outline">
             <mat-label>Choose a date</mat-label>
             <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">

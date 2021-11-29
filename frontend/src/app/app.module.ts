@@ -15,6 +15,7 @@ import { LoginInterceptor } from './interceptor/login.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MaterialsModule } from './shared/materials/materials.module';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { SharedComponentsModule } from './shared/components/components.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialsModule,
+    SharedComponentsModule
   ],
   providers: [
     ActivatorGuard,

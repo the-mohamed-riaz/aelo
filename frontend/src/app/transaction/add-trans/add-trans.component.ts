@@ -1,6 +1,10 @@
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+export interface i_dropdowns {
+  name: string | null;
+  value: string | null;
+}
 
 @Component({
   // encapsulation: ViewEncapsulation.None,
@@ -16,6 +20,10 @@ export class AddTransComponent implements OnInit {
     this.randId = 'id_' + this.gen_RandId();
   }
 
+  editOptions(val: any) {
+    console.log(val);
+  }
+
   addForm = new FormGroup({
     username: new FormControl(),
     amount: new FormControl(),
@@ -25,6 +33,11 @@ export class AddTransComponent implements OnInit {
     trans_hour: new FormControl(),
     payment_mode: new FormControl()
   })
+
+  cat_opts: Array<i_dropdowns> = [
+    { name: 'Family', value: 'family' },
+    { name: 'Friend', value: 'friend' },
+  ]
 
   ngOnInit(): void {
   }

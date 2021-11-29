@@ -1,3 +1,4 @@
+import { SharedComponentsModule } from './../shared/components/components.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CardsModule } from '../cards/cards.module';
@@ -23,7 +24,8 @@ import { TransactionRoutingModule } from './transaction-routing.module';
     DropdownModule,
     CardsModule,
     ChartsModule,
-    MaterialsModule
+    MaterialsModule,
+    SharedComponentsModule
   ],
   exports: [
     HomeComponent,
