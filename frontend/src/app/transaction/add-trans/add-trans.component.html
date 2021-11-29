@@ -6,15 +6,51 @@
     </div>
     <form class="px-3 mt-2">
         <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Legacy form field 1</mat-label>
-            <input matInput placeholder="Placeholder" class="w-100">
-            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-            <!-- <mat-hint>Hint</mat-hint> -->
+            <mat-label>Amount</mat-label>
+            <input matInput placeholder="Amount in local currency" class="w-100" type="number">
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <mat-label>Legacy form field 2</mat-label>
-            <input matInput placeholder="Placeholder 2" class="w-100">
+            <mat-label>Debit/Credit</mat-label>
+            <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
+            <mat-select>
+                <mat-option value="debit">Debit (expense)</mat-option>
+                <mat-option value="credit">Credited (income)</mat-option>
+            </mat-select>
         </mat-form-field>
-    </form>
+        <mat-form-field appearance="outline">
+            <mat-label>Category of transaction</mat-label>
+            <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
+            <mat-select>
+                <mat-option value="family">Family</mat-option>
+                <mat-option value="friends">Friends</mat-option>
+                <mat-option value="food">Food</mat-option>
+                <mat-option value="snacks">Snacks</mat-option>
+                <mat-option value="medical">Medical</mat-option>
+                <mat-option value="shoping">Shoping</mat-option>
+                <mat-option value="fuel">Fuel</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Transaction Hour</mat-label>
+            <input matInput placeholder="Choose from the options below" class="w-100" type="time" placeholder="24:00">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Payment mode</mat-label>
+            <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
+            <mat-select>
+                <mat-option value="cash">Cash</mat-option>
+                <mat-option value="upi">UPI</mat-option>
+                <mat-option value="bank_transfer">Bank transfer</mat-option>
+                <mat-option value="cheque">Cheque</mat-option>
+                <mat-option value="others">Others</mat-option>
+            </mat-select>
+        </mat-form-field>
 
+    </form>
 </div>
