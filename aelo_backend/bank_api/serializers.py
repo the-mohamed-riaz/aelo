@@ -1,4 +1,5 @@
 # from django.contrib.auth.models import User
+from copy import error
 from django.db.models import fields
 from rest_framework import serializers
 
@@ -13,6 +14,29 @@ class Login_serializer(serializers.Serializer):
 class Token_serializer(serializers.Serializer):
     username = serializers.CharField(max_length=50)
     token = serializers.CharField()
+
+
+class Get_option_serializer(serializers.Serializer):
+    user = serializers.CharField(max_length=50)
+    # cat_options = serializers.CharField()
+    # token = serializers.CharField()
+    # field_name = serializers.CharField()
+
+
+class Post_option_serializer(serializers.Serializer):
+    user = serializers.CharField(max_length=50)
+    # token = serializers.CharField()
+    # field_name = serializers.CharField()
+    cat_options = serializers.CharField()
+
+    def create(self, validated_data):
+        try:
+            username = User.objects.get(username=validated_data['user'])
+
+        except:
+            raise error("Invalid User in serializer")
+
+        return UserOptions.objects.create(user=username, cat_options=validated_data['cat_options'])
 
 
 class User_trans_summary_serializer(serializers.ModelSerializer):

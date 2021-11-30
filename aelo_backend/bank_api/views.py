@@ -2,6 +2,7 @@ import datetime
 from decimal import Context
 
 from django.contrib.auth.hashers import check_password
+from django.db.models import query
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, views
 from rest_framework.authentication import (
@@ -74,6 +75,38 @@ def verify_token(request):
         return Response(True, status=status.HTTP_200_OK)
     else:
         return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+
+# Getting user dropdowns
+
+
+@api_view(['GET', 'POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_category_options(request):
+    if request.method == 'GET':
+        data = request.query_params
+        serial = Get_option_serializer(data=data)
+        serial.is_valid(raise_exception=True)
+        try:
+            username = User.objects.get(username=data['user'])
+        except:
+            return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+            # return Response("IDK why I failed", status=status.HTTP_401_UNAUTHORIZED)
+
+        if username:
+            query = UserOptions.objects.get(user=username)
+            print("\n\nquery: ", query.__dict__, "\n\n")
+            return Response(f"{query.__dict__['cat_options']}", status=status.HTTP_200_OK)
+        else:
+            return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+
+    if request.method == 'POST':
+        serializer = Post_option_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # Adds new transaction
 

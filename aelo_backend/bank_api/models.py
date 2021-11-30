@@ -54,6 +54,12 @@ class User(AbstractUser):
         return self.username
 
 
+class UserOptions(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=False, null=False)
+    cat_options = models.CharField(blank=True, null=True, max_length=10000)
+
+
 class BankTranscations(models.Model):
     id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,
                           editable=False, primary_key=True)
