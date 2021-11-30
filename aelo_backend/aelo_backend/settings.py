@@ -15,7 +15,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:4200']
+CORS_ALLOWED_ORIGINS = ['http://*']
+# CORS_ALLOWED_ORIGINS = ['http://localhost:4200']
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",

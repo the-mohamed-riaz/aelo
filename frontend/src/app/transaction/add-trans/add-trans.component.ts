@@ -1,9 +1,17 @@
-import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { dropdown_option, EditableDropdownComponent } from 'src/app/shared/components/editable-dropdown/editable-dropdown.component';
+
 export interface i_dropdowns {
   name: string | null;
   value: string | null;
+}
+
+export interface DialogData {
+  animal: string;
+  name: string;
 }
 
 @Component({
@@ -14,10 +22,27 @@ export interface i_dropdowns {
 })
 export class AddTransComponent implements OnInit {
 
+
+  catergoryOptions: Array<dropdown_option> = [];
+
   randId: string;
   customDate = true;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
     this.randId = 'id_' + this.gen_RandId();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditableDropdownComponent, {
+      width: '350px',
+      closeOnNavigation: true,
+      data: {
+        title: 'Add/remove category labels', label: 'Category of transaction', placeholder: 'Add new label', options: this.catergoryOptions
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: Array<dropdown_option>) => {
+      this.catergoryOptions = result;
+    });
   }
 
   editOptions(val: any) {
