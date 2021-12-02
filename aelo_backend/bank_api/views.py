@@ -3,6 +3,7 @@ from decimal import Context
 
 from django.contrib.auth.hashers import check_password
 from django.db.models import query
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, views
 from rest_framework.authentication import (
@@ -87,18 +88,27 @@ def get_category_options(request):
         data = request.query_params
         serial = Get_option_serializer(data=data)
         serial.is_valid(raise_exception=True)
+        print("serializer data: ", serial.data)
         try:
-            username = User.objects.get(username=data['user'])
+            username = User.objects.get(username=serial.data['user'])
+            print('\n\nusername:  ', username)
         except:
             return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
             # return Response("IDK why I failed", status=status.HTTP_401_UNAUTHORIZED)
 
         if username:
-            query = UserOptions.objects.get(user=username)
-            print("\n\nquery: ", query.__dict__, "\n\n")
-            return Response(f"{query.__dict__['cat_options']}", status=status.HTTP_200_OK)
-        else:
-            return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+            query = UserOptions.objects.filter(
+                user=username).values('cat_options')
+            print("\n\nquery full: ", query, "\n\n")
+            print("\n\nquery full2: ", [query], "\n\n")
+            print("\n\nquery full3: ", query.__dict__, "\n\n")
+            # print("\n\nquery: ", query.__dict__, "\n\n")
+            # resp = Get_options_output_serializer(data=query, many=True)
+            # resp = Get_options_output_serializer(data=query)
+            # return Response(f"{query.__dict__['cat_options']}", status=status.HTTP_200_OK)
+            return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
+        # else:
+            # return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
 
     if request.method == 'POST':
         serializer = Post_option_serializer(data=request.data)
