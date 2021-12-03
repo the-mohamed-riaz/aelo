@@ -20,6 +20,7 @@ export class LoginInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: { Authorization: `Token ${this.cookie.get('tkn')}` }
       });
+      console.debug(request);
     } else {
       request = request;
       this.route.navigateByUrl('/login')

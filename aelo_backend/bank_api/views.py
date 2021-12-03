@@ -80,11 +80,12 @@ def verify_token(request):
 # Getting user dropdowns
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'PUT'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_category_options(request):
-    if request.method == 'GET':
+    # if request.method == 'GET':
+    if request.method == 'PUT':
         data = request.query_params
         serial = Get_option_serializer(data=data)
         serial.is_valid(raise_exception=True)

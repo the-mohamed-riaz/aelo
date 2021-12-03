@@ -1,3 +1,5 @@
+import { CookieService } from 'ngx-cookie-service';
+import { FormDataGeneratorService, generateOptions } from './../../shared/form-data-generator.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -21,14 +23,19 @@ export interface DialogData {
   styleUrls: ['./add-trans.component.scss']
 })
 export class AddTransComponent implements OnInit {
-
-
+  user: string | null = null;
   catergoryOptions: Array<dropdown_option> = [];
 
   randId: string;
   customDate = true;
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService) {
+    this.user = this.cookie.get('username');
     this.randId = 'id_' + this.gen_RandId();
+    this.http.get<string>('http://localhost:8000/options/?user=' + this.user).subscribe(
+      (val: string) => {
+        this.catergoryOptions = generateOptions(val.split(','));
+      }
+    )
   }
 
   openDialog(): void {
@@ -42,6 +49,23 @@ export class AddTransComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Array<dropdown_option>) => {
       this.catergoryOptions = result;
+      console.log(result);
+      let op_dt = "";
+      for (let i in result) {
+        op_dt += result[i].value + ',';
+      }
+      op_dt = op_dt.slice(0, op_dt.length - 1);
+      let data = new FormData();
+      data.append('user', this.user!);
+      data.append('cat_options', op_dt);
+      if (this.cookie.check('username')) {
+        this.user = this.cookie.get('username');
+      };
+      this.http.post("http://localhost:8000/options/", { user: this.user, cat_options: op_dt }).subscribe(
+        // this.http.post("http://localhost:8000/options/", data).subscribe(
+        (val) => console.log(val),
+        (err) => console.log(err)
+      );
     });
   }
 
@@ -65,6 +89,9 @@ export class AddTransComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    if (this.cookie.check('user')) {
+      this.user = this.cookie.get('user');
+    };
   }
 
   formFields = ["username", "amount", "type_of_trans", "cat_of_trans", "trans_date", "trans_hour", "payment_mode"];

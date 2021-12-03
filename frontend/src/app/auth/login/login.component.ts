@@ -56,8 +56,8 @@ export class LoginComponent implements OnInit {
     constructor(public http: HttpClient, private cookie: CookieService, private route: Router) {
         this.url = environment.rootUrl;
         console.log("current url: ", this.url);
-        this.cookie.delete('tkn');
-        console.log("deleted token");
+        // this.cookie.delete('tkn');
+        // console.log("deleted token");
     }
 
     callFocus(val: any) {
