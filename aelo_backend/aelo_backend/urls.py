@@ -15,7 +15,7 @@ urlpatterns = [
     path('delete/', Delete_Trans.as_view(), name="Delete a transaction"),
     path('edit/', Edit_Trans.as_view(), name="Edit a transaction"),
     path('history/', User_trans_summary.as_view(), name='testing'),
-    # path('options/', get_category_options, name='options'),
+    path('recent/', User_recent_trans.as_view(), name='last 5 transaction'),
     path('options/', CategoryOptions.as_view(), name='options'),
 ]
 

@@ -227,3 +227,16 @@ class User_trans_summary(generics.ListAPIView):
         queryset = BankTranscations.objects.all().filter(
             user=user_obj)
         return queryset
+
+
+class User_recent_trans(generics.ListAPIView):
+    serializer_class = User_trans_summary_serializer
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        r_user = self.request.query_params.get('username')
+        user_obj = User.objects.get(username=r_user)
+        queryset = BankTranscations.objects.all().filter(
+            user=user_obj).order_by('-trans_date')[:5]
+        return queryset
