@@ -38,6 +38,15 @@ class Get_options_output_serializer(serializers.ModelSerializer):
         fields = ['cat_options']
 
 
+class Options_serializer(serializers.ModelSerializer):
+    # user = User_serializer()
+    # cat_options = serializers.CharField(max_length=10000)
+
+    class Meta:
+        model = UserOptions
+        fields = "__all__"
+
+
 class Post_option_serializer(serializers.Serializer):
     user = serializers.CharField(max_length=50)
     # token = serializers.CharField()

@@ -36,7 +36,7 @@ class User(AbstractUser):
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
     is_superuser = models.BooleanField(blank=False, default=False, null=False)
-    username = models.CharField(unique=True, max_length=150)
+    username = models.CharField(unique=True, max_length=150, primary_key=True)
     full_name = models.CharField(max_length=150, blank=False, null=False)
     # last_name = models.CharField(max_length=150, blank=True, null=True)
     email = models.CharField(max_length=254, unique=True)
@@ -44,8 +44,8 @@ class User(AbstractUser):
     is_active = models.BooleanField(blank=False, default=True, null=False)
     mobile = models.IntegerField(blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4,
-                          editable=False, primary_key=True)
+    id = models.UUIDField(unique=True, auto_created=True,
+                          default=uuid.uuid4, editable=False)
 
     class Meta:
         db_table = 'auth_user'
@@ -55,9 +55,12 @@ class User(AbstractUser):
 
 
 class UserOptions(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, blank=False, null=False)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, blank=False, null=False, primary_key=True)
     cat_options = models.CharField(blank=True, null=True, max_length=10000)
+
+    class Meta:
+        db_table = 'user_option_category'
 
 
 class BankTranscations(models.Model):

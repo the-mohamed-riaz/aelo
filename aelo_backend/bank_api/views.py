@@ -85,7 +85,7 @@ def verify_token(request):
 @permission_classes([IsAuthenticated])
 def get_category_options(request):
     # if request.method == 'GET':
-    if request.method == 'PUT':
+    if request.method == 'GET':
         data = request.query_params
         serial = Get_option_serializer(data=data)
         serial.is_valid(raise_exception=True)
@@ -111,6 +111,13 @@ def get_category_options(request):
         # else:
             # return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
 
+    # if request.method == 'PUT':
+    #     serializer = Put_options_output_serializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     if request.method == 'POST':
         serializer = Post_option_serializer(data=request.data)
         if serializer.is_valid():
@@ -118,6 +125,72 @@ def get_category_options(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class CategoryOptions(views.APIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, pk):
+        return UserOptions.objects.get(user=User.objects.get(pk))
+
+    def get(self, request, format=None):
+        data = request.query_params
+        serial = Get_option_serializer(data=data)
+        serial.is_valid(raise_exception=True)
+        print("serializer data: ", serial.data)
+        try:
+            username = User.objects.get(username=serial.data['user'])
+            print('\n\nusername:  ', username)
+        except:
+            return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+
+        if username:
+            query = UserOptions.objects.filter(
+                user=username).values('cat_options')
+            print("\n\nquery full: ", query, "\n\n")
+            print("\n\nquery full2: ", [query], "\n\n")
+            print("\n\nquery full3: ", query.__dict__, "\n\n")
+            return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        serializer = Post_option_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, *args, **kwargs):
+        data = request.data
+        print("\n\nrequest datas:\n", data)
+        user1 = User.objects.get(username=data.get('user'))
+        print("user: ", user1)
+        # print("\n\nall user objects:\n\n", UserOptions.objects.get())
+        print("\n\none obj\n\n", UserOptions.objects.get(user=user1))
+        options_obj = UserOptions.objects.get(user=user1)
+        print("user object 1", options_obj)
+        # options_obj.user = data.get("user", options_obj.user)
+        options_obj.cat_options = data.get(
+            "cat_options", options_obj.cat_options)
+        options_obj.save()
+        serializer = Options_serializer(options_obj)
+        return Response(serializer.data)
+
+        #  pk = self.kwargs.get('user')
+        # print("\n\n____PATCH____REQUEST____")
+        # # req = request.query_params
+        # # pk =
+        # # print()
+        # # print("\npk: \t", self.__dict__)
+        # testmodel_object = self.get_object(pk)
+        # print("\ntestmodeal: \t", testmodel_object)
+        # # set partial=True to update a data partially
+        # serializer = Options_serializer(
+        #     testmodel_object, data=request.data, partial=True)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return JsonResponse(code=201, data=serializer.data)
+        # return JsonResponse(code=400, data="wrong parameters")
 
 # Adds new transaction
 
