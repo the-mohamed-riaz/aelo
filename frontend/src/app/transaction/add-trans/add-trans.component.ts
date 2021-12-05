@@ -30,6 +30,7 @@ export class AddTransComponent implements OnInit {
 
   randId: string;
   customDate = true;
+
   constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService) {
     this.user = this.cookie.get('username');
     this.randId = 'id_' + this.gen_RandId();
@@ -39,6 +40,17 @@ export class AddTransComponent implements OnInit {
       }
     )
   }
+
+  addForm = new FormGroup({
+    username: new FormControl(this.user),
+    amount: new FormControl(),
+    type_of_trans: new FormControl(),
+    cat_of_trans: new FormControl(),
+    trans_date: new FormControl(moment(new Date()).format("YYYY-MM-DD")),
+    trans_hour: new FormControl(new Date().getHours() + ":" + new Date().getMinutes()),
+    payment_mode: new FormControl()
+  })
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EditableDropdownComponent, {
@@ -75,15 +87,6 @@ export class AddTransComponent implements OnInit {
     console.log(val);
   }
 
-  addForm = new FormGroup({
-    username: new FormControl(this.user),
-    amount: new FormControl(),
-    type_of_trans: new FormControl(),
-    cat_of_trans: new FormControl(),
-    trans_date: new FormControl(),
-    trans_hour: new FormControl(),
-    payment_mode: new FormControl()
-  })
 
   cat_opts: Array<i_dropdowns> = [
     { name: 'Family', value: 'family' },
