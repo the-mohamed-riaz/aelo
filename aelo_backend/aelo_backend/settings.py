@@ -13,32 +13,33 @@ SECRET_KEY = 'django-insecure--&9^#ktj#-l(g(38qsao_k-_j+n00(+suy1@cmclm%ump3$$af
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
-
-# CORS_ALLOWED_ORIGINS = ['http://*']
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOWED_ORIGINS = ['http://localhost:4200']
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
+CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-]
-
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ]
+CORS_ORIGIN_WHITELIST = (
+    "http://127.0.0.1:4200",
+    "http://localhost:4200",
+)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT', )
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Access-Control-Allow-Origin', )
 
 # Application definition
 

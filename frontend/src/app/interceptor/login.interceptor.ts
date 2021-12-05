@@ -18,7 +18,13 @@ export class LoginInterceptor implements HttpInterceptor {
     // If we have a token, we set it to the header Authorization:Token
     if (this.cookie.check('tkn')) {
       request = request.clone({
-        setHeaders: { Authorization: `Token ${this.cookie.get('tkn')}` }
+        setHeaders: {
+          Authorization: `Token ${this.cookie.get('tkn')}`,
+          // 'Content-Type': 'application/json',
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Headers': 'Content-Type',
+          // 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT,PATCH',
+        }
       });
       console.debug(request);
     } else {

@@ -61,10 +61,10 @@ export class AddTransComponent implements OnInit {
       if (this.cookie.check('username')) {
         this.user = this.cookie.get('username');
       };
-      this.http.put("http://localhost:8000/options/", { user: this.user, cat_options: op_dt }).subscribe(
+      this.http.patch(`http://localhost:8000/options/?user=${this.user}`, { user: this.user, cat_options: op_dt }).subscribe(
         // this.http.post("http://localhost:8000/options/", data).subscribe(
-        (val) => console.log(val),
-        (err) => console.log(err)
+        (val) => console.log("patching request ....\n", val),
+        (err) => console.log("patching request ....\n", err)
       );
     });
   }
