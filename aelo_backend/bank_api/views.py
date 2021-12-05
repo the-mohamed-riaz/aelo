@@ -95,28 +95,11 @@ def get_category_options(request):
             print('\n\nusername:  ', username)
         except:
             return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
-            # return Response("IDK why I failed", status=status.HTTP_401_UNAUTHORIZED)
 
         if username:
             query = UserOptions.objects.filter(
                 user=username).values('cat_options')
-            # print("\n\nquery full: ", query, "\n\n")
-            # print("\n\nquery full2: ", [query], "\n\n")
-            # print("\n\nquery full3: ", query.__dict__, "\n\n")
-            # print("\n\nquery: ", query.__dict__, "\n\n")
-            # resp = Get_options_output_serializer(data=query, many=True)
-            # resp = Get_options_output_serializer(data=query)
-            # return Response(f"{query.__dict__['cat_options']}", status=status.HTTP_200_OK)
             return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
-        # else:
-            # return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
-
-    # if request.method == 'PUT':
-    #     serializer = Put_options_output_serializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'POST':
         serializer = Post_option_serializer(data=request.data)
@@ -148,9 +131,6 @@ class CategoryOptions(views.APIView):
         if username:
             query = UserOptions.objects.filter(
                 user=username).values('cat_options')
-            print("\n\nquery full: ", query, "\n\n")
-            print("\n\nquery full2: ", [query], "\n\n")
-            print("\n\nquery full3: ", query.__dict__, "\n\n")
             return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -175,24 +155,6 @@ class CategoryOptions(views.APIView):
         options_obj.save()
         serializer = Options_serializer(options_obj)
         return Response(serializer.data)
-
-        #  pk = self.kwargs.get('user')
-        # print("\n\n____PATCH____REQUEST____")
-        # # req = request.query_params
-        # # pk =
-        # # print()
-        # # print("\npk: \t", self.__dict__)
-        # testmodel_object = self.get_object(pk)
-        # print("\ntestmodeal: \t", testmodel_object)
-        # # set partial=True to update a data partially
-        # serializer = Options_serializer(
-        #     testmodel_object, data=request.data, partial=True)
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return JsonResponse(code=201, data=serializer.data)
-        # return JsonResponse(code=400, data="wrong parameters")
-
-# Adds new transaction
 
 
 class Add_Trans(views.APIView):
@@ -259,9 +221,9 @@ class User_trans_summary(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        r_user = self.request.query_params.get('user_id')
-        user_obj = User.objects.filter(username=r_user).values('id')
+        r_user = self.request.query_params.get('username')
+        user_obj = User.objects.get(username=r_user)
         print("\n\n User:", r_user, "\n\n id:", user_obj)
         queryset = BankTranscations.objects.all().filter(
-            user=user_obj[0]['id'])
+            user=user_obj)
         return queryset

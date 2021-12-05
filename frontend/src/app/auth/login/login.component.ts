@@ -1,9 +1,8 @@
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map } from 'jquery';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { environment } from './../../../environments/environment';
 
 export interface $reg_err_response {

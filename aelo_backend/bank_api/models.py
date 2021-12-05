@@ -68,13 +68,9 @@ class BankTranscations(models.Model):
                           editable=False, primary_key=True)
     user = models.ForeignKey(
         User, on_delete=models.PROTECT, blank=False, null=False)
-    TRANS_CHOICE = [('debit', 'Expense/Debit'), ('credit', 'Income/Credit')]
-    PAYMENT_MODES = [('cash', 'Cash'), ('upi', 'UPI'), ('bank_transfer', 'Bank transfer'), ('vouchers', 'Vouchers'),
-                     ('cheque', 'Cheque'), ('others', 'Others'), ('cash_backs', 'Cash backs'), ('miscellaneous', 'Miscellaneous')]
     amount = models.DecimalField(
         verbose_name='Money/Amount in INR', blank=False, null=False, decimal_places=3, max_digits=19)
-    type_of_trans = models.CharField(max_length=100,
-                                     choices=TRANS_CHOICE, null=True, blank=True)
+    type_of_trans = models.CharField(max_length=100, null=True, blank=True)
     cat_of_trans = models.CharField(max_length=200, blank=True, null=True)
     trans_date = models.DateField(
         verbose_name="Transaction Date", null=True, blank=False)
@@ -85,4 +81,4 @@ class BankTranscations(models.Model):
     modified = models.DateTimeField(
         verbose_name="Timestamp of transaction entry", auto_now=True)
     payment_mode = models.CharField(max_length=40,
-                                    verbose_name="Payment Mode", choices=PAYMENT_MODES, null=False, blank=False)
+                                    verbose_name="Payment Mode", null=False, blank=False)

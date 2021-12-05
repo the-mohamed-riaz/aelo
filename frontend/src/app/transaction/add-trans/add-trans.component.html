@@ -4,7 +4,7 @@
     <div class="title">
         <h1 class="mx-4">Add transaction</h1>
     </div>
-    <form class="px-3 mt-2" [formGroup]="addForm">
+    <form class="px-3 mt-2" [formGroup]="addForm" autocomplete="off">
         <mat-form-field class="custColor" appearance="outline" class="w-100">
             <mat-label>Amount</mat-label>
             <input matInput placeholder="Amount in local currency" class="w-100" type="number" formControlName="amount">
@@ -33,7 +33,7 @@
 
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Category of Transaction</mat-label>
-            <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="cat_of_trans">
+            <input type="text" placeholder="Pick one" matInput formControlName="cat_of_trans" autocomplete="off">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                 <mat-option *ngFor="let option of catergoryOptions" [value]="option.value">
                     {{option.name}}
