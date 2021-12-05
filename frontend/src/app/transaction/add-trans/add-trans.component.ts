@@ -4,8 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
-import { dropdown_option, EditableDropdownComponent } from 'src/app/shared/components/editable-dropdown/editable-dropdown.component';
+import { $dropdown_option, EditableDropdownComponent } from 'src/app/shared/components/editable-dropdown/editable-dropdown.component';
 import { FormDataGeneratorService, generateOptions } from './../../shared/form-data-generator.service';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
 
 
 export interface i_dropdowns {
@@ -26,7 +27,7 @@ export interface DialogData {
 })
 export class AddTransComponent implements OnInit {
   user: string | null = null;
-  catergoryOptions: Array<dropdown_option> = [];
+  catergoryOptions: Array<$dropdown_option> = [];
 
   randId: string;
   customDate = true;
@@ -51,6 +52,21 @@ export class AddTransComponent implements OnInit {
     payment_mode: new FormControl()
   })
 
+  openDetailedTrans(): void {
+    const dialogRef = this.dialog.open(TableComponent, {
+      width: '650px',
+      closeOnNavigation: true,
+      // data: {
+      //   title: 'Add/remove category labels', label: 'Category of transaction', placeholder: 'Add new label', options: this.catergoryOptions
+      // }
+    });
+
+    dialogRef.afterClosed().subscribe((result: Array<$dropdown_option>) => {
+      this.catergoryOptions = result;
+      console.log(result);
+    });
+  }
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EditableDropdownComponent, {
@@ -61,7 +77,7 @@ export class AddTransComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe((result: Array<dropdown_option>) => {
+    dialogRef.afterClosed().subscribe((result: Array<$dropdown_option>) => {
       this.catergoryOptions = result;
       console.log(result);
       let op_dt = "";

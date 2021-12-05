@@ -3,16 +3,16 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export interface dropdown_option {
+export interface $dropdown_option {
   name: string;
   value: string;
 }
 
-export interface data {
+export interface $data {
   title: string;
   label: string;
   placeholder: string;
-  options: Array<dropdown_option>
+  options: Array<$dropdown_option>
 }
 
 @Component({
@@ -24,7 +24,7 @@ export class EditableDropdownComponent implements OnInit {
 
   constructor(
     @Optional() public dialogRef: MatDialogRef<EditableDropdownComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: data,
+    @Inject(MAT_DIALOG_DATA) public data: $data,
   ) { }
 
   onClose(): void {
@@ -43,17 +43,8 @@ export class EditableDropdownComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  // options: Array<dropdown_option> = [
-  //   { name: 'Family', value: 'family' },
-  //   { name: 'Friend', value: 'friend' },
-  //   { name: 'Food', value: 'food' },
-  //   { name: 'Medical', value: 'medical' },
-  //   { name: 'Rent', value: 'rent' },
-  //   { name: 'Pet', value: 'pet' },
-  //   { name: 'Games', value: 'games' }
-  // ];
 
-  options: Array<dropdown_option> = this.data.options;
+  options: Array<$dropdown_option> = this.data.options;
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -67,8 +58,8 @@ export class EditableDropdownComponent implements OnInit {
     event.chipInput!.clear();
   }
 
-  remove(val: dropdown_option): void {
-    const index = this.options.findIndex((v: dropdown_option) => v.value === val.value);
+  remove(val: $dropdown_option): void {
+    const index = this.options.findIndex((v: $dropdown_option) => v.value === val.value);
 
     if (index >= 0) {
       this.options.splice(index, 1);
