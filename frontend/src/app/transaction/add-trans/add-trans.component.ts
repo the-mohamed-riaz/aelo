@@ -1,10 +1,12 @@
-import { CookieService } from 'ngx-cookie-service';
-import { FormDataGeneratorService, generateOptions } from './../../shared/form-data-generator.service';
+import * as moment from 'moment/moment';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { CookieService } from 'ngx-cookie-service';
 import { dropdown_option, EditableDropdownComponent } from 'src/app/shared/components/editable-dropdown/editable-dropdown.component';
+import { FormDataGeneratorService, generateOptions } from './../../shared/form-data-generator.service';
+
 
 export interface i_dropdowns {
   name: string | null;
@@ -20,7 +22,7 @@ export interface DialogData {
   // encapsulation: ViewEncapsulation.None,
   selector: 'add-trans',
   templateUrl: './add-trans.component.html',
-  styleUrls: ['./add-trans.component.scss']
+  styleUrls: ['./add-trans.component.scss'],
 })
 export class AddTransComponent implements OnInit {
   user: string | null = null;
@@ -74,7 +76,7 @@ export class AddTransComponent implements OnInit {
   }
 
   addForm = new FormGroup({
-    username: new FormControl(),
+    username: new FormControl(this.user),
     amount: new FormControl(),
     type_of_trans: new FormControl(),
     cat_of_trans: new FormControl(),
@@ -91,6 +93,7 @@ export class AddTransComponent implements OnInit {
   ngOnInit(): void {
     if (this.cookie.check('user')) {
       this.user = this.cookie.get('user');
+      this.addForm.controls['username'].setValue(this.user);
     };
   }
 
@@ -98,8 +101,13 @@ export class AddTransComponent implements OnInit {
 
   postTransaction() {
     let formData = new FormData();
+    this.addForm.controls['username'].setValue(this.user);
+    let parse_date = moment(this.addForm.controls['trans_date'].value).format("YYYY-MM-DD");
+    this.addForm.controls['trans_date'].setValue(parse_date);
+    console.log("date: ", this.addForm.controls['trans_date'].value);
     for (let key of this.formFields) {
       formData.append(key, this.addForm.controls[key].value);
+      console.debug(key, ':', this.addForm.controls[key].value);
     }
     this.http.post("http://localhost:8000/add/", formData).subscribe(
       (next) => { console.log("success: ", next); },

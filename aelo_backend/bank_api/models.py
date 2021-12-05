@@ -69,30 +69,6 @@ class BankTranscations(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.PROTECT, blank=False, null=False)
     TRANS_CHOICE = [('debit', 'Expense/Debit'), ('credit', 'Income/Credit')]
-    # TRANS_CATEGORY = [
-    #     ('family', 'Family'),
-    #     ('friends', 'Friends'),
-    #     ('food', (('healthy', 'Healthy'), ('Indoor', 'Indoor'), ('outdoor', 'Outdoor'))),
-    #     ('outings', 'Outings'),
-    #     ('medical', 'Medical'),
-    #     ('travel', 'Travel'),
-    #     ('rent', (('house', 'House Rent'), ('pg', 'PG rent'), ('others', 'others'))),
-    #     ('bills', (('electric Bill', 'Electric Bill'),
-    #      ('phone_bill', 'Phone Bill'), ('water_bill', 'Water Bill'))),
-    #     ('maintenance', (('bike', 'Bike'), ('home', 'Home'),
-    #      ('personal', 'Personal'))),
-    #     ('tax', 'Tax'),
-    #     ('shopping', (('gadgets', 'Gadgets'), ('appliances', 'Appliances'), ('essentials', 'Essentials'), ('luxury',
-    #      'luxury'), ('tools', 'tools'), ('grocceries', 'Groceries'), ('cloths', 'Cloths'), ('jewellery', 'Jewellery'))),
-    #     ('Repayment', (('loan', 'Loan'), ('emi', 'EMI'))),
-    #     ('investment', 'Investment'),
-    #     ('Purchase', (('bike', 'Bike'), ('car', 'Car'),
-    #      ('cycle', 'Cycle'), ('other', 'Others'))),
-    #     ('pets', 'Pets'),
-    #     ('games', 'Games'),
-    #     ('charity_works', 'Charity works'),
-    #     ('gifts', 'Gifts'), ('income', 'Income')
-    # ]
     PAYMENT_MODES = [('cash', 'Cash'), ('upi', 'UPI'), ('bank_transfer', 'Bank transfer'), ('vouchers', 'Vouchers'),
                      ('cheque', 'Cheque'), ('others', 'Others'), ('cash_backs', 'Cash backs'), ('miscellaneous', 'Miscellaneous')]
     amount = models.DecimalField(
@@ -102,8 +78,8 @@ class BankTranscations(models.Model):
     cat_of_trans = models.CharField(max_length=200, blank=True, null=True)
     trans_date = models.DateField(
         verbose_name="Transaction Date", null=True, blank=False)
-    trans_hour = models.IntegerField(
-        blank=False, null=True,  verbose_name="Transaction Hour")
+    trans_hour = models.CharField(max_length=6,
+                                  blank=False, null=True,  verbose_name="Transaction Hour")
     created = models.DateTimeField(
         verbose_name="Timestamp of transaction entry", auto_now_add=True)
     modified = models.DateTimeField(

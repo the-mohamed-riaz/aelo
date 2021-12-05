@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CardsModule } from '../cards/cards.module';
@@ -20,6 +21,8 @@ import { TransactionRoutingModule } from './transaction-routing.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     TransactionRoutingModule,
     DropdownModule,
     CardsModule,

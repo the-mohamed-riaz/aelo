@@ -4,22 +4,36 @@
     <div class="title">
         <h1 class="mx-4">Add transaction</h1>
     </div>
-    <form class="px-3 mt-2">
+    <form class="px-3 mt-2" [formGroup]="addForm">
         <mat-form-field class="custColor" appearance="outline" class="w-100">
             <mat-label>Amount</mat-label>
-            <input matInput placeholder="Amount in local currency" class="w-100" type="number">
+            <input matInput placeholder="Amount in local currency" class="w-100" type="number" formControlName="amount">
         </mat-form-field>
-        <mat-form-field class="custColor" appearance="outline">
-            <mat-label>Debit/Credit</mat-label>
-            <mat-select>
-                <mat-option value="debit">Debit (expense)</mat-option>
-                <mat-option value="credit">Credited (income)</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <mat-form-field class="custColor" appearance="outline" class="w-50 me-2">
+                <mat-label>Debit/Credit</mat-label>
+                <mat-select formControlName="type_of_trans">
+                    <mat-option value="debit">Debit (expense)</mat-option>
+                    <mat-option value="credit">Credited (income)</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-50 ml-2">
+                <mat-label>Payment mode</mat-label>
+                <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
+                <mat-select formControlName="payment_mode">
+                    <mat-option value="cash">Cash</mat-option>
+                    <mat-option value="upi">UPI</mat-option>
+                    <mat-option value="bank_transfer">Bank transfer</mat-option>
+                    <mat-option value="cheque">Cheque</mat-option>
+                    <mat-option value="others">Others</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
 
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Category of Transaction</mat-label>
-            <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto">
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="cat_of_trans">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                 <mat-option *ngFor="let option of catergoryOptions" [value]="option.value">
                     {{option.name}}
@@ -29,28 +43,18 @@
                     <span>Add or remove categories</span></mat-option>
             </mat-autocomplete>
         </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Transaction Hour</mat-label>
-            <input matInput placeholder="Choose from the options below" class="w-100" type="time" placeholder="24:00">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Payment mode</mat-label>
-            <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
-            <mat-select>
-                <mat-option value="cash">Cash</mat-option>
-                <mat-option value="upi">UPI</mat-option>
-                <mat-option value="bank_transfer">Bank transfer</mat-option>
-                <mat-option value="cheque">Cheque</mat-option>
-                <mat-option value="others">Others</mat-option>
-            </mat-select>
-        </mat-form-field>
-
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <mat-form-field appearance="outline" class="w-50 mr-1">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" formControlName="trans_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-50 ml-1">
+                <mat-label>Transaction Hour</mat-label>
+                <input matInput placeholder="Choose from the options below" class="w-100" type="time" placeholder="24:00" formControlName="trans_hour">
+            </mat-form-field>
+        </div>
+        <button mat-raised-button class="my-2" (click)=" $event.preventDefault();postTransaction()">Add transaction</button>
     </form>
 </div>

@@ -100,9 +100,9 @@ def get_category_options(request):
         if username:
             query = UserOptions.objects.filter(
                 user=username).values('cat_options')
-            print("\n\nquery full: ", query, "\n\n")
-            print("\n\nquery full2: ", [query], "\n\n")
-            print("\n\nquery full3: ", query.__dict__, "\n\n")
+            # print("\n\nquery full: ", query, "\n\n")
+            # print("\n\nquery full2: ", [query], "\n\n")
+            # print("\n\nquery full3: ", query.__dict__, "\n\n")
             # print("\n\nquery: ", query.__dict__, "\n\n")
             # resp = Get_options_output_serializer(data=query, many=True)
             # resp = Get_options_output_serializer(data=query)
@@ -203,6 +203,7 @@ class Add_Trans(views.APIView):
         serializer = Add_trans_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         datas = serializer.validated_data
+        print("\n\nserialized data:\n", serializer.data)
         datas['user'] = User.objects.all().filter(
             username=datas['username']).first()
         obj = BankTranscations.objects.create(
