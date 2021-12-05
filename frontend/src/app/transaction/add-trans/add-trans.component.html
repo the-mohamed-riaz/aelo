@@ -19,7 +19,6 @@
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-50 ml-2">
                 <mat-label>Payment mode</mat-label>
-                <!-- <input matInput placeholder="Choose from the options below" class="w-100"> -->
                 <mat-select formControlName="payment_mode">
                     <mat-option value="cash">Cash</mat-option>
                     <mat-option value="upi">UPI</mat-option>
@@ -30,18 +29,17 @@
             </mat-form-field>
         </div>
 
-
-        <mat-form-field class="w-100" appearance="outline">
+        <mat-form-field appearance="outline" class="w-100">
             <mat-label>Category of Transaction</mat-label>
-            <input type="text" placeholder="Pick one" matInput formControlName="cat_of_trans" autocomplete="off">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-select formControlName="cat_of_trans" autoActiveFirstOption>
                 <mat-option *ngFor="let option of catergoryOptions" [value]="option.value">
                     {{option.name}}
                 </mat-option>
                 <mat-option (click)="$event.preventDefault();openDialog()" style="opacity: 0.72;">
                     <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
-                    <span>Add or remove categories</span></mat-option>
-            </mat-autocomplete>
+                    <span>Add or remove categories</span>
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <div class="d-flex flex-row justify-content-between align-items-center">
             <mat-form-field appearance="outline" class="w-50 mr-1">
