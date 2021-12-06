@@ -2,7 +2,7 @@
     <div class="heading">
         <div>Recent transactions</div>
         <!-- <div>date</div> -->
-        <button class="btn btn-outline-dark">See detailed transaction</button>
+        <button class="btn btn-outline-dark" (click)="$event.preventDefault()">See detailed transaction</button>
 
     </div>
     <ng-container *ngFor="let item of data">

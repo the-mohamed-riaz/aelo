@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { $pretty_recent_trans, $recentTransaction } from '../models/model';
 
@@ -13,7 +14,7 @@ export class RecentTransactionComponent implements OnInit {
   data: Array<$pretty_recent_trans> = [];
   recent_trans_query: Array<$recentTransaction> = [];
   user: string | null = null;
-  constructor(private http: HttpClient, private cookie: CookieService) {
+  constructor(private http: HttpClient, private cookie: CookieService, public dialog: MatDialog) {
     if (this.cookie.check('username')) {
       this.user = this.cookie.get('username');
       this.fetchValues();
