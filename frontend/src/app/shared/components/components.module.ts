@@ -17,6 +17,7 @@ import { MatTableComponent } from './mat-table/mat-table.component';
   ],
   exports: [
     EditableDropdownComponent,
+    MatTableComponent,
   ]
 })
 export class SharedComponentsModule { }
