@@ -2,9 +2,6 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-/**
- * @title Table with pagination
- */
 @Component({
   selector: 'material-table',
   templateUrl: './mat-table.component.html',

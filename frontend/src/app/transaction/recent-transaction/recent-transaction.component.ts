@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,15 +15,17 @@ export class RecentTransactionComponent implements OnInit {
   data: Array<$pretty_recent_trans> = [];
   recent_trans_query: Array<$recentTransaction> = [];
   user: string | null = null;
-  constructor(private http: HttpClient, private cookie: CookieService, public dialog: MatDialog) {
+  constructor(private http: HttpClient, private cookie: CookieService, public dialog: MatDialog, private route: Router) {
     if (this.cookie.check('username')) {
       this.user = this.cookie.get('username');
       this.fetchValues();
       setInterval(async () => this.fetchValues(), 1000 * 30);
     }
-
   }
 
+  goTo(val: string) {
+    this.route.navigateByUrl(val);
+  }
   fetchValues() {
     this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.user}`).subscribe(
       (val) => {
