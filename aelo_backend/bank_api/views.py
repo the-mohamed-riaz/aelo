@@ -3,6 +3,7 @@ from decimal import Context
 
 from django.contrib.auth.hashers import check_password
 from django.db.models import query
+from django.db.models.aggregates import Count
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, views
@@ -155,6 +156,18 @@ class CategoryOptions(views.APIView):
         options_obj.save()
         serializer = Options_serializer(options_obj)
         return Response(serializer.data)
+
+
+class Tree_chart_api(views.APIView):
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        serializer = Tree_chart_serializer
+        fieldname = 'cat_of_trans'
+        queryset = BankTranscations.objects.values(fieldname).order_by(
+            fieldname).annotate(the_count=Count(fieldname))
+        return Response(queryset, status=status.HTTP_200_OK)
 
 
 class Add_Trans(views.APIView):

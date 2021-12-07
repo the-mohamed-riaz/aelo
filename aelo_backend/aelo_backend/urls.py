@@ -17,6 +17,8 @@ urlpatterns = [
     path('history/', User_trans_summary.as_view(), name='testing'),
     path('recent/', User_recent_trans.as_view(), name='last 5 transaction'),
     path('options/', CategoryOptions.as_view(), name='options'),
+    path('tree-map/', Tree_chart_api.as_view(),
+         name='gives data for tree map chart'),
 ]
 
 # urlpatterns += router.urls
