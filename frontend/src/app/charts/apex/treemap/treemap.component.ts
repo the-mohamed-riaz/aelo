@@ -1,22 +1,17 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  ApexAxisChartSeries,
-  ApexTitleSubtitle,
-  ApexDataLabels,
-  ApexChart,
-  ApexPlotOptions,
-  ApexLegend,
-  ChartComponent
+  ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexLegend, ApexPlotOptions, ApexTitleSubtitle, ChartComponent
 } from "ng-apexcharts";
+import { $tree_map, FetcherService } from './../fetcher.service';
 
-export type ChartOptions = {
+export type $ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   dataLabels: ApexDataLabels;
   title: ApexTitleSubtitle;
   plotOptions: ApexPlotOptions;
   legend: ApexLegend;
-  colors: string[];
+  // colors: string[];
 };
 @Component({
   selector: 'apex-treemap',
@@ -25,95 +20,60 @@ export type ChartOptions = {
 })
 export class TreemapComponent implements OnInit {
   @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          data: [
-            {
-              x: "New Delhi",
-              y: 218
-            },
-            {
-              x: "Kolkata",
-              y: 149
-            },
-            {
-              x: "Mumbai",
-              y: 184
-            },
-            {
-              x: "Ahmedabad",
-              y: 55
-            },
-            {
-              x: "Bangaluru",
-              y: 84
-            },
-            {
-              x: "Pune",
-              y: 31
-            },
-            {
-              x: "Chennai",
-              y: 70
-            },
-            {
-              x: "Jaipur",
-              y: 30
-            },
-            {
-              x: "Surat",
-              y: 44
-            },
-            {
-              x: "Hyderabad",
-              y: 68
-            }
-          ]
-        }
-      ],
+  public chartOptions: Partial<$ChartOptions>;
 
+  tree_chart_data!: Array<$tree_map>;
+  constructor(private getData: FetcherService) {
+
+    this.getData.get_tree_map_data().subscribe(
+      (val) => {
+        this.tree_chart_data = val;
+      },
+      (err: any) => { console.log("Error in fetching tree map data:\n", err); }
+    );
+
+    this.chartOptions = {
+      series: [{ data: this.tree_chart_data }],
       chart: {
         height: 253,
-        width:292,
+        width: 292,
         // offsetY:-40,
         type: "treemap",
-        zoom:{
-          enabled:false
+        zoom: {
+          enabled: false
         },
-        toolbar:{
-          show:false,
+        toolbar: {
+          show: false,
         }
       },
-      colors: [
-        "#3B93A5",
-        "#F7B844",
-        "#ADD8C7",
-        "#EC3C65",
-        "#CDD7B6",
-        "#C1F666",
-        "#D43F97",
-        "#1E5D8C",
-        "#421243",
-        "#7F94B0",
-        "#EF6537",
-        "#C0ADDB"
-      ],
-      plotOptions: {
-        treemap: {
-          distributed: true,
-          enableShades: false
-        }
-      },
+      // colors: [
+      //   "#3B93A5",
+      //   "#F7B844",
+      //   "#ADD8C7",
+      //   "#EC3C65",
+      //   "#CDD7B6",
+      //   "#C1F666",
+      //   "#D43F97",
+      //   "#1E5D8C",
+      //   "#421243",
+      //   "#7F94B0",
+      //   "#EF6537",
+      //   "#C0ADDB"
+      // ],
+      // plotOptions: {
+      //   treemap: {
+      //     distributed: true,
+      //     enableShades: false
+      //   }
+      // },
       title: {
         text: "",
       }
     };
+
   }
 
-  public generateData(count:any, yrange:any) {
+  public generateData(count: any, yrange: any) {
     var i = 0;
     var series = [];
     while (i < count) {
@@ -131,6 +91,7 @@ export class TreemapComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.chartOptions.series = {...this.chartOptions.series, data: this.tree_chart_data}
   }
 
 }

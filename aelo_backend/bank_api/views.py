@@ -4,14 +4,16 @@ from decimal import Context
 from django.contrib.auth.hashers import check_password
 from django.db.models import query
 from django.db.models.aggregates import Count
+from django.db.models.expressions import F
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, views
-from rest_framework.authentication import (
-    BasicAuthentication, TokenAuthentication)
+from rest_framework.authentication import (BasicAuthentication,
+                                           TokenAuthentication)
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes)
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -19,6 +21,7 @@ from rest_framework.serializers import Serializer
 
 from bank_api.models import *
 from bank_api.serializers import *
+
 # Create / register a new user
 
 
@@ -165,8 +168,8 @@ class Tree_chart_api(views.APIView):
     def get(self, request, *args, **kwargs):
         serializer = Tree_chart_serializer
         fieldname = 'cat_of_trans'
-        queryset = BankTranscations.objects.values(fieldname).order_by(
-            fieldname).annotate(the_count=Count(fieldname))
+        queryset = BankTranscations.objects.values(x=F(fieldname)).order_by(
+            fieldname).annotate(y=Count(fieldname))
         return Response(queryset, status=status.HTTP_200_OK)
 
 
