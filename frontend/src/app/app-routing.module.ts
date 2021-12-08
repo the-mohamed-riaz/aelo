@@ -1,3 +1,4 @@
+import { SettingsModule } from './settings/settings.module';
 import { LogoutComponent } from './auth/logout/logout.component';
 // import { ActivatorGuard } from './guard/activator.guard';
 // import { ModulesLoaderGuard } from './guard/modules-loader.guard';
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'transaction', loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule) },
   // { path: 'analytics', loadChildren: () => import('./analytics/analytics.module').then(m => m.AnalyticsModule), canLoad: [ModulesLoaderGuard] },
   { path: 'analytics', loadChildren: () => import('./analytics/analytics.module').then(m => m.AnalyticsModule) },
+  { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
   { path: '', redirectTo: 'login', pathMatch: "full" }
 ];
 

@@ -1,3 +1,4 @@
+import { SettingsModule } from './settings/settings.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,7 +34,8 @@ import { MaterialsModule } from './shared/materials/materials.module';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    SettingsModule
   ],
   providers: [
     ActivatorGuard,

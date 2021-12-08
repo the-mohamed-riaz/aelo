@@ -20,9 +20,14 @@ export class NavbarComponent implements OnInit {
   links = [
     {
       icon: "user",
-      text: "Log out",
-      link: "/logout"
+      text: "Setting",
+      link: "/settings"
     },
+    // {
+    //   icon: "user",
+    //   text: "Log out",
+    //   link: "/logout"
+    // },
     {
       icon: "dollar sign",
       text: "Transaction",
