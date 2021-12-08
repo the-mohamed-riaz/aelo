@@ -11,7 +11,7 @@ export type $ChartOptions = {
   title: ApexTitleSubtitle;
   plotOptions: ApexPlotOptions;
   legend: ApexLegend;
-  // colors: string[];
+  colors: string[];
 };
 @Component({
   selector: 'apex-treemap',
@@ -20,18 +20,10 @@ export type $ChartOptions = {
 })
 export class TreemapComponent implements OnInit {
   @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: Partial<$ChartOptions>;
+  public chartOptions!: Partial<$ChartOptions>;
 
-  tree_chart_data!: Array<$tree_map>;
+  tree_chart_data: Array<$tree_map> = [];
   constructor(private getData: FetcherService) {
-
-    this.getData.get_tree_map_data().subscribe(
-      (val) => {
-        this.tree_chart_data = val;
-      },
-      (err: any) => { console.log("Error in fetching tree map data:\n", err); }
-    );
-
     this.chartOptions = {
       series: [{ data: this.tree_chart_data }],
       chart: {
@@ -42,35 +34,74 @@ export class TreemapComponent implements OnInit {
         zoom: {
           enabled: false
         },
+
         toolbar: {
           show: false,
         }
       },
-      // colors: [
-      //   "#3B93A5",
-      //   "#F7B844",
-      //   "#ADD8C7",
-      //   "#EC3C65",
-      //   "#CDD7B6",
-      //   "#C1F666",
-      //   "#D43F97",
-      //   "#1E5D8C",
-      //   "#421243",
-      //   "#7F94B0",
-      //   "#EF6537",
-      //   "#C0ADDB"
-      // ],
+      plotOptions: {
+        treemap: {
+          distributed: true,
+          colorScale: {
+            ranges: [
+              {
+                from: 0,
+                to: 5,
+                color: '#EC3C65'
+              },
+              {
+                from: 6,
+                to: 20,
+                color: '#F7B844'
+              },
+              {
+                from: 21,
+                to: 50,
+                color: '#ADD8C7'
+              },
+              {
+                from: 51,
+                to: 100,
+                color: '#1E5D8C'
+              },
+              {
+                from: 101,
+                to: 150,
+                color: '#C1F666'
+              },
+              {
+                from: 151,
+                to: 200,
+                color: '#EF6537'
+              },
+            ]
+          }
+        }
+      },
+      colors: [
+        "#3B93A5",
+        "#F7B844",
+        "#ADD8C7",
+        "#EC3C65",
+        "#CDD7B6",
+        "#C1F666",
+        "#D43F97",
+        "#1E5D8C",
+        "#421243",
+        "#7F94B0",
+        "#EF6537",
+        "#C0ADDB"
+      ],
       // plotOptions: {
       //   treemap: {
       //     distributed: true,
       //     enableShades: false
       //   }
       // },
-      title: {
-        text: "",
-      }
+      // title: {
+      //   text: "",
+      // }
     };
-
   }
 
   public generateData(count: any, yrange: any) {
@@ -92,6 +123,13 @@ export class TreemapComponent implements OnInit {
 
   ngOnInit(): void {
     // this.chartOptions.series = {...this.chartOptions.series, data: this.tree_chart_data}
+    this.getData.get_tree_map_data().subscribe(
+      (val) => {
+        this.tree_chart_data = val;
+        this.chartOptions.series = [{ data: this.tree_chart_data }]
+      },
+      (err: any) => { console.log("Error in fetching tree map data:\n", err); }
+    );
   }
 
 }

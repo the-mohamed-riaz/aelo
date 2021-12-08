@@ -16,6 +16,6 @@ export class FetcherService {
   constructor(private http: HttpClient) { }
 
   get_tree_map_data(): Observable<Array<$tree_map>> {
-    return this.http.get<Array<$tree_map>>("http://localhost:8000/tree-map");
+    return this.http.get<Array<$tree_map>>("http://localhost:8000/tree-map/");
   }
 }
