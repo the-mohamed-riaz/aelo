@@ -1,3 +1,4 @@
+import os
 import datetime
 from decimal import Context
 
@@ -18,6 +19,9 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User, Group
 
 from bank_api.models import *
 from bank_api.serializers import *
@@ -26,9 +30,30 @@ from bank_api.serializers import *
 
 
 class User_registration(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
     permission_classes = []
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+@receiver(post_save, sender=User)
+def new_user_created(instance, created, **kwargs):
+    # raw is set when model is created from loaddata.
+    print("\n\n --------- created ----------\n\n", created)
+    print("\n\n --------- instance ----------\n\n", instance)
+    if created:
+        # instance.groups.add(Group.objects.get(name='new-user-group'))
+
+        print("\n\n --------- created signal of user ----------\n\n", instance)
+
+        CategoryOptions.objects.create(
+            cat_options="food,family,fuel", user=instance)
+
+        # Feed.objects.create(
+        #     user = instance,
+        #     name = "%s's Feed" % instance.first_name,
+        #     ....
+        # )
+
 
 # Generate token to user / user login
 
@@ -46,7 +71,7 @@ def login_token(request):
     try:
         user = User.objects.get(username=req_username)
     except:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return Response("No user account exists", status=status.HTTP_404_NOT_FOUND)
 
     true_pass = User.objects.all().filter(
         username=req_username).values('password')[0]['password']
@@ -113,6 +138,10 @@ def get_category_options(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+def clearConsole(): return os.system(
+    'cls' if os.name in ('nt', 'dos') else 'clear')
+
+
 class CategoryOptions(views.APIView):
 
     authentication_classes = [TokenAuthentication]
@@ -125,6 +154,7 @@ class CategoryOptions(views.APIView):
         data = request.query_params
         serial = Get_option_serializer(data=data)
         serial.is_valid(raise_exception=True)
+        # clearConsole()
         print("serializer data: ", serial.data)
         try:
             username = User.objects.get(username=serial.data['user'])
@@ -135,7 +165,11 @@ class CategoryOptions(views.APIView):
         if username:
             query = UserOptions.objects.filter(
                 user=username).values('cat_options')
-            return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
+            if query.exists():
+                return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
+            else:
+                query = "no user option available"
+                return Response(query, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         serializer = Post_option_serializer(data=request.data)

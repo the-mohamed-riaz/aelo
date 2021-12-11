@@ -42,7 +42,7 @@ class User(AbstractUser):
     email = models.CharField(max_length=254, unique=True)
     is_staff = models.BooleanField(blank=False, default=False, null=False)
     is_active = models.BooleanField(blank=False, default=True, null=False)
-    mobile = models.IntegerField(blank=True)
+    mobile = models.IntegerField(blank=True, null=True,default=None)
     date_joined = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(unique=True, auto_created=True,
                           default=uuid.uuid4, editable=False)
@@ -57,7 +57,8 @@ class User(AbstractUser):
 class UserOptions(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, blank=False, null=False, primary_key=True)
-    cat_options = models.CharField(blank=True, null=True, max_length=10000)
+    cat_options = models.CharField(
+        blank=False, null=False, max_length=100000, default="family,food,fuel,loan,smart_phone")
 
     class Meta:
         db_table = 'user_option_category'

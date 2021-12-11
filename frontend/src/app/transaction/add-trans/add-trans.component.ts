@@ -114,6 +114,9 @@ export class AddTransComponent implements OnInit {
     this.http.post("http://localhost:8000/add/", formData).subscribe(
       (next) => { console.log("success: ", next); },
       (err) => { console.log("Add form error", err); },
+      () => {
+        this.addForm.reset();
+      }
     );
   }
 

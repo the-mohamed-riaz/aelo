@@ -46,7 +46,13 @@ export class LoginInterceptor implements HttpInterceptor {
           status: error.status
         };
         console.log("Error catched by interceptor\n", data);
-        this.cookie.delete('tkn');
+        if (error.status === 401) {
+          // this.cookie.delete('tkn');
+          // this.cookie.delete('username');
+          // console.log("Deleting cookies ......");
+          // this.route.navigateByUrl('/logout');
+        }
+        // console.debug("error status: ", error.status, "\ntype: ", typeof error.status);
         return throwError(error);
       })
     )

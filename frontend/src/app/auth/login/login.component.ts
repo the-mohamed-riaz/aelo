@@ -80,7 +80,8 @@ export class LoginComponent implements OnInit {
                     this.switchForms();
                 },
                 (err) => {
-                    console.log(err.error);
+                    console.log("what is this: ", err);
+                    window.alert(err.error);
                     this.submission = err.error;
                     this.registrationForm.setErrors(err.error);
                 }
@@ -101,7 +102,8 @@ export class LoginComponent implements OnInit {
                 this.route.navigateByUrl('/transaction')
             },
             (err) => {
-                console.log(err.error);
+                console.log("what is this: ", err);
+                window.alert(err.error);
                 this.submission = err.error;
                 this.loginForm.setErrors(err.error);
             }
