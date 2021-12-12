@@ -159,10 +159,9 @@ class Account_balance(views.APIView):
         try:
             queryset = AccountBalance.objects.filter(username=username)
             if(len(queryset) < 1):
-                return Request("Add bank details", status=status.HTTP_204_NO_CONTENT)
+                return Response("Add bank details", status=status.HTTP_204_NO_CONTENT)
         except:
-            return Request("Invalid user", status=status.HTTP_400_BAD_REQUEST)
-        print("queryset: \n", queryset)
+            return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
         return Response(queryset, status=status.HTTP_200_OK)
 
 
