@@ -1,7 +1,8 @@
 # from django.contrib.auth.models import User
 from copy import error
 from django.db.models import fields
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.response import Response
 
 from bank_api.models import *
 
@@ -47,6 +48,7 @@ class Bank_details_serializer(serializers.ModelSerializer):
 class Get_ac_serializer(serializers.Serializer):
     username = models.CharField(max_length=50)
 
+
 class Account_balance_serializer(serializers.ModelSerializer):
     username = User_serializer()
     bank_account_balance = serializers.DecimalField(
@@ -56,7 +58,21 @@ class Account_balance_serializer(serializers.ModelSerializer):
 
     class Meta:
         models = AccountBalance
-        fields = "__all__"
+        fields = ['username', 'bank_account_balance', 'timestamp']
+
+    def create(self, validated_data):
+        try:
+            username = User.objects.get(username=validated_data['username'])
+        except:
+            raise error("Invalid User in serializer")
+
+        try:
+            bk_name = BankDetails.objects.filter(username=username)
+
+        except:
+            return Response("No bank account linked", status=status.HTTP_204_NO_CONTENT)
+
+        return UserOptions.objects.create(username=username, bank_name=bk_name, bank_account_balance=validated_data['bank_account_balance'], timestamp=validated_data['timestamp'])
 
 
 class Get_options_output_serializer(serializers.ModelSerializer):

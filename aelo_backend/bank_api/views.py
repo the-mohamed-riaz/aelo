@@ -164,6 +164,13 @@ class Account_balance(views.APIView):
             return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
         return Response(queryset, status=status.HTTP_200_OK)
 
+    def post(self, request, *args, **kwargs):
+        sz = Account_balance_serializer(data=request.data)
+        if(sz.is_valid(raise_exception=True)):
+            sz.save()
+            return Response(sz.data, status=status.HTTP_201_CREATED)
+        return Response(sz.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CategoryOptions(views.APIView):
 
