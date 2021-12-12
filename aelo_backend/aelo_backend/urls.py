@@ -12,6 +12,8 @@ urlpatterns = [
     path('verify-token/', verify_token),
     path('login-token/', login_token),
     path('add/', Add_Trans.as_view(), name="Add new transaction"),
+    path('account-balance/', Account_balance.as_view(),
+         name="get account balance"),
     path('delete/', Delete_Trans.as_view(), name="Delete a transaction"),
     path('edit/', Edit_Trans.as_view(), name="Edit a transaction"),
     path('history/', User_trans_summary.as_view(),

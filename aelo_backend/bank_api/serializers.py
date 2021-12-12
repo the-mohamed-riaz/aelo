@@ -37,12 +37,25 @@ class User_serializer(serializers.ModelSerializer):
 
 class Bank_details_serializer(serializers.ModelSerializer):
     username = User_serializer()
-    bank_1_name = serializers.CharField()
-    bank_1_account_balance = serializers.DecimalField(
-        max_digits=25, decimal_places=2)
-    timestamp = serializers.DateTimeField()
+    bank_name = serializers.CharField()
 
     class Meta:
+        models = BankDetails
+        fields = ['bank_name']
+
+
+class Get_ac_serializer(serializers.Serializer):
+    username = models.CharField(max_length=50)
+
+class Account_balance_serializer(serializers.ModelSerializer):
+    username = User_serializer()
+    bank_account_balance = serializers.DecimalField(
+        max_digits=25, decimal_places=2)
+    timestamp = serializers.DateTimeField()
+    bank_name = Bank_details_serializer()
+
+    class Meta:
+        models = AccountBalance
         fields = "__all__"
 
 

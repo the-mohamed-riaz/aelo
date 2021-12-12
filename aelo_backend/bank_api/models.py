@@ -55,6 +55,7 @@ class BankDetails(models.Model):
 
 
 class AccountBalance(models.Model):
+    username = models.ForeignKey(User, on_delete=models.PROTECT)
     bank_name = models.OneToOneField(BankDetails, on_delete=models.PROTECT)
     bank_account_balance = models.DecimalField(
         max_digits=25, decimal_places=2)

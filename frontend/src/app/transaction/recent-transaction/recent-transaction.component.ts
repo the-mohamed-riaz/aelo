@@ -97,7 +97,6 @@ export class RecentTransactionComponent implements OnInit {
           row.comment = item.cat_of_trans + (item.comment != null ? ` (${item.comment!.slice(0, 20) + ' ...'})` : '');
           let ts = item.trans_date + ' ' + item.trans_hour;
           row.timeStamp = moment(ts, "YYYY-MM-DD HH:mm").format("LLLL");
-          row.timeStamp = ts;
           row.amount = item.amount;
           this.addData(item, row);
           this.ids.add(item.id);

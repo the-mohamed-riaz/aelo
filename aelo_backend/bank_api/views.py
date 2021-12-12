@@ -20,6 +20,7 @@ from rest_framework.decorators import (api_view, authentication_classes,
                                        permission_classes)
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
@@ -144,6 +145,25 @@ def covert_options_case(value):
 
 def clearConsole(): return os.system(
     'cls' if os.name in ('nt', 'dos') else 'clear')
+
+
+class Account_balance(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        req = request.query_params
+        req_serial = Get_ac_serializer(data=req)
+        req_serial.is_valid(raise_exception=True)
+        username = req['username']
+        try:
+            queryset = AccountBalance.objects.filter(username=username)
+            if(len(queryset) < 1):
+                return Request("Add bank details", status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Request("Invalid user", status=status.HTTP_400_BAD_REQUEST)
+        print("queryset: \n", queryset)
+        return Response(queryset, status=status.HTTP_200_OK)
 
 
 class CategoryOptions(views.APIView):
