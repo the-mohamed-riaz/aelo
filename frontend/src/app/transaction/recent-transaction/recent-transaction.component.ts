@@ -15,10 +15,10 @@ import * as moment from 'moment';
 export class RecentTransactionComponent implements OnInit {
   data: Array<$pretty_recent_trans> = [];
   recent_trans_query: Array<$recentTransaction> = [];
-  user: string | null = null;
+  username: string | null = null;
   constructor(private http: HttpClient, private cookie: CookieService, public dialog: MatDialog, private route: Router) {
     if (this.cookie.check('username')) {
-      this.user = this.cookie.get('username');
+      this.username = this.cookie.get('username');
       this.fetchValues_1();
       setInterval(async () => { this.fetchValues(); console.log("unique list: ", this.ids); }, 1000 * 3);
     }
@@ -31,7 +31,7 @@ export class RecentTransactionComponent implements OnInit {
   ids = new Set();
 
   fetchValues_1() {
-    this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.user}`).subscribe(
+    this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.username}`).subscribe(
       (val) => {
         this.recent_trans_query = val;
         for (let item of this.recent_trans_query) {
@@ -44,7 +44,7 @@ export class RecentTransactionComponent implements OnInit {
           if (item.payment_mode === "cash") {
             row.icon = "rupee sign";
           } else if (item.payment_mode === "upi") {
-            row.icon = "user outline";
+            row.icon = "username outline";
           } else if (item.payment_mode === "bank_transfer") {
             row.icon = "university";
           } else if (item.payment_mode === "cheque") {
@@ -71,7 +71,7 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   fetchValues() {
-    this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.user}`).subscribe(
+    this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.username}`).subscribe(
       (val) => {
         this.recent_trans_query = val;
         for (let item of this.recent_trans_query) {
@@ -84,7 +84,7 @@ export class RecentTransactionComponent implements OnInit {
           if (item.payment_mode === "cash") {
             row.icon = "rupee sign";
           } else if (item.payment_mode === "upi") {
-            row.icon = "user outline";
+            row.icon = "username outline";
           } else if (item.payment_mode === "bank_transfer") {
             row.icon = "university";
           } else if (item.payment_mode === "cheque") {

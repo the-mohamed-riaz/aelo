@@ -14,5 +14,5 @@ export interface $recentTransaction {
     trans_date: string;
     trans_hour: string;
     payment_mode: string;
-    user: string;
+    username: string;
 }

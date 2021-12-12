@@ -7,6 +7,6 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(BankTranscations)
 class BankTransactions(admin.ModelAdmin):
-    list_display = ('id', 'user', 'amount', 'type_of_trans', 'cat_of_trans',
+    list_display = ('id', 'username', 'amount', 'type_of_trans', 'cat_of_trans',
                     'trans_hour', 'created', 'modified', 'payment_mode')
     list_filter = ('type_of_trans', 'cat_of_trans', 'created', 'payment_mode')

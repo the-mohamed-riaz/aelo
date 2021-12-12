@@ -12,7 +12,7 @@ export class LogoutComponent implements OnInit {
   constructor(private cookie: CookieService, private route: Router) {
     if (this.cookie.check('tkn')) {
       this.cookie.delete('tkn');
-      this.cookie.delete('user');
+      this.cookie.delete('username');
     };
     setTimeout(() => this.route.navigateByUrl('/login'), 2500);
   }

@@ -26,16 +26,16 @@ export interface DialogData {
   styleUrls: ['./add-trans.component.scss'],
 })
 export class AddTransComponent implements OnInit {
-  user: string | null = null;
+  username: string | null = null;
   catergoryOptions: Array<$dropdown_option> = [];
 
   randId: string;
   customDate = true;
 
   constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService, private _snackBar: MatSnackBar) {
-    this.user = this.cookie.get('username');
+    this.username = this.cookie.get('username');
     this.randId = 'id_' + this.gen_RandId();
-    this.http.get<string>('http://localhost:8000/options/?user=' + this.user).subscribe(
+    this.http.get<string>('http://localhost:8000/options/?username=' + this.username).subscribe(
       (val: string) => {
         this.catergoryOptions = generateOptions(val.split(','));
       }
@@ -43,7 +43,7 @@ export class AddTransComponent implements OnInit {
   }
 
   addForm = new FormGroup({
-    username: new FormControl(this.user),
+    username: new FormControl(this.username),
     amount: new FormControl(null),
     comment: new FormControl(null),
     type_of_trans: new FormControl(null),
@@ -71,12 +71,12 @@ export class AddTransComponent implements OnInit {
       }
       op_dt = op_dt.slice(0, op_dt.length - 1);
       let data = new FormData();
-      data.append('user', this.user!);
+      data.append('username', this.username!);
       data.append('cat_options', op_dt);
       if (this.cookie.check('username')) {
-        this.user = this.cookie.get('username');
+        this.username = this.cookie.get('username');
       };
-      this.http.patch(`http://localhost:8000/options/?user=${this.user}`, { user: this.user, cat_options: op_dt }).subscribe(
+      this.http.patch(`http://localhost:8000/options/?username=${this.username}`, { username: this.username, cat_options: op_dt }).subscribe(
         // this.http.post("http://localhost:8000/options/", data).subscribe(
         (val) => console.log("patching request ....\n", val),
         (err) => console.log("patching request ....\n", err)
@@ -95,9 +95,9 @@ export class AddTransComponent implements OnInit {
   ]
 
   ngOnInit(): void {
-    if (this.cookie.check('user')) {
-      this.user = this.cookie.get('user');
-      this.addForm.controls['username'].setValue(this.user);
+    if (this.cookie.check('username')) {
+      this.username = this.cookie.get('username');
+      this.addForm.controls['username'].setValue(this.username);
     };
   }
 
@@ -105,7 +105,7 @@ export class AddTransComponent implements OnInit {
 
   postTransaction() {
     let formData = new FormData();
-    this.addForm.controls['username'].setValue(this.user);
+    this.addForm.controls['username'].setValue(this.username);
     let parse_date = moment(this.addForm.controls['trans_date'].value).format("YYYY-MM-DD");
     this.addForm.controls['trans_date'].setValue(parse_date);
     console.log("date: ", this.addForm.controls['trans_date'].value);

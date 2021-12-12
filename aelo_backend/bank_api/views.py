@@ -26,52 +26,61 @@ from rest_framework.serializers import Serializer
 from bank_api.models import *
 from bank_api.serializers import *
 
-# Create / register a new user
+# Create / register a new username
 
 
 class User_registration(generics.CreateAPIView):
-    permission_classes = []
-    serializer_class = UserSerializer
     queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-# creates default options when a user is registered with aelo
 
+# creates default options when a username is registered with aelo
 
 @receiver(post_save, sender=User)
 def new_user_created(instance, created, **kwargs):
     if created:
         UserOptions.objects.create(
-            cat_options="bike,food,family,fuel,medicine,public_transportation,repayment_of_loans,investments,cosmetics,wearables,smart_gadgets", user=instance)
+            cat_options="bike,food,family,fuel,medicine,public_transportation,repayment_of_loans,investments,cosmetics,wearables,smart_gadgets", username=instance)
 
-# Generate token to user / user login
+
+# Generate token to username / username login
+
+@receiver(post_save, sender=BankTranscations)
+def new_bank_balance(instance, created, **kwargs):
+    if created:
+        print("\n------ ------ -------\nnew transaction instance: ", instance)
+        bk = BankDetails.objects.get(username)
+        slz = User_trans_summary_serializer(instance=instance)
+        data = slz.data
+        AccountBalance.objects.create(username=data.username)
 
 
 @api_view(['POST'])
 def login_token(request):
-    data = request.data
     serializer = Login_serializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
     try:
-        req_username = data['username']
-        req_password = data['password']
+        serializer.is_valid(raise_exception=True)
+        req = {'username': serializer.data['username'],
+               'password': serializer.data['password']}
     except:
         return Response("Include username and password field in the request", status=status.HTTP_400_BAD_REQUEST)
+
     try:
-        user = User.objects.get(username=req_username)
+        user = User.objects.get(username=req['username'])
     except:
-        return Response("No user account exists", status=status.HTTP_404_NOT_FOUND)
+        return Response("Invalid user", status=status.HTTP_404_NOT_FOUND)
+    true_pass = User.objects.filter(
+        username=req['username']).values('password')[0]['password']
 
-    true_pass = User.objects.all().filter(
-        username=req_username).values('password')[0]['password']
-
-    if(true_pass != req_password):
+    if(true_pass != req['password']):
         return Response("Please enter a valid password!", status=status.HTTP_401_UNAUTHORIZED)
 
-    user_token = Token.objects.get_or_create(user=user)
-    resp = {'token': str(user_token[0]), 'username': req_username}
+    user_token = Token.objects.get_or_create(user=req['username'])
+    resp = {'token': str(user_token[0]), 'username': req['username']}
     output_serializer = Token_serializer(data=resp)
     output_serializer.is_valid(raise_exception=True)
     return Response(output_serializer.validated_data, status=status.HTTP_200_OK)
+
 
 # verify token
 
@@ -92,9 +101,9 @@ def verify_token(request):
     if username:
         return Response(True, status=status.HTTP_200_OK)
     else:
-        return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+        return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
 
-# Getting user dropdowns
+# Getting username dropdowns
 
 
 @api_view(['GET', 'POST', 'PUT'])
@@ -108,14 +117,14 @@ def get_category_options(request):
         serial.is_valid(raise_exception=True)
         print("serializer data: ", serial.data)
         try:
-            username = User.objects.get(username=serial.data['user'])
+            username = User.objects.get(username=serial.data['username'])
             print('\n\nusername:  ', username)
         except:
-            return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+            return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
 
         if username:
             query = UserOptions.objects.filter(
-                user=username).values('cat_options')
+                username=username).values('cat_options')
             # covert_options_case(query[0]['cat_options'])
             return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
 
@@ -143,7 +152,7 @@ class CategoryOptions(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
-        return UserOptions.objects.get(user=User.objects.get(pk))
+        return UserOptions.objects.get(username=User.objects.get(pk))
 
     def get(self, request, format=None):
         data = request.query_params
@@ -152,18 +161,18 @@ class CategoryOptions(views.APIView):
         # clearConsole()
         print("serializer data: ", serial.data)
         try:
-            username = User.objects.get(username=serial.data['user'])
+            username = User.objects.get(username=serial.data['username'])
             print('\n\nusername:  ', username)
         except:
-            return Response("Invalid user", status=status.HTTP_401_UNAUTHORIZED)
+            return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
 
         if username:
             query = UserOptions.objects.filter(
-                user=username).values('cat_options')
+                username=username).values('cat_options')
             if query.exists():
                 return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
             else:
-                query = "no user option available"
+                query = "no username option available"
                 return Response(query, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -176,13 +185,13 @@ class CategoryOptions(views.APIView):
     def patch(self, request, *args, **kwargs):
         data = request.data
         print("\n\nrequest datas:\n", data)
-        user1 = User.objects.get(username=data.get('user'))
-        print("user: ", user1)
-        # print("\n\nall user objects:\n\n", UserOptions.objects.get())
-        print("\n\none obj\n\n", UserOptions.objects.get(user=user1))
-        options_obj = UserOptions.objects.get(user=user1)
-        print("user object 1", options_obj)
-        # options_obj.user = data.get("user", options_obj.user)
+        user1 = User.objects.get(username=data.get('username'))
+        print("username: ", user1)
+        # print("\n\nall username objects:\n\n", UserOptions.objects.get())
+        print("\n\none obj\n\n", UserOptions.objects.get(username=user1))
+        options_obj = UserOptions.objects.get(username=user1)
+        print("username object 1", options_obj)
+        # options_obj.username = data.get("username", options_obj.username)
         options_obj.cat_options = data.get(
             "cat_options", options_obj.cat_options)
         options_obj.save()
@@ -214,10 +223,10 @@ class Add_Trans(views.APIView):
         serializer.is_valid(raise_exception=True)
         datas = serializer.validated_data
         print("\n\nserialized data:\n", serializer.data)
-        datas['user'] = User.objects.all().filter(
+        datas['username'] = User.objects.all().filter(
             username=datas['username']).first()
         obj = BankTranscations.objects.create(
-            user=datas['user'],
+            username=datas['username'],
             comment=datas['comment'],
             amount=datas['amount'],
             type_of_trans=datas['type_of_trans'],
@@ -260,8 +269,8 @@ class Edit_Trans(views.APIView):
         _data = serializer.data
         return Response(_data, status.HTTP_200_OK)
 
-# Give list of transaction for authenticated user
-# only get request allowed, takes user as input parameter
+# Give list of transaction for authenticated username
+# only get request allowed, takes username as input parameter
 
 
 class User_trans_summary(generics.ListAPIView):
@@ -274,7 +283,7 @@ class User_trans_summary(generics.ListAPIView):
         user_obj = User.objects.get(username=r_user)
         print("\n\n User:", r_user, "\n\n id:", user_obj)
         queryset = BankTranscations.objects.all().filter(
-            user=user_obj)
+            username=user_obj)
         return queryset
 
 
@@ -287,7 +296,7 @@ class User_recent_trans(generics.ListAPIView):
         r_user = self.request.query_params.get('username')
         user_obj = User.objects.get(username=r_user)
         queryset = BankTranscations.objects.all().filter(
-            user=user_obj).order_by('-trans_date')[:5]
+            username=user_obj).order_by('-trans_date')[:5]
         for i in range(0, len(queryset)):
             parsed = queryset[i].__dict__['cat_of_trans'].replace("_", " ")
             queryset[i].__dict__['cat_of_trans'] = parsed[0].upper() + \

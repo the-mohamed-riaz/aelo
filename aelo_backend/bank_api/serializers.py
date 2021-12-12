@@ -23,7 +23,7 @@ class Token_serializer(serializers.Serializer):
 
 
 class Get_option_serializer(serializers.Serializer):
-    user = serializers.CharField(max_length=50)
+    username = serializers.CharField(max_length=50)
     # cat_options = serializers.CharField()
     # token = serializers.CharField()
     # field_name = serializers.CharField()
@@ -35,8 +35,19 @@ class User_serializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class Bank_details_serializer(serializers.ModelSerializer):
+    username = User_serializer()
+    bank_1_name = serializers.CharField()
+    bank_1_account_balance = serializers.DecimalField(
+        max_digits=25, decimal_places=2)
+    timestamp = serializers.DateTimeField()
+
+    class Meta:
+        fields = "__all__"
+
+
 class Get_options_output_serializer(serializers.ModelSerializer):
-    user = User_serializer()
+    username = User_serializer()
     cat_options = serializers.CharField(max_length=10000)
 
     class Meta:
@@ -45,7 +56,7 @@ class Get_options_output_serializer(serializers.ModelSerializer):
 
 
 class Options_serializer(serializers.ModelSerializer):
-    # user = User_serializer()
+    # username = User_serializer()
     # cat_options = serializers.CharField(max_length=10000)
 
     class Meta:
@@ -54,26 +65,26 @@ class Options_serializer(serializers.ModelSerializer):
 
 
 class Post_option_serializer(serializers.Serializer):
-    user = serializers.CharField(max_length=50)
+    username = serializers.CharField(max_length=50)
     # token = serializers.CharField()
     # field_name = serializers.CharField()
     cat_options = serializers.CharField()
 
     def create(self, validated_data):
         try:
-            username = User.objects.get(username=validated_data['user'])
+            username = User.objects.get(username=validated_data['username'])
 
         except:
             raise error("Invalid User in serializer")
 
-        return UserOptions.objects.create(user=username, cat_options=validated_data['cat_options'])
+        return UserOptions.objects.create(username=username, cat_options=validated_data['cat_options'])
 
 
 class User_trans_summary_serializer(serializers.ModelSerializer):
     class Meta():
         model = BankTranscations
         fields = ['id', 'amount', 'comment', 'type_of_trans', 'cat_of_trans',
-                  'trans_date', 'trans_hour', 'payment_mode', 'user']
+                  'trans_date', 'trans_hour', 'payment_mode', 'username']
 
 
 class Add_trans_serializer(serializers.Serializer):
