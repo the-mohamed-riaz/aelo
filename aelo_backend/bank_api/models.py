@@ -42,7 +42,7 @@ class User(AbstractUser):
     email = models.CharField(max_length=254, unique=True)
     is_staff = models.BooleanField(blank=False, default=False, null=False)
     is_active = models.BooleanField(blank=False, default=True, null=False)
-    mobile = models.IntegerField(blank=True, null=True,default=None)
+    mobile = models.IntegerField(blank=True, null=True, default=None)
     date_joined = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(unique=True, auto_created=True,
                           default=uuid.uuid4, editable=False)
@@ -72,6 +72,7 @@ class BankTranscations(models.Model):
     amount = models.DecimalField(
         verbose_name='Money/Amount in INR', blank=False, null=False, decimal_places=3, max_digits=19)
     type_of_trans = models.CharField(max_length=100, null=True, blank=True)
+    comment = models.CharField(max_length=30, null=True, blank=True)
     cat_of_trans = models.CharField(max_length=200, blank=True, null=True)
     trans_date = models.DateField(
         verbose_name="Transaction Date", null=True, blank=False)

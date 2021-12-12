@@ -1,5 +1,5 @@
-import { FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 interface i_dropdowns {
   name: string;
@@ -26,14 +26,24 @@ export class FormDataGeneratorService {
 
 export function generateOptions(val: string[] | number[]): Array<i_dropdowns> {
   let options: i_dropdowns[] = [];
-  // console.log(val);
+
   for (let item in val) {
-    if (typeof val[item] === 'string') {
-      options.push({ name: `${val[item]}`, value: `${('' + val[item]).toLowerCase().replace(/ /g, '_')}` })
+    let str: string | number = val[item];
+    if (typeof str === 'string') {
+      options.push({ name: `${conver_to_human_name(str)}`, value: `${('' + str).toLowerCase().replace(/ /g, '_')}` })
     } else if (typeof val[item] === 'number') {
       options.push({ name: `${val[item]}`, value: `${val[item]}` });
     }
   }
+
   // console.log(options);
   return options;
+}
+
+
+export function conver_to_human_name(val: string): string {
+  let ln = val.length;
+  val = val.charAt(0).toUpperCase() + val.slice(1, ln).toLowerCase();
+  val = val.replace(/_/g, ' ');
+  return val;
 }

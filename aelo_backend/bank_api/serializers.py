@@ -72,12 +72,13 @@ class Post_option_serializer(serializers.Serializer):
 class User_trans_summary_serializer(serializers.ModelSerializer):
     class Meta():
         model = BankTranscations
-        fields = ['id', 'amount', 'type_of_trans', 'cat_of_trans',
+        fields = ['id', 'amount', 'comment', 'type_of_trans', 'cat_of_trans',
                   'trans_date', 'trans_hour', 'payment_mode', 'user']
 
 
 class Add_trans_serializer(serializers.Serializer):
     username = serializers.CharField()
+    comment = serializers.CharField()
     amount = serializers.DecimalField(decimal_places=2, max_digits=20)
     type_of_trans = serializers.CharField()
     cat_of_trans = serializers.CharField()

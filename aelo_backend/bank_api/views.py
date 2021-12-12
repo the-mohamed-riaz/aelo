@@ -1,11 +1,14 @@
-import os
 import datetime
+import os
 from decimal import Context
 
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import Group, User
 from django.db.models import query
 from django.db.models.aggregates import Count
 from django.db.models.expressions import F
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, views
@@ -19,9 +22,6 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.contrib.auth.models import User, Group
 
 from bank_api.models import *
 from bank_api.serializers import *
@@ -34,26 +34,14 @@ class User_registration(generics.CreateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
+# creates default options when a user is registered with aelo
+
 
 @receiver(post_save, sender=User)
 def new_user_created(instance, created, **kwargs):
-    # raw is set when model is created from loaddata.
-    print("\n\n --------- created ----------\n\n", created)
-    print("\n\n --------- instance ----------\n\n", instance)
     if created:
-        # instance.groups.add(Group.objects.get(name='new-user-group'))
-
-        print("\n\n --------- created signal of user ----------\n\n", instance)
-
-        CategoryOptions.objects.create(
-            cat_options="food,family,fuel", user=instance)
-
-        # Feed.objects.create(
-        #     user = instance,
-        #     name = "%s's Feed" % instance.first_name,
-        #     ....
-        # )
-
+        UserOptions.objects.create(
+            cat_options="bike,food,family,fuel,medicine,public_transportation,repayment_of_loans,investments,cosmetics,wearables,smart_gadgets", user=instance)
 
 # Generate token to user / user login
 
@@ -128,6 +116,7 @@ def get_category_options(request):
         if username:
             query = UserOptions.objects.filter(
                 user=username).values('cat_options')
+            # covert_options_case(query[0]['cat_options'])
             return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
 
     if request.method == 'POST':
@@ -136,6 +125,12 @@ def get_category_options(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def covert_options_case(value):
+    print("\n\n", value)
+    for i in value:
+        print(i)
 
 
 def clearConsole(): return os.system(
@@ -204,6 +199,9 @@ class Tree_chart_api(views.APIView):
         fieldname = 'cat_of_trans'
         queryset = BankTranscations.objects.values(x=F(fieldname)).order_by(
             fieldname).annotate(y=Count(fieldname))
+        for i in range(0, len(queryset)):
+            parsed = queryset[i]['x'].replace("_", " ")
+            queryset[i]['x'] = parsed[0].upper() + parsed[1:].lower()
         return Response(queryset, status=status.HTTP_200_OK)
 
 
@@ -220,6 +218,7 @@ class Add_Trans(views.APIView):
             username=datas['username']).first()
         obj = BankTranscations.objects.create(
             user=datas['user'],
+            comment=datas['comment'],
             amount=datas['amount'],
             type_of_trans=datas['type_of_trans'],
             cat_of_trans=datas['cat_of_trans'],
@@ -289,4 +288,9 @@ class User_recent_trans(generics.ListAPIView):
         user_obj = User.objects.get(username=r_user)
         queryset = BankTranscations.objects.all().filter(
             user=user_obj).order_by('-trans_date')[:5]
+        for i in range(0, len(queryset)):
+            parsed = queryset[i].__dict__['cat_of_trans'].replace("_", " ")
+            queryset[i].__dict__['cat_of_trans'] = parsed[0].upper() + \
+                parsed[1:].lower()
+            # print("i: ", i, "\n ith query:", queryset[i].__dict__['cat_of_trans'])
         return queryset

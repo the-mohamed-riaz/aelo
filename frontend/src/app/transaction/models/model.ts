@@ -8,6 +8,7 @@ export interface $pretty_recent_trans {
 export interface $recentTransaction {
     id: string;
     amount: string;
+    comment: string | null;
     type_of_trans: string;
     cat_of_trans: string;
     trans_date: string;

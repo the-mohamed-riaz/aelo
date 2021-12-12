@@ -130,6 +130,15 @@ export class TreemapComponent implements OnInit {
       },
       (err: any) => { console.log("Error in fetching tree map data:\n", err); }
     );
+    setInterval(() => {
+      this.getData.get_tree_map_data().subscribe(
+        (val) => {
+          this.tree_chart_data = val;
+          this.chartOptions.series = [{ data: this.tree_chart_data }]
+        },
+        (err: any) => { console.log("Error in fetching tree map data:\n", err); }
+      );
+    }, 3000);
   }
 
 }

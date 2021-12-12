@@ -18,8 +18,8 @@ export class AppComponent {
 
   checkStatus() {
     this.route.events.subscribe(
-      (event) => {
-        (event instanceof NavigationEnd) ? (this.currentUrl = event.url, console.log(this.currentUrl)) : null;
+      async (event) => {
+        (event instanceof NavigationEnd) ? (this.currentUrl = event.url) : null;
       }
     );
     return this.currentUrl;

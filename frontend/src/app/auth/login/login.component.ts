@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         full_name: new FormControl(null, [Validators.required]),
         username: new FormControl(null, [Validators.required]),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        mobile: new FormControl(null),
+        mobile: new FormControl(""),
         password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
         confirm_password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     });

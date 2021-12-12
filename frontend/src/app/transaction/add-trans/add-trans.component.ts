@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment/moment';
 import { CookieService } from 'ngx-cookie-service';
 import { $dropdown_option, EditableDropdownComponent } from 'src/app/shared/components/editable-dropdown/editable-dropdown.component';
@@ -31,7 +32,7 @@ export class AddTransComponent implements OnInit {
   randId: string;
   customDate = true;
 
-  constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService, private _snackBar: MatSnackBar) {
     this.user = this.cookie.get('username');
     this.randId = 'id_' + this.gen_RandId();
     this.http.get<string>('http://localhost:8000/options/?user=' + this.user).subscribe(
@@ -43,12 +44,13 @@ export class AddTransComponent implements OnInit {
 
   addForm = new FormGroup({
     username: new FormControl(this.user),
-    amount: new FormControl(),
-    type_of_trans: new FormControl(),
-    cat_of_trans: new FormControl(),
+    amount: new FormControl(null),
+    comment: new FormControl(null),
+    type_of_trans: new FormControl(null),
+    cat_of_trans: new FormControl(null),
     trans_date: new FormControl(moment(new Date()).format("YYYY-MM-DD")),
     trans_hour: new FormControl(new Date().getHours() + ":" + new Date().getMinutes()),
-    payment_mode: new FormControl()
+    payment_mode: new FormControl(null)
   })
 
   openDialog(): void {
@@ -99,7 +101,7 @@ export class AddTransComponent implements OnInit {
     };
   }
 
-  formFields = ["username", "amount", "type_of_trans", "cat_of_trans", "trans_date", "trans_hour", "payment_mode"];
+  formFields = ["username", "amount", "type_of_trans", "comment", "cat_of_trans", "trans_date", "trans_hour", "payment_mode"];
 
   postTransaction() {
     let formData = new FormData();
@@ -112,13 +114,18 @@ export class AddTransComponent implements OnInit {
       console.debug(key, ':', this.addForm.controls[key].value);
     }
     this.http.post("http://localhost:8000/add/", formData).subscribe(
-      (next) => { console.log("success: ", next); },
+      (next) => {
+        console.log("success: ", next);
+        this._snackBar.open("Last transaction was noted succesfully!", "OK", { duration: 3000 });
+      },
       (err) => { console.log("Add form error", err); },
       () => {
         this.addForm.reset();
       }
     );
   }
+
+
 
   gen_RandId() {
     let id = Math.random() * 1000;

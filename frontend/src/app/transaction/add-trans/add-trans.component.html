@@ -21,6 +21,7 @@
                 <mat-label>Payment mode</mat-label>
                 <mat-select formControlName="payment_mode">
                     <mat-option value="cash">Cash</mat-option>
+                    <mat-option value="atm_card">ATM card</mat-option>
                     <mat-option value="upi">UPI</mat-option>
                     <mat-option value="bank_transfer">Bank transfer</mat-option>
                     <mat-option value="cheque">Cheque</mat-option>
@@ -53,6 +54,10 @@
                 <input matInput placeholder="Choose from the options below" class="w-100" type="time" placeholder="24:00" formControlName="trans_hour">
             </mat-form-field>
         </div>
+        <mat-form-field class="custColor" appearance="outline" class="w-100">
+            <mat-label>Comment / hint</mat-label>
+            <input matInput placeholder="What is the transaction about" class="w-100" type="text" maxlength="30" formControlName="comment">
+        </mat-form-field>
         <button mat-raised-button class="my-2" (click)=" $event.preventDefault();postTransaction()">Add transaction</button>
     </form>
 </div>
