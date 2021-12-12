@@ -25,6 +25,14 @@ export class TreemapComponent implements OnInit {
   tree_chart_data: Array<$tree_map> = [];
   constructor(private getData: FetcherService) {
     this.chartOptions = {
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontWeight: '300',
+          fontSize: '12px',
+          fontFamily: 'Montserrat'
+        }
+      },
       series: [{ data: this.tree_chart_data }],
       chart: {
         height: 253,
@@ -40,6 +48,7 @@ export class TreemapComponent implements OnInit {
         }
       },
       plotOptions: {
+
         treemap: {
           distributed: true,
           colorScale: {

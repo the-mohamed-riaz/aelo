@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./mat-table.component.scss']
 })
 export class MatTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['type_of_trans', 'amount', 'cat_of_trans', 'trans_date', 'trans_hour', 'id', 'payment_mode', 'user'];
+  displayedColumns: string[] = ['type_of_trans', 'comment', 'amount', 'cat_of_trans', 'trans_date', 'trans_hour', 'payment_mode', 'id'];
   dataSource!: MatTableDataSource<$TableElement>;
   username: string;
   constructor(private http: HttpClient, private cookie: CookieService) {
@@ -31,6 +31,7 @@ export class MatTableComponent implements AfterViewInit {
 
 export interface $TableElement {
   type_of_trans: string;
+  comment: string | null;
   amount: string;
   cat_of_trans: string;
   trans_date: string;
