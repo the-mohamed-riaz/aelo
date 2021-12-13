@@ -147,15 +147,25 @@ def clearConsole(): return os.system(
     'cls' if os.name in ('nt', 'dos') else 'clear')
 
 
+def account_exists(username):
+    print("\n____________checking for account_____________\n")
+    print("checking for :", username)
+    try:
+        User.objects.get(username=username)
+    except:
+        return False
+    return True
+
+
 class Account_balance(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        req = request.query_params
-        req_serial = Get_ac_serializer(data=req)
-        req_serial.is_valid(raise_exception=True)
-        username = req['username']
+        # req = request.query_params
+        # req_serial = Req_username_serializer(data=req)
+        # req_serial.is_valid(raise_exception=True)
+        username = request['username']
         try:
             queryset = AccountBalance.objects.filter(username=username)
             if(len(queryset) < 1):
@@ -170,6 +180,41 @@ class Account_balance(views.APIView):
             sz.save()
             return Response(sz.data, status=status.HTTP_201_CREATED)
         return Response(sz.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Bank_account_details(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        # req = request.data
+        # print("request data:", req)
+        # username = req['username']
+        req = request.query_params
+        print('query_params : ', req)
+        req_sz = Get_option_serializer(data=req)
+        req_sz.is_valid(raise_exception=False)
+        username = req_sz.data['username']
+        print("serializer data:", username)
+        if (account_exists(username)):
+            print("\nverified user ✔")
+            try:
+                print("checking for bank details")
+                queryset = BankDetails.objects.filter(
+                    username=username).values()
+                print("bank details present", len(queryset))
+                if(len(queryset) < 1):
+                    return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
+
+            except:
+                print("no bank details present")
+                return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
+            sz = Bank_details_serializer(data=queryset)
+            sz.is_valid(raise_exception=True)
+            print("Final serializer data", sz.data)
+            return Response(sz.data, status.HTTP_200_OK)
+        else:
+            return Response("Invalid user", status.HTTP_401_UNAUTHORIZED)
 
 
 class CategoryOptions(views.APIView):

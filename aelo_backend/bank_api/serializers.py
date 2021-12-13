@@ -37,7 +37,7 @@ class User_serializer(serializers.ModelSerializer):
 
 
 class Bank_details_serializer(serializers.ModelSerializer):
-    username = User_serializer()
+    username = serializers.CharField()
     bank_name = serializers.CharField()
 
     class Meta:
@@ -45,8 +45,13 @@ class Bank_details_serializer(serializers.ModelSerializer):
         fields = ['bank_name']
 
 
-class Get_ac_serializer(serializers.Serializer):
-    username = models.CharField(max_length=50)
+class Req_username_serializer(serializers.ModelSerializer):
+    username = models.CharField()
+    bank_name = models.CharField()
+
+    class Meta:
+        models = BankDetails
+        fields = ['username']
 
 
 class Account_balance_serializer(serializers.ModelSerializer):
