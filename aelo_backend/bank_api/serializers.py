@@ -9,7 +9,7 @@ from bank_api.models import *
 
 class Tree_chart_serializer(serializers.ModelSerializer):
     class Meta:
-        models = BankTranscations
+        model = BankTranscations
         fields = "__all__"
 
 
@@ -32,7 +32,7 @@ class Get_option_serializer(serializers.Serializer):
 
 class User_serializer(serializers.ModelSerializer):
     class Meta:
-        models = User
+        model = User
         fields = "__all__"
 
 
@@ -41,8 +41,23 @@ class Bank_details_serializer(serializers.ModelSerializer):
     bank_name = serializers.CharField()
 
     class Meta:
-        models = BankDetails
-        fields = ['bank_name']
+        model = BankDetails
+        fields = "__all__"
+        # fields = ['bank_name']
+
+    def create(self, validated_data):
+        try:
+            username = User.objects.get(username=validated_data['username'])
+        except:
+            raise error("Invalid User in serializer")
+
+        # try:
+        #     bk_name = BankDetails.objects.filter(username=username)
+
+        # except:
+        #     return Response("No bank account linked", status=status.HTTP_204_NO_CONTENT)
+
+        return BankDetails.objects.create(username=username, bank_name=validated_data['bank_name'])
 
 
 class Req_username_serializer(serializers.ModelSerializer):
@@ -50,7 +65,7 @@ class Req_username_serializer(serializers.ModelSerializer):
     bank_name = models.CharField()
 
     class Meta:
-        models = BankDetails
+        model = BankDetails
         fields = ['username']
 
 
@@ -62,7 +77,7 @@ class Account_balance_serializer(serializers.ModelSerializer):
     bank_name = Bank_details_serializer()
 
     class Meta:
-        models = AccountBalance
+        model = AccountBalance
         fields = ['username', 'bank_account_balance', 'timestamp']
 
     def create(self, validated_data):

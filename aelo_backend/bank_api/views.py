@@ -216,6 +216,13 @@ class Bank_account_details(views.APIView):
         else:
             return Response("Invalid user", status.HTTP_401_UNAUTHORIZED)
 
+    def post(self, request, *args, **kwargs):
+        serializer = Bank_details_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CategoryOptions(views.APIView):
 
