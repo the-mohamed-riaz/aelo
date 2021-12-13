@@ -20,9 +20,11 @@ export class Card1xComponent implements OnInit {
     this.http.get(`http://localhost:8000/bank-details/?username=${this.username}`).subscribe(
       val => {
         console.debug("val from bank details api", val);
+        this.provided_bk_details = true;
       },
       err => {
         console.debug("error from bank api", err);
+        this.provided_bk_details = false;
       }
     )
   }

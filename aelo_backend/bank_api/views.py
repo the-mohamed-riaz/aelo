@@ -187,34 +187,20 @@ class Bank_account_details(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        # req = request.data
-        # print("request data:", req)
-        # username = req['username']
         req = request.query_params
-        print('query_params : ', req)
         req_sz = Get_option_serializer(data=req)
         req_sz.is_valid(raise_exception=False)
         username = req_sz.data['username']
-        print("serializer data:", username)
         if (account_exists(username)):
-            print("\nverified user ✔")
             try:
-                print("checking for bank details")
                 queryset = BankDetails.objects.all().filter(
                     username=username)
-
             except:
-                print("no bank details present")
                 return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
-
-            # print("bank details present", len(
-                # queryset), "queryset:\n", queryset)
             if(len(queryset) < 1):
                 return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
-            print("queryset: ", queryset, "\nqueryset.length:", len(queryset))
             sz = Bank_details_serializer(data=queryset, many=True)
             sz.is_valid(raise_exception=False)
-            print("Final serializer data", sz.data)
             return Response(sz.data, status.HTTP_200_OK)
         else:
             return Response("Invalid user", status.HTTP_401_UNAUTHORIZED)
