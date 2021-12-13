@@ -36,9 +36,16 @@ class User_serializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class Username_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+
+
 class Bank_details_serializer(serializers.ModelSerializer):
-    username = serializers.CharField()
-    bank_name = serializers.CharField()
+    # username = serializers.CharField()
+    # username = Username_serializer()
+    # bank_name = serializers.CharField()
 
     class Meta:
         model = BankDetails

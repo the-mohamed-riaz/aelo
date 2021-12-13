@@ -200,17 +200,20 @@ class Bank_account_details(views.APIView):
             print("\nverified user ✔")
             try:
                 print("checking for bank details")
-                queryset = BankDetails.objects.filter(
-                    username=username).values()
-                print("bank details present", len(queryset))
-                if(len(queryset) < 1):
-                    return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
+                queryset = BankDetails.objects.all().filter(
+                    username=username)
 
             except:
                 print("no bank details present")
                 return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
-            sz = Bank_details_serializer(data=queryset)
-            sz.is_valid(raise_exception=True)
+
+            # print("bank details present", len(
+                # queryset), "queryset:\n", queryset)
+            if(len(queryset) < 1):
+                return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
+            print("queryset: ", queryset, "\nqueryset.length:", len(queryset))
+            sz = Bank_details_serializer(data=queryset, many=True)
+            sz.is_valid(raise_exception=False)
             print("Final serializer data", sz.data)
             return Response(sz.data, status.HTTP_200_OK)
         else:

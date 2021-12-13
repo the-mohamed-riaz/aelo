@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'card1x',
@@ -6,12 +12,20 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./card1x.component.scss']
 })
 export class Card1xComponent implements OnInit {
-  @Input() data = {
-    title: "",
-    content: "",
-    icon:""
+
+  provided_bk_details = false;
+  username: string;
+  constructor(private http: HttpClient, private cookie: CookieService) {
+    this.username = this.cookie.get('username');
+    this.http.get(`http://localhost:8000/bank-details/?username=${this.username}`).subscribe(
+      val => {
+        console.debug("val from bank details api", val);
+      },
+      err => {
+        console.debug("error from bank api", err);
+      }
+    )
   }
-  constructor() { }
 
   ngOnInit(): void {
   }
