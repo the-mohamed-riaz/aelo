@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +14,8 @@ import { Card1xComponent } from './card1x/card1x.component';
   imports: [
     MatButtonModule,
     MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule
   ],
   exports: [

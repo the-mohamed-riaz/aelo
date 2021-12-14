@@ -10,19 +10,19 @@
 </div>
 <div class="case2" *ngIf="!this.provided_bk_details">
     <div class="pt-2 w-100">
-        <div class="w-100">
+        <div class="w-100" [formGroup]="bank_form">
             <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Bank name</mat-label>
-                <input matInput placeholder="Ex. Pizza" value="Sushi" class="w-100">
+                <input matInput placeholder="Ex. Pizza" value="Sushi" class="w-100" formControlName="bank_name">
             </mat-form-field>
             <!-- </div> -->
             <!-- <div> -->
             <mat-form-field class="w-100 mt-2" appearance="outline">
                 <mat-label>Current balance</mat-label>
-                <input matInput placeholder="Ex. Pizza" type="number" value="00" class="w-100">
+                <input matInput placeholder="Ex. Pizza" type="number" value="00" class="w-100" formControlName="account_balance">
             </mat-form-field>
         </div>
-        <button class="mt-2" mat-raised-button color="primary">Add bank</button>
+        <button class="mt-2" mat-raised-button color="primary" (click)="$event.preventDefault(); submitForm()">Add bank</button>
     </div>
     <div class="note">
         <b>Note: </b> The above information is required to calculate average gain and loss to enhance user experience. We dont collect user's account details or card details.

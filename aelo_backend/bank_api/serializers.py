@@ -77,29 +77,38 @@ class Req_username_serializer(serializers.ModelSerializer):
 
 
 class Account_balance_serializer(serializers.ModelSerializer):
-    username = User_serializer()
-    bank_account_balance = serializers.DecimalField(
-        max_digits=25, decimal_places=2)
-    timestamp = serializers.DateTimeField()
-    bank_name = Bank_details_serializer()
+    # username = User_serializer()
+    # bank_name = Bank_details_serializer()
+    # account_balance = serializers.DecimalField(
+    #     max_digits=25, decimal_places=2)
+    # timestamp = serializers.DateTimeField()
+    # bank_name = Bank_details_serializer()
 
     class Meta:
         model = AccountBalance
-        fields = ['username', 'bank_account_balance', 'timestamp']
+        fields = ['username', 'bank_name', 'account_balance']
 
     def create(self, validated_data):
         try:
             username = User.objects.get(username=validated_data['username'])
+            print('______________user found_______________')
         except:
             raise error("Invalid User in serializer")
 
         try:
             bk_name = BankDetails.objects.filter(username=username)
+            print('______________ bank name present _______________', bk_name)
 
         except:
-            return Response("No bank account linked", status=status.HTTP_204_NO_CONTENT)
+            bk = BankDetails.objects.create(
+                username=username, bank_name=validated_data['bank_name'])
+            print('______________ adding bank name _______________', bk)
+            bk_name = BankDetails.objects.filter(username=username)
+            print('______________ bank name present _______________', bk_name)
 
-        return UserOptions.objects.create(username=username, bank_name=bk_name, bank_account_balance=validated_data['bank_account_balance'], timestamp=validated_data['timestamp'])
+            # return Response("No bank account linked", status=status.HTTP_204_NO_CONTENT)
+
+        return AccountBalance.objects.create(username=username, bank_name=bk_name, account_balance=validated_data['account_balance'])
 
 
 class Get_options_output_serializer(serializers.ModelSerializer):
