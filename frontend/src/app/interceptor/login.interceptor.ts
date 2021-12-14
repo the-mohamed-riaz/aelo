@@ -26,16 +26,17 @@ export class LoginInterceptor implements HttpInterceptor {
           // 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT,PATCH',
         }
       });
-      console.debug(request);
+      // console.debug(request);
     } else {
       request = request;
-      this.route.navigateByUrl('/login')
+      this.route.navigateByUrl('/login');
     }
+
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log("letting pass in interceptor");
-          console.log("interceptor event: \n", event);
+          // console.log("letting pass in interceptor");
+          // console.log("interceptor event: \n", event);
         }
         return event;
       }),

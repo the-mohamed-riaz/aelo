@@ -1,10 +1,19 @@
 <div class="extraBold mx-3 mt-4">Number metrics</div>
-<div class="parent">
+<div class="parent" *ngIf="this.provided_bk_details">
     <div class="class div1 boldText">Current Balance</div>
     <div class="class div2 extraBold">$1,20,500</div>
-    <div class="class div3 boldText">Net Gain (pm)</div>
+    <div class="class div3 boldText">This month expense</div>
     <div class="class div4 extraBold">$5000</div>
-    <div class="class div5 boldText">Net Loss (pm)</div>
+    <div class="class div5 boldText">This month gain</div>
     <div class="class div6 extraBold">$800
+    </div>
+</div>
+<div class="case2" *ngIf="!this.provided_bk_details">
+    <div class="pt-2">
+        <div>Add bank details to show number metrics</div>
+        <button class="mt-2" mat-raised-button color="primary">Add bank</button>
+    </div>
+    <div class="note">
+        <b>Note: </b> The above information is required to calculate average gain and loss to enhance user experience. We dont collect user's account details or card details.
     </div>
 </div>
