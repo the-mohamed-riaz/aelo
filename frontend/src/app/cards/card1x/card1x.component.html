@@ -9,8 +9,19 @@
     </div>
 </div>
 <div class="case2" *ngIf="!this.provided_bk_details">
-    <div class="pt-2">
-        <div>Add bank details to show number metrics</div>
+    <div class="pt-2 w-100">
+        <div class="w-100">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Bank name</mat-label>
+                <input matInput placeholder="Ex. Pizza" value="Sushi" class="w-100">
+            </mat-form-field>
+            <!-- </div> -->
+            <!-- <div> -->
+            <mat-form-field class="w-100 mt-2" appearance="outline">
+                <mat-label>Current balance</mat-label>
+                <input matInput placeholder="Ex. Pizza" type="number" value="00" class="w-100">
+            </mat-form-field>
+        </div>
         <button class="mt-2" mat-raised-button color="primary">Add bank</button>
     </div>
     <div class="note">

@@ -1,6 +1,7 @@
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { Card1xComponent } from './card1x/card1x.component';
 
 
@@ -11,7 +12,8 @@ import { Card1xComponent } from './card1x/card1x.component';
   ],
   imports: [
     MatButtonModule,
-    CommonModule,
+    MatInputModule,
+    CommonModule
   ],
   exports: [
     Card1xComponent
