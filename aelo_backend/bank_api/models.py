@@ -56,7 +56,6 @@ class BankDetails(models.Model):
 
 class AccountBalance(models.Model):
     username = models.ForeignKey(User, on_delete=models.PROTECT)
-    # bank_name = models.OneToOneField(BankDetails, on_delete=models.PROTECT)
     bank_name = models.CharField(max_length=70)
     account_balance = models.DecimalField(
         max_digits=25, decimal_places=2)
@@ -65,7 +64,7 @@ class AccountBalance(models.Model):
 
     class Meta:
         db_table = 'user_account_balance'
-        ordering = ['-timestamp']
+        ordering = ['timestamp']
 
 
 class UserOptions(models.Model):

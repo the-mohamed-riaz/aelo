@@ -1,6 +1,7 @@
 import datetime
 import os
 from decimal import Context
+from re import M
 
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group, User
@@ -49,11 +50,33 @@ def new_user_created(instance, created, **kwargs):
 @receiver(post_save, sender=BankTranscations)
 def new_bank_balance(instance, created, **kwargs):
     if created:
-        print("\n------ ------ -------\nnew transaction instance: ", instance)
-        bk = BankDetails.objects.get(username)
-        slz = User_trans_summary_serializer(instance=instance)
-        data = slz.data
-        AccountBalance.objects.create(username=data.username)
+        # print("\n------ ------ -------\nnew transaction instance: ", instance)
+        sz = User_trans_summary_serializer(instance=instance)
+        # print('serialized data:\n', sz.data)
+        data = sz.data
+        ac_data = AccountBalance.objects.filter(
+            username=data['username']).values().annotate(username=F('username_id')).last()
+        # print('\n\nac_data', ac_data)
+        ac_sz = Account_balance_serializer(data=ac_data)
+        ac_sz.is_valid(raise_exception=True)
+        # print("account_detail", ac_sz.data)
+        if(data['type_of_trans'] == 'credit'):
+            # print("credit\t",ac_sz.data['account_balance'], ' + ', data['amount'])
+            last_balance = float(
+                ac_sz.data['account_balance']) + float(data['amount'])
+        else:
+            # print("debited\t",float(ac_sz.data['account_balance']), ' - ', float(data['amount']))
+            last_balance = float(
+                ac_sz.data['account_balance']) - float(data['amount'])
+        # print('new calc bal', last_balance)
+        user = User.objects.get(username=ac_sz.data['username'])
+        # print("\n\nseriali: ", ac_sz.data['username'], 'user:', user)
+        new_bal = AccountBalance.objects.create(
+            username=user,
+            bank_name=ac_sz.data['bank_name'],
+            account_balance=last_balance
+        )
+        print("new balance added", new_bal)
 
 
 @api_view(['POST'])
@@ -162,16 +185,21 @@ class Account_balance(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        # req = request.query_params
-        # req_serial = Req_username_serializer(data=req)
-        # req_serial.is_valid(raise_exception=True)
         username = request.query_params['username']
         try:
-            queryset = AccountBalance.objects.filter(username=username)
+            queryset = AccountBalance.objects.filter(
+                username=username).values().annotate(username=F('username_id')).last()
             if(len(queryset) < 1):
                 return Response("Add bank details", status=status.HTTP_204_NO_CONTENT)
         except:
             return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
+        print('queryset', queryset)
+        # queryset = queryset.__dict__['_result_cache']
+        # queryset = queryset.__dict__
+        # sz = Account_balance_serializer(data=queryset, many=True)
+        # sz = Account_balance_serializer(data=queryset)
+        # sz.is_valid(raise_exception=True)
+        # return Response(sz.data, status=status.HTTP_200_OK)
         return Response(queryset, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
