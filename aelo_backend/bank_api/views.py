@@ -175,24 +175,19 @@ class Account_balance(views.APIView):
         return Response(queryset, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        print("got data", request.data['username'])
-        username = request.data['username']
+        username = User.objects.get(username=request.data['username'])
         bank_name = request.data['bank_name']
         account_balance = request.data['account_balance']
-        # sz = Account_balance_serializer(data=request.data)
-        # print("serializer assigned")
-        # if(sz.is_valid(raise_exception=False)):
-        # print("serializer is valid")
-        # sz.save()
         res = AccountBalance.objects.create(
             username=username,
             bank_name=bank_name,
             account_balance=account_balance
         )
-        return Response(res, status=status.HTTP_201_CREATED)
-        # return Response(sz.data, status=status.HTTP_201_CREATED)
-        # print(sz.errors)
-        # return Response(sz.errors, status=status.HTTP_400_BAD_REQUEST)
+        res = res.__dict__
+        res['username'] = res['username_id']
+        sez = Account_balance_serializer(data=res)
+        sez.is_valid(raise_exception=True)
+        return Response(sez.data, status=status.HTTP_201_CREATED)
 
 
 class Bank_account_details(views.APIView):
