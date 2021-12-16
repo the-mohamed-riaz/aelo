@@ -2,6 +2,7 @@ import datetime
 import os
 from decimal import Context
 from re import M
+from time import strftime
 
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group, User
@@ -180,6 +181,47 @@ def account_exists(username):
     return True
 
 
+class Number_metrics(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        username = request.query_params['username']
+        parser = '%Y-%m-%d %H:%M:%S %z'
+        day_start = datetime.datetime.strptime((str(datetime.date.today())[
+            :-2] + '01 00:00:01 +0530'), parser)
+        day_end = datetime.datetime.strptime((str(datetime.date.today())[
+            :-2] + '01 23:59:59 +0530'), parser)
+        infinite_start = datetime.datetime(2021, 1, 1, 0, 0, 0, 0)
+        # try:
+        #     start_bal_query = AccountBalance.objects.filter(timestamp__range=(
+        #         day_start, day_end)).order_by('-timestamp').first().value('account_balance')
+        # except:
+        start_bal_query = AccountBalance.objects.filter(
+            timestamp__range=(day_start, day_end)).order_by('-timestamp')
+
+        if (len(start_bal_query) < 1):
+            start_bal = AccountBalance.objects.values('account_balance').filter(timestamp__range=(
+                infinite_start, day_start)).order_by('-timestamp').first()['account_balance']
+        else:
+            start_bal = 0
+
+        amount = AccountBalance.objects.values('account_balance').order_by(
+            '-timestamp').first()['account_balance']
+
+        new = amount - start_bal
+        print('\n\nnew = ', amount, "-", start_bal)
+        print('\n\namt:', amount, "new bal: ", new)
+
+        if(len(start_bal_query) < 1):
+            # print("no balance")
+            return Response(new)
+
+        # current_bal =
+        print('start_bal: ', start_bal)
+        return Response(f'{timezone.now()}')
+
+
 class Account_balance(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -194,12 +236,6 @@ class Account_balance(views.APIView):
         except:
             return Response("Invalid user", status=status.HTTP_400_BAD_REQUEST)
         print('queryset', queryset)
-        # queryset = queryset.__dict__['_result_cache']
-        # queryset = queryset.__dict__
-        # sz = Account_balance_serializer(data=queryset, many=True)
-        # sz = Account_balance_serializer(data=queryset)
-        # sz.is_valid(raise_exception=True)
-        # return Response(sz.data, status=status.HTTP_200_OK)
         return Response(queryset, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):

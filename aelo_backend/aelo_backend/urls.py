@@ -23,7 +23,9 @@ urlpatterns = [
     path('recent/', User_recent_trans.as_view(), name='last 5 transaction'),
     path('tree-map/', Tree_chart_api.as_view(),
          name='gives data for tree map chart'),
-    path('verify-token/', verify_token)
+    path('verify-token/', verify_token),
+
+    path('number-metrics/', Number_metrics.as_view(), name="Number metrics")
 ]
 
 # urlpatterns += router.urls
