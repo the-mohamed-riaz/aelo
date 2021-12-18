@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { ChartEvent, ChartType } from "ng-chartist";
 
-import { Component, OnInit, Input } from '@angular/core';
-import { ChartType, ChartEvent } from "ng-chartist";
-import * as Chartist from "chartist";
 
 
 
@@ -16,11 +15,11 @@ export interface Chart {
 }
 
 @Component({
-  selector: 'widget-line-chart',
+  selector: 'chartist-line',
   templateUrl: './line.component.html',
   styleUrls: ['./line.component.scss']
 })
-export class LineComponent implements OnInit {
+export class ChartistLineComponent implements OnInit {
 
   @Input() y_axis: Array<number> | null = null;
 

@@ -1362,6 +1362,11 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
+"@types/chartist@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@types/chartist/-/chartist-0.11.1.tgz#3825e6cee87f5f548e8631b2c25e3a7b597b2522"
+  integrity sha512-85eNd7rF+e5sLnpprgcDdeqARgNvczEXaBfnrkw0292TBCE4KF/2HmOPA6dIblyHUWV4OZ2kuQBH2R12F+VwYg==
+
 "@types/component-emitter@^1.2.10":
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/@types/component-emitter/-/component-emitter-1.2.11.tgz#50d47d42b347253817a39709fef03ce66a108506"
@@ -2082,6 +2087,11 @@ chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+
+chartist@^0.11.4:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.11.4.tgz#e96e1c573d8b67478920a3a6ae52359d9fc8d8b7"
+  integrity sha512-H4AimxaUD738/u9Mq8t27J4lh6STsLi4BQHt65nOtpLk3xyrBPaLiLMrHw7/WV9CmsjGA02WihjuL5qpSagLYw==
 
 "chokidar@>=3.0.0 <4.0.0", chokidar@^3.0.0, chokidar@^3.5.1, chokidar@^3.5.2:
   version "3.5.2"
@@ -4319,6 +4329,13 @@ ng-apexcharts@^1.5.12:
   integrity sha512-k82AdWNbZs5yqGCjiX7PGS11Cy1+1Oo/RGt2lT89xReD9N9Vvo1t34p1dmzS+U6W5wOFlLEKKVLGNQqENW8cTQ==
   dependencies:
     tslib "^1.10.0"
+
+ng-chartist@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/ng-chartist/-/ng-chartist-6.3.0.tgz#60b3cf1950c8eab35d12ead6d94effe4f3132ecd"
+  integrity sha512-Hr+HZJhUNwWndzBsnyWzFhDS1SeuyVC+MuU+Oa+WcAVIAFaLcwyarhAkQScXCAQ6SzZ9vh0FOrWDQ56jGPbIUA==
+  dependencies:
+    tslib "^2.3.0"
 
 ngx-cookie-service@^13.0.1:
   version "13.0.1"

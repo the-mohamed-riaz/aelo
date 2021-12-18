@@ -1,4 +1,3 @@
-import { SettingsModule } from './settings/settings.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,9 +14,9 @@ import { ActivatorGuard } from './guard/activator.guard';
 import { ModulesLoaderGuard } from './guard/modules-loader.guard';
 import { LoginInterceptor } from './interceptor/login.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SettingsModule } from './settings/settings.module';
 import { SharedComponentsModule } from './shared/components/components.module';
 import { MaterialsModule } from './shared/materials/materials.module';
-import { LineComponent } from './shared/charts/chartist/line/line.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { LineComponent } from './shared/charts/chartist/line/line.component';
     NavbarComponent,
     LoginComponent,
     LogoutComponent,
-    LineComponent,
   ],
   imports: [
     BrowserModule,
