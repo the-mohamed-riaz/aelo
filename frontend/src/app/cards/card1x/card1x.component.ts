@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { FormDataGeneratorService } from 'src/app/shared/form-data-generator.service';
+import * as moment from 'moment';
 
 export interface bank_api_resp {
   account_balance: number;
@@ -11,6 +12,10 @@ export interface bank_api_resp {
   username: string;
 }
 
+export interface number_metrics_resp {
+  income: number;
+  expense: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -25,14 +30,29 @@ export class Card1xComponent implements OnInit {
   provided_bk_details = false;
   username: string;
 
+  cash_in_flow!: number;
+  cash_out_flow!: number;
   bank_balance: number | null | string = null;
 
+  month: string;
+  months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   constructor(private http: HttpClient, private cookie: CookieService, private generator: FormDataGeneratorService) {
     this.username = this.cookie.get('username');
     this.bank_form.controls['username'].setValue(this.username);
+    this.month = this.months_arr[new Date().getMonth()];
     this.get_bk_details();
   }
 
+  get_number_metrics() {
+    this.http.get<number_metrics_resp>(`http://localhost:8000/number-metrics/?username=${this.username}`).subscribe(
+      (val) => {
+
+        this.cash_in_flow = val.income;
+        this.cash_out_flow = val.expense;
+        console.debug("number metrics\n,", this.cash_in_flow, this.cash_out_flow, "\n val: ", val);
+      }
+    )
+  };
   get_bk_details() {
     this.http.get<bank_api_resp>(`http://localhost:8000/account-balance/?username=${this.username}`).subscribe(
       (val: bank_api_resp) => {
@@ -40,6 +60,7 @@ export class Card1xComponent implements OnInit {
         val ? this.provided_bk_details = true : this.provided_bk_details = false;
         if (this.provided_bk_details) {
           this.bank_balance = val.account_balance.toLocaleString();
+          this.get_number_metrics();
         }
       },
       err => {

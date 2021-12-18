@@ -2,10 +2,10 @@
 <div class="parent" *ngIf="this.provided_bk_details">
     <div class="class div1 boldText">Current Balance</div>
     <div class="class div2 extraBold">{{bank_balance}}</div>
-    <div class="class div3 boldText">This month expense</div>
-    <div class="class div4 extraBold">$5000</div>
-    <div class="class div5 boldText">This month gain</div>
-    <div class="class div6 extraBold">$800
+    <div class="class div3 boldText">Cash in flow - {{month}}</div>
+    <div class="class div4 extraBold">{{cash_in_flow}}</div>
+    <div class="class div5 boldText">Cash out flow - {{month}}</div>
+    <div class="class div6 extraBold">{{cash_out_flow}}
     </div>
 </div>
 <div class="case2" *ngIf="!this.provided_bk_details">

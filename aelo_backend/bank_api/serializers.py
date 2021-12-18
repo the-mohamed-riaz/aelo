@@ -7,6 +7,12 @@ from rest_framework.response import Response
 from bank_api.models import *
 
 
+class Accounts_chart_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccountBalance
+        fields = ['timestamp', 'account_balance']
+
+
 class Cash_flow_serializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=40, decimal_places=3)
 

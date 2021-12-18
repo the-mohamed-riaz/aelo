@@ -42,6 +42,15 @@ export class AddTransComponent implements OnInit {
     )
   }
 
+  re_initialize_form() {
+    if (this.cookie.check('username')) {
+      this.username = this.cookie.get('username');
+      this.addForm.controls['username'].setValue(this.username);
+    };
+    this.addForm.controls['trans_date'].setValue(moment(new Date()).format("YYYY-MM-DD"));
+    this.addForm.controls['trans_hour'].setValue(new Date().getHours() + ":" + new Date().getMinutes());
+  }
+
   addForm = new FormGroup({
     username: new FormControl(this.username),
     amount: new FormControl(null),
@@ -116,11 +125,13 @@ export class AddTransComponent implements OnInit {
     this.http.post("http://localhost:8000/add/", formData).subscribe(
       (next) => {
         console.log("success: ", next);
+        this.re_initialize_form();
         this._snackBar.open("Last transaction was noted succesfully!", "OK", { duration: 3000 });
       },
       (err) => { console.log("Add form error", err); },
       () => {
         this.addForm.reset();
+        this.re_initialize_form();
       }
     );
   }

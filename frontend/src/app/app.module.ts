@@ -17,6 +17,7 @@ import { LoginInterceptor } from './interceptor/login.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharedComponentsModule } from './shared/components/components.module';
 import { MaterialsModule } from './shared/materials/materials.module';
+import { LineComponent } from './shared/charts/chartist/line/line.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MaterialsModule } from './shared/materials/materials.module';
     NavbarComponent,
     LoginComponent,
     LogoutComponent,
+    LineComponent,
   ],
   imports: [
     BrowserModule,

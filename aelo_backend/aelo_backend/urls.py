@@ -25,7 +25,9 @@ urlpatterns = [
          name='gives data for tree map chart'),
     path('verify-token/', verify_token),
 
-    path('number-metrics/', Number_metrics.as_view(), name="Number metrics")
+    path('number-metrics/', Number_metrics.as_view(), name="Number metrics"),
+    path('trans-chart/', Transaction_chart_api.as_view(),
+         name="transaction chart data")
 ]
 
 # urlpatterns += router.urls

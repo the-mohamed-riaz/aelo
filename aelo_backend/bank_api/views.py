@@ -16,6 +16,7 @@ from django.dispatch import receiver
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status, views
+from rest_framework import request
 from rest_framework.authentication import (BasicAuthentication,
                                            TokenAuthentication)
 from rest_framework.authtoken.models import Token
@@ -26,10 +27,19 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
+
 # from rest_framework.serializers import Serializer
 from django.core import serializers
 from bank_api.models import *
 from bank_api.serializers import *
+
+# finds username from token provided for authentication
+
+
+def find_user(self):
+    token_str = self.request.META['HTTP_AUTHORIZATION'][6:]
+    return str(Token.objects.get(key=token_str).user)
+
 
 # Create / register a new username
 
@@ -452,3 +462,17 @@ class User_recent_trans(generics.ListAPIView):
                 parsed[1:].lower()
             # print("i: ", i, "\n ith query:", queryset[i].__dict__['cat_of_trans'])
         return queryset
+
+
+class Transaction_chart_api(views.APIView):
+    def get(self, request, format=None):
+        user = find_user(self)
+        today = datetime.datetime.now()
+        print('today : ', today)
+        start_day = today - datetime.timedelta(days=365)
+        print("start_day", start_day)
+        queryset = AccountBalance.objects.all().filter(
+            username=user).filter(timestamp__range=(start_day, today)).order_by('timestamp')
+        print("queryset: ", queryset)
+        data = Accounts_chart_serializer(queryset, many=True).data
+        return Response(data, status.HTTP_200_OK)
