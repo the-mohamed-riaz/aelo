@@ -1,4 +1,6 @@
+from copy import Error
 import datetime
+import json
 import os
 from decimal import Context
 from re import M
@@ -24,8 +26,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.serializers import Serializer
-
+# from rest_framework.serializers import Serializer
+from django.core import serializers
 from bank_api.models import *
 from bank_api.serializers import *
 
@@ -181,45 +183,52 @@ def account_exists(username):
     return True
 
 
+def get_amt_value(serialized_data, dict_key):
+    arr = []
+    for (i) in serialized_data:
+        arr.append(float(dict(i).get(dict_key)))
+    return arr
+
+
 class Number_metrics(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        username = request.query_params['username']
+        try:
+            username = request.query_params['username']
+        except:
+            return Response('Username is required', status.HTTP_404_NOT_FOUND)
+        try:
+            User.objects.get(username=username)
+        except:
+            return Response('Not a valid user', status.HTTP_404_NOT_FOUND)
         parser = '%Y-%m-%d %H:%M:%S %z'
+# month start
         day_start = datetime.datetime.strptime((str(datetime.date.today())[
             :-2] + '01 00:00:01 +0530'), parser)
-        day_end = datetime.datetime.strptime((str(datetime.date.today())[
-            :-2] + '01 23:59:59 +0530'), parser)
-        infinite_start = datetime.datetime(2021, 1, 1, 0, 0, 0, 0)
-        # try:
-        #     start_bal_query = AccountBalance.objects.filter(timestamp__range=(
-        #         day_start, day_end)).order_by('-timestamp').first().value('account_balance')
-        # except:
-        start_bal_query = AccountBalance.objects.filter(
-            timestamp__range=(day_start, day_end)).order_by('-timestamp')
+# till date
+        day_end = datetime.datetime.strptime(
+            (str(datetime.date.today()) + ' 23:59:59 +0530'), parser)
+# list of income amount
+        cash_in_flow = list(BankTranscations.objects.filter(username=username).filter(
+            trans_date__range=(day_start, day_end)).filter(type_of_trans='credit').values('amount'))
+# list of expense amout
+        cash_out_flow = list(BankTranscations.objects.filter(username=username).filter(
+            trans_date__range=(day_start, day_end), type_of_trans='debit').values('amount'))
 
-        if (len(start_bal_query) < 1):
-            start_bal = AccountBalance.objects.values('account_balance').filter(timestamp__range=(
-                infinite_start, day_start)).order_by('-timestamp').first()['account_balance']
-        else:
-            start_bal = 0
 
-        amount = AccountBalance.objects.values('account_balance').order_by(
-            '-timestamp').first()['account_balance']
+# serializing the queryset
+        cash_in = Cash_flow_serializer(cash_in_flow, many=True).data
+        cash_out = Cash_flow_serializer(cash_out_flow, many=True).data
 
-        new = amount - start_bal
-        print('\n\nnew = ', amount, "-", start_bal)
-        print('\n\namt:', amount, "new bal: ", new)
+        c_in_arr = get_amt_value(cash_in, 'amount')
+        c_out_arr = get_amt_value(cash_out, 'amount')
 
-        if(len(start_bal_query) < 1):
-            # print("no balance")
-            return Response(new)
+        income_this_month = sum(c_in_arr)
+        expense_this_month = sum(c_out_arr)
 
-        # current_bal =
-        print('start_bal: ', start_bal)
-        return Response(f'{timezone.now()}')
+        return Response({'income': income_this_month, 'expense': expense_this_month}, status.HTTP_200_OK)
 
 
 class Account_balance(views.APIView):

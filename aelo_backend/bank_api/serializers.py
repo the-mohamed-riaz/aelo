@@ -7,6 +7,10 @@ from rest_framework.response import Response
 from bank_api.models import *
 
 
+class Cash_flow_serializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=40, decimal_places=3)
+
+
 class Tree_chart_serializer(serializers.ModelSerializer):
     class Meta:
         model = BankTranscations
