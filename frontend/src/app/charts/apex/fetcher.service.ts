@@ -7,6 +7,11 @@ export interface $tree_map {
   y: string;
 };
 
+export interface $trans_chart {
+  timestamp: Date | string;
+  account_balance: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,5 +22,8 @@ export class FetcherService {
 
   get_tree_map_data(): Observable<Array<$tree_map>> {
     return this.http.get<Array<$tree_map>>("http://localhost:8000/tree-map/");
+  }
+  get_trans_time_series(): Observable<Array<$trans_chart>> {
+    return this.http.get<Array<$trans_chart>>("http://localhost:8000/tree-map/");
   }
 }
