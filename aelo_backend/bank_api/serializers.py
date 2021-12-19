@@ -3,11 +3,14 @@ from copy import error
 from django.db.models import fields
 from rest_framework import serializers, status
 from rest_framework.response import Response
+from aelo_backend.settings import DATETIME_FORMAT
 
 from bank_api.models import *
 
 
 class Accounts_chart_serializer(serializers.ModelSerializer):
+    timestamp = serializers.DateTimeField(format=DATETIME_FORMAT)
+
     class Meta:
         model = AccountBalance
         fields = ['timestamp', 'account_balance']

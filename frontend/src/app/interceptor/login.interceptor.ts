@@ -20,26 +20,22 @@ export class LoginInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Token ${this.cookie.get('tkn')}`,
-          // 'Content-Type': 'application/json',
-          // 'Access-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Headers': 'Content-Type',
-          // 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT,PATCH',
         }
       });
       // console.debug(request);
     } else {
-      request = request;
+      // request = request;
       this.route.navigateByUrl('/login');
     }
 
     return next.handle(request).pipe(
-      map((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          // console.log("letting pass in interceptor");
-          // console.log("interceptor event: \n", event);
-        }
-        return event;
-      }),
+      // map((event: HttpEvent<any>) => {
+      // if (event instanceof HttpResponse) {
+      // console.log("letting pass in interceptor");
+      // console.log("interceptor event: \n", event);
+      // }
+      // return event;
+      // }),
       catchError((error: HttpErrorResponse) => {
         let data = {};
         data = {

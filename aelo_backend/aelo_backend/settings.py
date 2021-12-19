@@ -141,7 +141,9 @@ TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
+
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S %z'
 
 USE_TZ = True
 

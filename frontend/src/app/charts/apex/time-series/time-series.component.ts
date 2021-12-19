@@ -1,16 +1,12 @@
-import { $trans_chart, FetcherService } from './../fetcher.service';
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import * as moment from 'moment';
 import {
   ApexAxisChartSeries,
-  ApexChart,
-  ApexTitleSubtitle,
-  ApexDataLabels,
-  ApexFill,
-  ApexMarkers,
-  ApexYAxis,
-  ApexXAxis,
-  ApexTooltip
+  ApexChart, ApexDataLabels, ApexFill, ApexGrid,
+  ApexLegend,
+  ApexMarkers, ApexStroke, ApexTitleSubtitle, ApexTooltip, ApexXAxis, ApexYAxis, ChartComponent
 } from "ng-apexcharts";
+import { $trans_chart, FetcherService } from './../fetcher.service';
 
 @Component({
   selector: 'apex-time-series',
@@ -28,30 +24,32 @@ export class TimeSeriesComponent implements OnInit {
   public yaxis!: ApexYAxis;
   public xaxis!: ApexXAxis;
   public tooltip!: ApexTooltip;
+  public grid!: ApexGrid;
+  public legend!: ApexLegend;
+  public colors: string[] = [];
+  series_data!: Array<[number, number]>;
 
 
-  x_axis!: Array<string | Date>;
   constructor(api: FetcherService) {
+    this.colors = ['#0090FF', '#00E396'];
     api.get_trans_time_series().subscribe(
       (val) => {
-        // update value to chart
-        this.splitData(val);
-        // this.initChartData();
+        this.series_data = this.splitData(val);
+        this.initChartData()
       }
     )
   }
 
-  splitData(api_data: Array<$trans_chart>): Array<string | Date> {
-    let dates: Array<string | Date> = []
+  splitData(api_data: Array<$trans_chart>): Array<[number, number]> {
+    let series: Array<[number, number]> = []
+    let parse = "YYYY-MM-DD HH:mm:ss Z"
     api_data.forEach(
       (val: $trans_chart) => {
-        console.log(val.timestamp);
-        dates.push(val.timestamp);
+        series.push([moment(val.timestamp, parse).unix(), val.account_balance]);
       }
     );
-
-    console.log("completed x: ", dates);
-    return dates;
+    console.debug("completed spliting data for charts: ", series);
+    return series;
   }
 
 
@@ -59,68 +57,88 @@ export class TimeSeriesComponent implements OnInit {
   }
 
 
-  // public initChartData(): void {
+  public initChartData(): void {
 
-  //   this.series = [
-  //     {
-  //       name: "XYZ MOTORS",
-  //       data: this.x_axis
-  //     }
-  //   ];
+    this.series = [
+      {
+        name: "Account balance",
+        data: this.series_data
+      }
+    ];
 
-  //   this.chart = {
-  //     type: "area",
-  //     stacked: false,
-  //     height: 350,
-  //     zoom: {
-  //       type: "x",
-  //       enabled: true,
-  //       autoScaleYaxis: true
-  //     },
-  //     toolbar: {
-  //       autoSelected: "zoom"
-  //     }
-  //   };
-  //   this.dataLabels = {
-  //     enabled: false
-  //   };
-  //   this.markers = {
-  //     size: 0
-  //   };
-  //   this.title = {
-  //     text: "Stock Price Movement",
-  //     align: "left"
-  //   };
-  //   this.fill = {
-  //     type: "gradient",
-  //     gradient: {
-  //       shadeIntensity: 1,
-  //       inverseColors: false,
-  //       opacityFrom: 0.5,
-  //       opacityTo: 0,
-  //       stops: [0, 90, 100]
-  //     }
-  //   };
-  //   this.yaxis = {
-  //     labels: {
-  //       formatter: function (val) {
-  //         return (val / 1000000).toFixed(0);
-  //       }
-  //     },
-  //     title: {
-  //       text: "Price"
-  //     }
-  //   };
-  //   this.xaxis = {
-  //     type: "datetime"
-  //   };
-  //   this.tooltip = {
-  //     shared: false,
-  //     y: {
-  //       formatter: function (val) {
-  //         return (val / 1000000).toFixed(0);
-  //       }
-  //     }
-  //   };
-  // }
+    this.legend = {
+      position: 'top',
+      horizontalAlign: 'left'
+    },
+      this.chart = {
+        type: "area",
+        stacked: false,
+        height: 205,
+        dropShadow: {
+          enabled: true,
+          top: -2,
+          left: 2,
+          blur: 8,
+          opacity: 0.2
+        },
+        zoom: {
+          type: "x",
+          enabled: true,
+          autoScaleYaxis: true
+        },
+        toolbar: {
+          autoSelected: "zoom"
+        }
+      };
+
+    this.dataLabels = {
+      enabled: false
+    };
+    this.markers = {
+      size: 0,
+      strokeColors: ['#fff'],
+      strokeWidth: 3,
+      strokeOpacity: 1,
+      fillOpacity: 1,
+      hover: {
+        size: 6
+      }
+    };
+    this.grid = {
+      padding: {
+        left: -5,
+        right: 5
+      }
+    }
+    this.title = {
+      align: "left"
+    };
+    this.fill = {
+
+      type: "solid",
+      opacity: 0.4
+
+    };
+    this.yaxis = {
+      labels: {
+        offsetX: 14,
+        offsetY: -5
+      },
+      tooltip: {
+        enabled: true
+      },
+      title: {
+        text: "Balance"
+      }
+    };
+    this.xaxis = {
+      type: "datetime",
+    };
+    this.tooltip = {
+      shared: false,
+      x: {
+        format: "dd MMM yyyy"
+      }
+    };
+  }
 }

@@ -1,3 +1,4 @@
+import { TimeSeriesComponent } from './apex/time-series/time-series.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,7 @@ import { TreemapComponent } from './apex/treemap/treemap.component';
   declarations: [
     LineComponent,
     TreemapComponent,
+    TimeSeriesComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,8 @@ import { TreemapComponent } from './apex/treemap/treemap.component';
   exports: [
     LineComponent,
     TreemapComponent,
+    TimeSeriesComponent
+
   ]
 })
 export class ChartsModule { }
