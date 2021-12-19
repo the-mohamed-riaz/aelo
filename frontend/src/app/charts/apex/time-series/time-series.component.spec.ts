@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LineComponent } from './line.component';
+import { TimeSeriesComponent } from './time-series.component';
 
-describe('LineComponent', () => {
-  let component: LineComponent;
-  let fixture: ComponentFixture<LineComponent>;
+describe('TimeSeriesComponent', () => {
+  let component: TimeSeriesComponent;
+  let fixture: ComponentFixture<TimeSeriesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LineComponent ]
+      declarations: [ TimeSeriesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LineComponent);
+    fixture = TestBed.createComponent(TimeSeriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

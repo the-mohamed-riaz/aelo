@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LineComponent } from './apex/line/line.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { TreemapComponent } from './apex/treemap/treemap.component';
 import { ChartistModule } from 'ng-chartist';
-import { ChartistLineComponent } from './chartist/line/line.component';
+import { LineComponent } from './apex/line/line.component';
+import { TreemapComponent } from './apex/treemap/treemap.component';
 
 
 
@@ -12,17 +12,15 @@ import { ChartistLineComponent } from './chartist/line/line.component';
   declarations: [
     LineComponent,
     TreemapComponent,
-    ChartistLineComponent
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     NgApexchartsModule,
-    ChartistModule
   ],
   exports: [
     LineComponent,
     TreemapComponent,
-    ChartistLineComponent
   ]
 })
 export class ChartsModule { }
