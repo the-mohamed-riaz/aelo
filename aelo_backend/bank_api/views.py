@@ -29,7 +29,6 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 # from rest_framework.serializers import Serializer
-from django.core import serializers
 from bank_api.models import *
 from bank_api.serializers import *
 
@@ -119,6 +118,11 @@ def login_token(request):
     return Response(output_serializer.validated_data, status=status.HTTP_200_OK)
 
 
+def get_user_from_token_func(req):
+    token_str = req.META['HTTP_AUTHORIZATION'][6:]
+    return str(Token.objects.get(key=token_str).user)
+
+
 # verify token
 
 
@@ -129,8 +133,11 @@ def verify_token(request):
     data = request.query_params
     serial = Token_serializer(data=data)
     serial.is_valid(raise_exception=True)
+
     try:
-        username = User.objects.get(username=data['username'])
+        # username = User.objects.get(username=data['username'])
+        username = get_user_from_token_func(request)
+
         print("\n\nUsername: ", username, "\n\n")
     except:
         return Response("why failed", status=status.HTTP_401_UNAUTHORIZED)
@@ -154,7 +161,9 @@ def get_category_options(request):
         serial.is_valid(raise_exception=True)
         print("serializer data: ", serial.data)
         try:
-            username = User.objects.get(username=serial.data['username'])
+            username = get_user_from_token_func(request)
+
+            # username = User.objects.get(username=serial.data['username'])
             print('\n\nusername:  ', username)
         except:
             return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
@@ -206,7 +215,8 @@ class Number_metrics(views.APIView):
 
     def get(self, request, format=None):
         try:
-            username = request.query_params['username']
+            # username = request.query_params['username']
+            username = find_user(self)
         except:
             return Response('Username is required', status.HTTP_404_NOT_FOUND)
         try:
@@ -246,7 +256,9 @@ class Account_balance(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        username = request.query_params['username']
+        # username = request.query_params['username']
+        username = find_user(self)
+
         try:
             queryset = AccountBalance.objects.filter(
                 username=username).values().annotate(username=F('username_id')).last()
@@ -278,23 +290,21 @@ class Bank_account_details(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        req = request.query_params
-        req_sz = Get_option_serializer(data=req)
-        req_sz.is_valid(raise_exception=False)
-        username = req_sz.data['username']
-        if (account_exists(username)):
-            try:
-                queryset = BankDetails.objects.all().filter(
-                    username=username)
-            except:
-                return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
-            if(len(queryset) < 1):
-                return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
-            sz = Bank_details_serializer(data=queryset, many=True)
-            sz.is_valid(raise_exception=False)
-            return Response(sz.data, status.HTTP_200_OK)
-        else:
-            return Response("Invalid user", status.HTTP_401_UNAUTHORIZED)
+        # req = request.query_params
+        # req_sz = Get_option_serializer(data=req)
+        # req_sz.is_valid(raise_exception=False)
+        # username = req_sz.data['username']
+        username = find_user(self)
+        try:
+            queryset = BankDetails.objects.all().filter(
+                username=username)
+        except:
+            return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
+        if(len(queryset) < 1):
+            return Response("No bank details were added", status.HTTP_204_NO_CONTENT)
+        sz = Bank_details_serializer(data=queryset, many=True)
+        sz.is_valid(raise_exception=False)
+        return Response(sz.data, status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         serializer = Bank_details_serializer(data=request.data)
@@ -314,25 +324,23 @@ class CategoryOptions(views.APIView):
         return UserOptions.objects.get(username=User.objects.get(pk))
 
     def get(self, request, format=None):
-        data = request.query_params
-        serial = Get_option_serializer(data=data)
-        serial.is_valid(raise_exception=True)
+        # data = request.query_params
+        # serial = Get_option_serializer(data=data)
+        # serial.is_valid(raise_exception=True)
         # clearConsole()
-        print("serializer data: ", serial.data)
+        # print("serializer data: ", serial.data)
         try:
-            username = User.objects.get(username=serial.data['username'])
-            print('\n\nusername:  ', username)
+            username = find_user(self)
         except:
             return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
 
-        if username:
-            query = UserOptions.objects.filter(
-                username=username).values('cat_options')
-            if query.exists():
-                return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
-            else:
-                query = "no username option available"
-                return Response(query, status=status.HTTP_200_OK)
+        query = UserOptions.objects.filter(
+            username=username).values('cat_options')
+        if query.exists():
+            return Response(query[0]['cat_options'], status=status.HTTP_200_OK)
+        else:
+            query = "no username option available"
+            return Response(query, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         serializer = Post_option_serializer(data=request.data)
@@ -343,8 +351,12 @@ class CategoryOptions(views.APIView):
 
     def patch(self, request, *args, **kwargs):
         data = request.data
-        print("\n\nrequest datas:\n", data)
-        user1 = User.objects.get(username=data.get('username'))
+        # print("\n\nrequest datas:\n", data)
+        # user1 = User.objects.get(username=data.get('username'))
+        try:
+            user1 = find_user(self)
+        except:
+            return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
         print("username: ", user1)
         # print("\n\nall username objects:\n\n", UserOptions.objects.get())
         print("\n\none obj\n\n", UserOptions.objects.get(username=user1))
@@ -363,9 +375,13 @@ class Tree_chart_api(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        serializer = Tree_chart_serializer
+        # serializer = Tree_chart_serializer
+        try:
+            username = find_user(self)
+        except:
+            return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
         fieldname = 'cat_of_trans'
-        queryset = BankTranscations.objects.values(x=F(fieldname)).order_by(
+        queryset = BankTranscations.objects.filter(username=username).values(x=F(fieldname)).order_by(
             fieldname).annotate(y=Count(fieldname))
         for i in range(0, len(queryset)):
             parsed = queryset[i]['x'].replace("_", " ")

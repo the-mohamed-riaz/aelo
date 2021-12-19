@@ -82,8 +82,12 @@ export class Card1xComponent implements OnInit {
   submitForm() {
     let form_data = this.generator.generateFormData(['username', 'bank_name', 'account_balance'], this.bank_form);
     this.http.post('http://localhost:8000/account-balance/', form_data).subscribe(
-      (val) => {
+      () => {
         this.get_bk_details();
+        console.log("-------- sending bank details ----------");
+      },
+      (err) => {
+        console.log("cannot send data, ", err);
       }
     )
   }
