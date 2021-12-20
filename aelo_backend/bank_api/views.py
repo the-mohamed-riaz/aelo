@@ -394,7 +394,7 @@ class Add_Trans(views.APIView):
         datas['username'] = self.request.user
 
         obj = BankTranscations.objects.create(
-            username=datas['username'],
+            username=self.request.user,
             comment=datas['comment'],
             amount=datas['amount'],
             type_of_trans=datas['type_of_trans'],

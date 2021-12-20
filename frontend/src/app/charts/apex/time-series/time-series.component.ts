@@ -34,6 +34,7 @@ export class TimeSeriesComponent implements OnInit {
     this.colors = ['#0090FF', '#00E396'];
     api.get_trans_time_series().subscribe(
       (val) => {
+        console.log('received val: \n', val);
         this.series_data = this.splitData(val);
         this.initChartData()
       }
@@ -45,7 +46,8 @@ export class TimeSeriesComponent implements OnInit {
     let parse = "YYYY-MM-DD HH:mm:ss Z"
     api_data.forEach(
       (val: $trans_chart) => {
-        series.push([moment(val.timestamp, parse).unix(), val.account_balance]);
+        // console.log(moment(val.timestamp, parse).local());
+        series.push([moment(val.timestamp, parse).valueOf(), val.account_balance]);
       }
     );
     console.debug("completed spliting data for charts: ", series);
@@ -74,12 +76,13 @@ export class TimeSeriesComponent implements OnInit {
         type: "area",
         stacked: false,
         height: 205,
+        width: 500,
         dropShadow: {
           enabled: true,
-          top: -2,
-          left: 2,
-          blur: 8,
-          opacity: 0.2
+          top: -1,
+          left: 3,
+          blur: 5,
+          opacity: 0.1
         },
         zoom: {
           type: "x",
@@ -122,7 +125,8 @@ export class TimeSeriesComponent implements OnInit {
     this.yaxis = {
       labels: {
         offsetX: 14,
-        offsetY: -5
+        offsetY: -5,
+        formatter: (value) => { return (value / 1000) + 'K' },
       },
       tooltip: {
         enabled: true
@@ -138,6 +142,11 @@ export class TimeSeriesComponent implements OnInit {
       shared: false,
       x: {
         format: "dd MMM yyyy"
+      },
+      y: {
+        formatter: (val) => {
+          return (val / 1000) + 'K';
+        }
       }
     };
   }

@@ -119,7 +119,7 @@ export class AddTransComponent implements OnInit {
       formData.append(key, this.addForm.controls[key].value);
       console.debug(key, ':', this.addForm.controls[key].value);
     }
-    this.http.post("http://localhost:8000/add/", formData).subscribe(
+    this.api.add_transaction(formData).subscribe(
       (next) => {
         console.log("success: ", next);
         this.re_initialize_form();

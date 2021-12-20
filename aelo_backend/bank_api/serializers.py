@@ -139,7 +139,7 @@ class User_trans_summary_serializer(serializers.ModelSerializer):
 
 
 class Add_trans_serializer(serializers.Serializer):
-    username = serializers.CharField()
+    # username = serializers.CharField()
     comment = serializers.CharField()
     amount = serializers.DecimalField(decimal_places=2, max_digits=20)
     type_of_trans = serializers.CharField()

@@ -24,4 +24,8 @@ export class ApiService {
       (err) => console.log("Error patching request ....\n", err)
     );
   }
+
+  add_transaction(formData: FormData): Observable<any> {
+    return this.http.post("http://localhost:8000/add/", formData);
+  }
 }
