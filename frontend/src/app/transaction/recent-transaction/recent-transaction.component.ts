@@ -1,10 +1,11 @@
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { CookieService } from 'ngx-cookie-service';
 import { $pretty_recent_trans, $recentTransaction } from '../models/model';
-import * as moment from 'moment';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'recent-transaction',
@@ -16,11 +17,11 @@ export class RecentTransactionComponent implements OnInit {
   data: Array<$pretty_recent_trans> = [];
   recent_trans_query: Array<$recentTransaction> = [];
   username: string | null = null;
-  constructor(private http: HttpClient, private cookie: CookieService, public dialog: MatDialog, private route: Router) {
+  constructor(private http: HttpClient, private api: ApiService, private cookie: CookieService, public dialog: MatDialog, private route: Router) {
     if (this.cookie.check('username')) {
       this.username = this.cookie.get('username');
       this.fetchValues_1();
-      setInterval(async () => { this.fetchValues(); console.log("unique list: ", this.ids); }, 1000 * 3);
+      setInterval(async () => { this.fetchValues() }, 1000 * 3);
     }
   }
 
@@ -31,7 +32,7 @@ export class RecentTransactionComponent implements OnInit {
   ids = new Set();
 
   fetchValues_1() {
-    this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.username}`).subscribe(
+    this.api.get_recent_transaction().subscribe(
       (val) => {
         this.recent_trans_query = val;
         for (let item of this.recent_trans_query) {
@@ -71,7 +72,7 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   fetchValues() {
-    this.http.get<Array<$recentTransaction>>(`http://localhost:8000/recent/?username=${this.username}`).subscribe(
+    this.api.get_recent_transaction().subscribe(
       (val) => {
         this.recent_trans_query = val;
         for (let item of this.recent_trans_query) {
@@ -110,9 +111,9 @@ export class RecentTransactionComponent implements OnInit {
 
   addData(item: $recentTransaction, row: $pretty_recent_trans) {
     if (this.ids.has(item.id)) {
-      console.log("not pushing row, has status: ", this.ids.has(item.id), "\n id list", this.ids, "\n item id:", item.id);
+      // console.log("not pushing row, has status: ", this.ids.has(item.id), "\n id list", this.ids, "\n item id:", item.id);
     } else {
-      console.debug("pushing row into table: \n", row);
+      // console.debug("pushing row into table: \n", row);
       this.data.push(row);
     }
   }

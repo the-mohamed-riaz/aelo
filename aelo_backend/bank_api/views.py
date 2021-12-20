@@ -41,15 +41,12 @@ def find_user(self):
 
 
 # Create / register a new username
-
-
 class User_registration(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 # creates default options when a username is registered with aelo
-
 @receiver(post_save, sender=User)
 def new_user_created(instance, created, **kwargs):
     if created:
@@ -58,7 +55,6 @@ def new_user_created(instance, created, **kwargs):
 
 
 # Generate token to username / username login
-
 @receiver(post_save, sender=BankTranscations)
 def new_bank_balance(instance, created, **kwargs):
     if created:
@@ -216,7 +212,8 @@ class Number_metrics(views.APIView):
     def get(self, request, format=None):
         try:
             # username = request.query_params['username']
-            username = find_user(self)
+            # username = find_user(self)
+            username = request.user
         except:
             return Response('Username is required', status.HTTP_404_NOT_FOUND)
         try:
@@ -257,7 +254,8 @@ class Account_balance(views.APIView):
 
     def get(self, request, format=None):
         # username = request.query_params['username']
-        username = find_user(self)
+        # username = find_user(self)
+        username = request.user
 
         try:
             queryset = AccountBalance.objects.filter(
@@ -270,7 +268,8 @@ class Account_balance(views.APIView):
         return Response(queryset, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        username = User.objects.get(username=request.data['username'])
+        # username = User.objects.get(username=request.data['username'])
+        username = request.user
         bank_name = request.data['bank_name']
         account_balance = request.data['account_balance']
         res = AccountBalance.objects.create(
@@ -290,11 +289,7 @@ class Bank_account_details(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        # req = request.query_params
-        # req_sz = Get_option_serializer(data=req)
-        # req_sz.is_valid(raise_exception=False)
-        # username = req_sz.data['username']
-        username = find_user(self)
+        username = request.user
         try:
             queryset = BankDetails.objects.all().filter(
                 username=username)
@@ -324,13 +319,9 @@ class CategoryOptions(views.APIView):
         return UserOptions.objects.get(username=User.objects.get(pk))
 
     def get(self, request, format=None):
-        # data = request.query_params
-        # serial = Get_option_serializer(data=data)
-        # serial.is_valid(raise_exception=True)
-        # clearConsole()
-        # print("serializer data: ", serial.data)
         try:
-            username = find_user(self)
+            # username = find_user(self)
+            username = request.user
         except:
             return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
 
@@ -354,7 +345,8 @@ class CategoryOptions(views.APIView):
         # print("\n\nrequest datas:\n", data)
         # user1 = User.objects.get(username=data.get('username'))
         try:
-            user1 = find_user(self)
+            # user1 = find_user(self)
+            user1 = request.user
         except:
             return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
         print("username: ", user1)
@@ -377,7 +369,8 @@ class Tree_chart_api(views.APIView):
     def get(self, request, *args, **kwargs):
         # serializer = Tree_chart_serializer
         try:
-            username = find_user(self)
+            # username = find_user(self)
+            username = request.user
         except:
             return Response("Invalid username", status=status.HTTP_401_UNAUTHORIZED)
         fieldname = 'cat_of_trans'
@@ -398,8 +391,8 @@ class Add_Trans(views.APIView):
         serializer.is_valid(raise_exception=True)
         datas = serializer.validated_data
         print("\n\nserialized data:\n", serializer.data)
-        datas['username'] = User.objects.all().filter(
-            username=datas['username']).first()
+        datas['username'] = self.request.user
+
         obj = BankTranscations.objects.create(
             username=datas['username'],
             comment=datas['comment'],
@@ -454,41 +447,33 @@ class User_trans_summary(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        r_user = self.request.query_params.get('username')
-        user_obj = User.objects.get(username=r_user)
-        print("\n\n User:", r_user, "\n\n id:", user_obj)
-        queryset = BankTranscations.objects.all().filter(
-            username=user_obj)
+        queryset = BankTranscations.objects.all().filter(username=self.request.user)
         return queryset
 
 
 class User_recent_trans(generics.ListAPIView):
     serializer_class = User_trans_summary_serializer
-    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        r_user = self.request.query_params.get('username')
-        user_obj = User.objects.get(username=r_user)
         queryset = BankTranscations.objects.all().filter(
-            username=user_obj).order_by('-trans_date')[:5]
+            username=self.request.user).order_by('-trans_date')[:5]
         for i in range(0, len(queryset)):
             parsed = queryset[i].__dict__['cat_of_trans'].replace("_", " ")
             queryset[i].__dict__['cat_of_trans'] = parsed[0].upper() + \
                 parsed[1:].lower()
-            # print("i: ", i, "\n ith query:", queryset[i].__dict__['cat_of_trans'])
         return queryset
 
 
 class Transaction_chart_api(views.APIView):
     def get(self, request, format=None):
-        user = find_user(self)
         today = datetime.datetime.now()
-        print('today : ', today)
+        # print('today : ', today)
         start_day = today - datetime.timedelta(days=365)
-        print("start_day", start_day)
+        # print("start_day", start_day)
         queryset = AccountBalance.objects.all().filter(
-            username=user).filter(timestamp__range=(start_day, today)).order_by('timestamp')
+            username=self.request.user).filter(timestamp__range=(start_day, today)).order_by('timestamp')
         print("queryset: ", queryset)
         data = Accounts_chart_serializer(queryset, many=True).data
         return Response(data, status.HTTP_200_OK)

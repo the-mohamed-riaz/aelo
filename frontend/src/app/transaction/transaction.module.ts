@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,7 @@ import { TransactionRoutingModule } from './transaction-routing.module';
     FormsModule,
     ReactiveFormsModule,
     TransactionRoutingModule,
+    HttpClientModule,
     DropdownModule,
     CardsModule,
     ChartsModule,

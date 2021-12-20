@@ -1,9 +1,9 @@
-import { FormGroup, FormControl } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 import { FormDataGeneratorService } from 'src/app/shared/form-data-generator.service';
-import * as moment from 'moment';
+import { ApiService } from './../serivce/api.service';
 
 export interface bank_api_resp {
   account_balance: number;
@@ -16,9 +16,7 @@ export interface number_metrics_resp {
   income: number;
   expense: number;
 }
-@Injectable({
-  providedIn: 'root'
-})
+
 
 @Component({
   selector: 'card1x',
@@ -36,7 +34,9 @@ export class Card1xComponent implements OnInit {
 
   month: string;
   months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  constructor(private http: HttpClient, private cookie: CookieService, private generator: FormDataGeneratorService) {
+
+
+  constructor(private http: HttpClient, private cookie: CookieService, private api: ApiService, private generator: FormDataGeneratorService) {
     this.username = this.cookie.get('username');
     this.bank_form.controls['username'].setValue(this.username);
     this.month = this.months_arr[new Date().getMonth()];
@@ -44,17 +44,18 @@ export class Card1xComponent implements OnInit {
   }
 
   get_number_metrics() {
-    this.http.get<number_metrics_resp>(`http://localhost:8000/number-metrics/?username=${this.username}`).subscribe(
+    this.api.get_number_metrics().subscribe(
       (val) => {
-
         this.cash_in_flow = val.income;
         this.cash_out_flow = val.expense;
         console.debug("number metrics\n,", this.cash_in_flow, this.cash_out_flow, "\n val: ", val);
       }
     )
   };
+
+
   get_bk_details() {
-    this.http.get<bank_api_resp>(`http://localhost:8000/account-balance/?username=${this.username}`).subscribe(
+    this.api.get_bk_details().subscribe(
       (val: bank_api_resp) => {
         console.debug("val from bank details api", val);
         val ? this.provided_bk_details = true : this.provided_bk_details = false;
@@ -69,6 +70,7 @@ export class Card1xComponent implements OnInit {
       }
     );
   }
+
   bank_form = new FormGroup({
     username: new FormControl(null),
     bank_name: new FormControl(null),
@@ -76,7 +78,7 @@ export class Card1xComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    setInterval(() => this.get_bk_details(), 3000);
+    // setInterval(() => this.get_bk_details(), 3000);
   }
 
   submitForm() {

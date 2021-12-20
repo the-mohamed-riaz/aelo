@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment/moment';
 import { CookieService } from 'ngx-cookie-service';
 import { $dropdown_option, EditableDropdownComponent } from 'src/app/shared/components/editable-dropdown/editable-dropdown.component';
+import { ApiService } from '../services/api.service';
 import { FormDataGeneratorService, generateOptions } from './../../shared/form-data-generator.service';
 
 
@@ -32,10 +33,10 @@ export class AddTransComponent implements OnInit {
   randId: string;
   customDate = true;
 
-  constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService, private _snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private gen_form_data: FormDataGeneratorService, private cookie: CookieService, private _snackBar: MatSnackBar, private api: ApiService) {
     this.username = this.cookie.get('username');
     this.randId = 'id_' + this.gen_RandId();
-    this.http.get<string>('http://localhost:8000/options/?username=' + this.username).subscribe(
+    this.api.get_cat_options().subscribe(
       (val: string) => {
         this.catergoryOptions = generateOptions(val.split(','));
       }
@@ -85,11 +86,7 @@ export class AddTransComponent implements OnInit {
       if (this.cookie.check('username')) {
         this.username = this.cookie.get('username');
       };
-      this.http.patch(`http://localhost:8000/options/?username=${this.username}`, { username: this.username, cat_options: op_dt }).subscribe(
-        // this.http.post("http://localhost:8000/options/", data).subscribe(
-        (val) => console.log("patching request ....\n", val),
-        (err) => console.log("patching request ....\n", err)
-      );
+      this.api.patch_cat_options(this.username!, op_dt);
     });
   }
 
