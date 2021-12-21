@@ -17,4 +17,8 @@ export class ApiService {
   get_bk_details(): Observable<bank_api_resp> {
     return this.http.get<bank_api_resp>('http://localhost:8000/account-balance/')
   }
+
+  send_bank_details(form_data: FormData): Observable<any> {
+    return this.http.post('http://localhost:8000/account-balance/', form_data)
+  }
 }

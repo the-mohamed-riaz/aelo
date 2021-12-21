@@ -126,7 +126,19 @@ export class TimeSeriesComponent implements OnInit {
       labels: {
         offsetX: 14,
         offsetY: -5,
-        formatter: (value) => { return (value / 1000) + 'K' },
+        formatter: (val) => {
+          // return (val / 100) + 'H'
+          let value = '' + val;
+          if ((val / 1000) > 0.9) {
+            // console.log('val/1000', val / 1000);
+            value = (val / 1000) + 'K';
+          } else if (((val / 100) > 0.9) && ((val / 100) < 10)) {
+            // console.log('val/100', val / 100);
+            value = (val / 100) + 'H';
+          }
+          // console.log('value: ', value);
+          return value;
+        },
       },
       tooltip: {
         enabled: true

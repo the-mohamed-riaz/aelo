@@ -65,8 +65,10 @@
             background-color: #DDDD;
             border-radius: 50%;
             .icon {
+                background: transparent;
+                border: none;
                 text-align: center;
-                padding-left: 4px;
+                padding-left: 2px;
                 font-size: 1.25rem;
                 opacity: 0.6;
             }

@@ -90,7 +90,7 @@ class Req_username_serializer(serializers.ModelSerializer):
 
 
 class Account_balance_serializer(serializers.ModelSerializer):
-    timestamp = serializers.DateTimeField()
+    timestamp = serializers.DateTimeField(format=DATETIME_FORMAT)
 
     class Meta:
         model = AccountBalance

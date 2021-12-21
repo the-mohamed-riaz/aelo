@@ -43,21 +43,25 @@ export class RecentTransactionComponent implements OnInit {
             timeStamp: ""
           };
           if (item.payment_mode === "cash") {
-            row.icon = "rupee sign";
+            row.icon = "money bill alternate";
           } else if (item.payment_mode === "upi") {
-            row.icon = "username outline";
+            row.icon = "qrcode";
           } else if (item.payment_mode === "bank_transfer") {
             row.icon = "university";
           } else if (item.payment_mode === "cheque") {
             row.icon = "bookmark outline";
           } else if (item.payment_mode === "atm_card") {
-            row.icon = "credit card outline";
+            row.icon = "credit card";
           } else if (item.payment_mode === "others") {
             row.icon = "handshake outline";
           }
 
-          row.comment = item.cat_of_trans + (item.comment != null ? ` (${item.comment!.slice(0, 20) + ' ...'})` : '');
-          // row.timeStamp = item.trans_date + "  " + item.trans_hour;
+          if (item.comment !== "null") {
+            row.comment = item.cat_of_trans + ' (' + item.comment!.slice(0, 20) + ') ...';
+          } else {
+            row.comment = item.cat_of_trans;
+          }
+
           let ts = item.trans_date + ' ' + item.trans_hour;
           row.timeStamp = moment(ts, "YYYY-MM-DD HH:mm").format("LLLL");
 
@@ -83,24 +87,31 @@ export class RecentTransactionComponent implements OnInit {
             timeStamp: ""
           };
           if (item.payment_mode === "cash") {
-            row.icon = "rupee sign";
+            row.icon = "money bill alternate";
           } else if (item.payment_mode === "upi") {
-            row.icon = "username outline";
+            row.icon = "qrcode";
           } else if (item.payment_mode === "bank_transfer") {
             row.icon = "university";
           } else if (item.payment_mode === "cheque") {
             row.icon = "bookmark outline";
           } else if (item.payment_mode === "atm_card") {
-            row.icon = "credit card outline";
+            row.icon = "credit card";
           } else if (item.payment_mode === "others") {
             row.icon = "handshake outline";
           }
-          row.comment = item.cat_of_trans + (item.comment != null ? ` (${item.comment!.slice(0, 20) + ' ...'})` : '');
+
+          if (item.comment !== "null") {
+            row.comment = item.cat_of_trans + ' (' + item.comment!.slice(0, 20) + ') ...';
+          } else {
+            row.comment = item.cat_of_trans;
+          }
+
           let ts = item.trans_date + ' ' + item.trans_hour;
           row.timeStamp = moment(ts, "YYYY-MM-DD HH:mm").format("LLLL");
           row.amount = item.amount;
           this.addData(item, row);
           this.ids.add(item.id);
+          // console.log('comment: ', item.comment, typeof (item.comment), item.comment === 'null');
         }
 
       },

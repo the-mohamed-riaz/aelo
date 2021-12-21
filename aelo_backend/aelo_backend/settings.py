@@ -144,7 +144,7 @@ USE_I18N = True
 USE_L10N = False
 
 # DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
-DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S %z'
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S %Z'
 
 USE_TZ = True
 
