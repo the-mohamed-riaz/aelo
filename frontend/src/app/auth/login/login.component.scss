@@ -11,7 +11,6 @@
     position: relative;
     overflow: hidden;
     height: 100vh;
-    overflow: hidden;
     .formsContainer {
         margin: 11% auto;
         display: flex;
@@ -164,7 +163,49 @@
     bottom: 5rem !important;
 }
 
-@media (max-width: 768px) {
+// bootstrap breakpoints  576px, 768px, 992px, and 1200px
+@media only screen and (max-width: 576px) {
+    section#formHolder .form {
+        width: 100vw;
+        margin-left: 0;
+    }
+    h2 {
+        font-size: 50px !important;
+    }
+    .hideBG {
+        right: 2rem !important;
+        bottom: 100% !important;
+        // Brand Area
+        .brand {
+            border: 5px solid red;
+            &::before {
+                height: 10%;
+            }
+            .rLogo {
+                width: 50px;
+                height: 50px;
+                img {
+                    padding-right: 6px;
+                }
+            }
+            .aeloT {
+                font-size: 2.5rem;
+                margin: -2.95rem auto 5px;
+            }
+            .aeloC {
+                color: #38723d;
+                font-size: 12px;
+                font-weight: 400;
+                text-align: left;
+                margin-left: 5rem;
+                padding-top: 3px;
+                margin-top: 8px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
     .container {
         overflow: hidden;
     }
@@ -225,15 +266,5 @@
     .brand {
         top: 2.5%;
         bottom: 2.5%;
-    }
-}
-
-@media (max-width: 480px) {
-    section#formHolder .form {
-        width: 100vw;
-        margin-left: 0;
-    }
-    h2 {
-        font-size: 50px !important;
     }
 }
