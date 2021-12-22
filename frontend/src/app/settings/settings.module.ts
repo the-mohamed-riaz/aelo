@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialsModule } from './../shared/materials/materials.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,7 +16,9 @@ import { SettingsHomeComponent } from './settings-home/settings-home.component';
   imports: [
     CommonModule,
     SettingsRoutingModule,
-    MaterialsModule
+    MaterialsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     ResetPasswordComponent,

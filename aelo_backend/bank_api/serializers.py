@@ -49,6 +49,20 @@ class User_serializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class Settings_page_sz(serializers.ModelSerializer):
+    full_name = serializers.CharField()
+    mobile = serializers.IntegerField()
+    email = serializers.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'mobile', 'email']
+
+    def get_cleaned_data(self):
+        self.is_valid(raise_exception=True)
+        return self.validated_data
+
+
 class Username_serializer(serializers.ModelSerializer):
     class Meta:
         model = User

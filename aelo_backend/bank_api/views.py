@@ -40,6 +40,19 @@ def find_user(self):
     return str(Token.objects.get(key=token_str).user)
 
 
+class Setting_page(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, req):
+        user = req.user
+        query = User.objects.get(username=user)
+        data = Settings_page_sz(query).data
+        # sz = Settings_page_sz(query).data
+        # data = sz.get_cleaned_data()
+        return Response(data, status.HTTP_200_OK)
+
+
 # Create / register a new username
 class User_registration(generics.CreateAPIView):
     queryset = User.objects.all()
