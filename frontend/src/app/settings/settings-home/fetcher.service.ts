@@ -20,6 +20,9 @@ export class FetcherService {
     get_profile_data(): Observable<$profile_details> {
         return this.http.get<$profile_details>("http://localhost:8000/settings-page/");
     };
+    update_profile_data(formData: FormData): Observable<$profile_details> {
+        return this.http.patch<$profile_details>("http://localhost:8000/settings-page/", formData);
+    };
 
     change_password(): Observable<Array<any>> {
         return this.http.get<Array<any>>("http://localhost:8000/trans-chart/");

@@ -48,8 +48,17 @@ class Setting_page(views.APIView):
         user = req.user
         query = User.objects.get(username=user)
         data = Settings_page_sz(query).data
-        # sz = Settings_page_sz(query).data
-        # data = sz.get_cleaned_data()
+        return Response(data, status.HTTP_200_OK)
+
+    def patch(self, req):
+        user = req.user
+        req_data = Settings_page_sz(req.data).data
+        obj = User.objects.get(username=user)
+        obj.email = req_data['email']
+        obj.mobile = req_data['mobile']
+        obj.full_name = req_data['full_name']
+        obj.save()
+        data = Settings_page_sz(obj).data
         return Response(data, status.HTTP_200_OK)
 
 
