@@ -36,6 +36,7 @@
     }
     .hideBG {
         position: absolute;
+        border: 1px solid green;
         top: 0;
         left: 0;
         bottom: 0;
@@ -165,6 +166,22 @@
 
 // bootstrap breakpoints  576px, 768px, 992px, and 1200px
 @media only screen and (max-width: 576px) {
+    .formsContainer {
+        position: relative;
+        left: -50%;
+        width: 100%;
+        .login-container {
+            margin-right: 0px;
+            width: 500px;
+            .matField {
+                width: 318px;
+                margin: 0px 1rem !important;
+            }
+            .other-btns {
+                width: 318px;
+            }
+        }
+    }
     section#formHolder .form {
         width: 100vw;
         margin-left: 0;
@@ -173,11 +190,11 @@
         font-size: 50px !important;
     }
     .hideBG {
-        right: 2rem !important;
+        right: 5px !important;
         bottom: 100% !important;
         // Brand Area
         .brand {
-            border: 5px solid red;
+            box-shadow: none;
             &::before {
                 height: 10%;
             }
@@ -198,7 +215,7 @@
                 font-weight: 400;
                 text-align: left;
                 margin-left: 5rem;
-                padding-top: 3px;
+                padding-top: 8px;
                 margin-top: 8px;
             }
         }
