@@ -1,22 +1,44 @@
 :host {
-     ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick,
-     ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline,
-     ::ng-deep .mat-form-field-label,
-     ::ng-deep .mat-button-wrapper {
-        color: #636363;
-    }
-     ::ng-deep .mat-form-field-wrapper {
-        padding: 0 !important;
-    }
-     ::ng-deep .mat-focused * {
-        color: #1e8d7b !important;
-    }
-     ::ng-deep mat-label,
-     ::ng-deep .mat-select-value-text {
-        color: #CFCFCF;
-    }
-     ::ng-deep .mat-input-element::placeholder {
-        color: #707070;
+     ::ng-deep {
+        .mat-form-field-appearance-outline .mat-form-field-outline-thick,
+        .mat-form-field-appearance-outline .mat-form-field-outline,
+        .mat-form-field-label {
+            // color: #636363;
+            color: #60882b9c !important;
+        }
+        .mat-focused .mat-form-field-label {
+            color: #8CC63F !important;
+        }
+        .mat-form-field-ripple {
+            background-color: #8CC63F !important;
+        }
+        .mat-form-field-wrapper {
+            padding: 0 !important;
+        }
+        .mat-focused * {
+            // color: #1e8d7b !important;
+            color: #8CC63F !important;
+        }
+        mat-label,
+        .mat-select-value-text {
+            color: #CFCFCF;
+        }
+        .mat-input-element::placeholder {
+            color: #707070;
+        }
+        button {
+            * {
+                color: white !important;
+            }
+            // color: white !important;
+            &.mat-flat-button,
+            &.mat-raised-button,
+            &.mat-fab,
+            &.mat-button-wrapper,
+            &.mat-mini-fab {
+                background-color: #8CC63F;
+            }
+        }
     }
 }
 

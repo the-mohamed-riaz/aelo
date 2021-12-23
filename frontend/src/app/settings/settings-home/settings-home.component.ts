@@ -21,6 +21,7 @@ export class SettingsHomeComponent implements OnInit {
       (val) => {
         this.profile_data = val;
         this.profile_form.setValue(this.profile_data);
+        this.profile_form.controls['email'].disable();
       }
     );
   }
@@ -28,13 +29,15 @@ export class SettingsHomeComponent implements OnInit {
 
   patch_changes() {
     let data = new FormData();
-    data.append("email", this.profile_form.controls['email'].value);
     data.append("mobile", this.profile_form.controls['mobile'].value);
     data.append("full_name", this.profile_form.controls['full_name'].value);
     this.fetcher.update_profile_data(data).subscribe(
       (val) => {
         this.profile_data = val;
         this.profile_form.setValue(this.profile_data);
+      },
+      (err) => {
+        this.profile_form.setErrors(err);
       }
 
     )

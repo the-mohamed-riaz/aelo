@@ -5,7 +5,7 @@
     </div>
     <div class="content">
         <div class="w-100">
-            <div *ngFor="let item of links" class="nav-item" (click)="$event.preventDefault();routeTo(item.link)">
+            <div *ngFor="let item of links" class="nav-item" [routerLink]="item.link" routerLinkActive="active">
                 <div class="nav-hover-eff"></div>
                 <div class="nav-icon"><i [class]="item.icon  + ' icon'"></i></div>
                 <div class="nav-text">{{item.text}}</div>

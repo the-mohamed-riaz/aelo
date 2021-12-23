@@ -19,6 +19,7 @@ urlpatterns = [
          name='view all transaction of the user, requires username in parameter'),
     path('login-token/', login_token),
     path('options/', CategoryOptions.as_view(), name='options'),
+    path('password/', Change_password.as_view(), name="change password"),
     path('register/', User_registration.as_view(), name='user registeration'),
     path('recent/', User_recent_trans.as_view(), name='last 5 transaction'),
     path('tree-map/', Tree_chart_api.as_view(),
@@ -26,7 +27,6 @@ urlpatterns = [
     path('settings-page/', Setting_page.as_view(),
          name='gives users data'),
     path('verify-token/', verify_token),
-
     path('number-metrics/', Number_metrics.as_view(), name="Number metrics"),
     path('trans-chart/', Transaction_chart_api.as_view(),
          name="transaction chart data")

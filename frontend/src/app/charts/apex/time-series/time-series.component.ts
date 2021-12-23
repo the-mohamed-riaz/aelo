@@ -31,7 +31,7 @@ export class TimeSeriesComponent implements OnInit {
 
 
   constructor(api: FetcherService) {
-    this.colors = ['#0090FF', '#00E396'];
+    this.colors = ['#8CC63F', '#0090FF', '#00E396'];
     api.get_trans_time_series().subscribe(
       (val) => {
         console.log('received val: \n', val);

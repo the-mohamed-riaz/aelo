@@ -40,6 +40,21 @@ def find_user(self):
     return str(Token.objects.get(key=token_str).user)
 
 
+class Change_password(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, req):
+        user = req.user
+        obj = User.objects.get(username=user)
+        try:
+            obj.password = req.data['password']
+        except:
+            return Response("password cannot be empty", status.HTTP_400_BAD_REQUEST)
+        obj.save()
+        return Response("updated", status.HTTP_202_ACCEPTED)
+
+
 class Setting_page(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]

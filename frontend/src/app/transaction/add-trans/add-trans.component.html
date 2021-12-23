@@ -2,7 +2,7 @@
 
 <div class="blackboard">
     <div class="title">
-        <h1 class="mx-4">Add transaction</h1>
+        <h1 class="mx-4" style="color: #8CC63F;">Add transaction</h1>
     </div>
     <form class="px-3 mt-2" [formGroup]="addForm" autocomplete="off">
         <mat-form-field class="custColor" appearance="outline" class="w-100">
@@ -58,6 +58,6 @@
             <mat-label>Comment / hint</mat-label>
             <input matInput placeholder="What is the transaction about" class="w-100" type="text" maxlength="30" formControlName="comment">
         </mat-form-field>
-        <button mat-raised-button class="my-2" (click)=" $event.preventDefault();postTransaction()">Add transaction</button>
+        <button mat-raised-button class="my-2" style="letter-spacing: 1px;" (click)=" $event.preventDefault();postTransaction()">Save</button>
     </form>
 </div>
