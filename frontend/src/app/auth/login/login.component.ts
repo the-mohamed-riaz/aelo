@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from './../../../environments/environment';
-
+import { $login_resp, ApisService } from '../services/apis.service';
 export interface $reg_err_response {
     fullname?: string | any;
     email?: string | any;
@@ -52,9 +52,8 @@ export class LoginComponent implements OnInit {
         confirm_password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     });
 
-    constructor(public http: HttpClient, private cookie: CookieService, private route: Router) {
-        this.url = environment.apiUrl;
-        console.log("current url: ", this.url);
+    constructor(public http: HttpClient, private cookie: CookieService, private route: Router, private api: ApisService) {
+
         // this.cookie.delete('tkn');
         // console.log("deleted token");
     }
@@ -73,7 +72,7 @@ export class LoginComponent implements OnInit {
     // Form submit
     register_user() {
         if (this.registrationForm.value.password === this.registrationForm.value.confirm_password) {
-            this.http.post(this.url + 'register/', export_form_data(this.registrationForm.value)).subscribe(
+            this.api.registerUser(this.registrationForm.value).subscribe(
                 (next) => {
                     this.submission = "success";
                     window.alert("User registered sucessfully! Please login to continue");
@@ -93,8 +92,8 @@ export class LoginComponent implements OnInit {
     }
 
     login_user() {
-        this.http.post(this.url + 'login-token/', export_form_data(this.loginForm.value)).subscribe(
-            (next: { username: string, token: string } | any) => {
+        this.api.loginUser(this.loginForm.value).subscribe(
+            (next: $login_resp) => {
                 this.submission = "success";
                 this.cookie.set('tkn', next.token);
                 this.cookie.set('username', next.username);
