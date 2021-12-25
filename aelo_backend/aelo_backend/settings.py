@@ -1,16 +1,8 @@
-# import django_heroku
-# django_heroku.settings(locals())
+
 from pathlib import Path
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--&9^#ktj#-l(g(38qsao_k-_j+n00(+suy1@cmclm%ump3$$af'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -19,7 +11,7 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", ]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*.verce.app"]
 CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:4200",
     "http://localhost:4200",
@@ -96,10 +88,10 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 # custom auth model:
