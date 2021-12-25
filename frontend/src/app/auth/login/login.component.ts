@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     });
 
     constructor(public http: HttpClient, private cookie: CookieService, private route: Router) {
-        this.url = environment.rootUrl;
+        this.url = environment.apiUrl;
         console.log("current url: ", this.url);
         // this.cookie.delete('tkn');
         // console.log("deleted token");

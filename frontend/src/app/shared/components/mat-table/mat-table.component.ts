@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'material-table',
@@ -15,7 +16,7 @@ export class MatTableComponent implements AfterViewInit {
   username: string;
   constructor(private http: HttpClient, private cookie: CookieService) {
     this.username = this.cookie.get('username');
-    this.http.get<Array<$TableElement>>(`http://localhost:8000/history/?username=${this.username}`).subscribe(
+    this.http.get<Array<$TableElement>>(environment.apiUrl + `history/?username=${this.username}`).subscribe(
       (val) => {
         this.dataSource = new MatTableDataSource<$TableElement>(val);
         this.dataSource.paginator = this.paginator;

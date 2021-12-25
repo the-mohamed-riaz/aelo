@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  rootUrl: "http://localhost:8000/"
+  apiUrl: "http://api.the-mohame-riaz.com/"
 };

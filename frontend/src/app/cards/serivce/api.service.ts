@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { bank_api_resp, number_metrics_resp } from '../card1x/card1x.component';
 
 @Injectable({
@@ -8,17 +9,17 @@ import { bank_api_resp, number_metrics_resp } from '../card1x/card1x.component';
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,) { }
 
   get_number_metrics(): Observable<number_metrics_resp> {
-    return this.http.get<number_metrics_resp>('http://localhost:8000/number-metrics/')
+    return this.http.get<number_metrics_resp>(environment.apiUrl + 'number-metrics/')
   }
 
   get_bk_details(): Observable<bank_api_resp> {
-    return this.http.get<bank_api_resp>('http://localhost:8000/account-balance/')
+    return this.http.get<bank_api_resp>(environment.apiUrl + 'account-balance/')
   }
 
   send_bank_details(form_data: FormData): Observable<any> {
-    return this.http.post('http://localhost:8000/account-balance/', form_data)
+    return this.http.post(environment.apiUrl + 'account-balance/', form_data)
   }
 }
