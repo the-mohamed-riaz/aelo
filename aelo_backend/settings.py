@@ -1,5 +1,9 @@
-
 from pathlib import Path
+import os
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,10 +15,14 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*.verce.app"]
+ALLOWED_HOSTS = [
+    "127.0.0.1", "localhost", "*.verce.app", '*.the-mohamed-riaz.com',
+    '.herokuapp.com'
+]
 CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:4200",
     "http://localhost:4200",
+    "http://aelo.the-mohamed-riaz.com",
 )
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = (
@@ -23,7 +31,8 @@ CORS_ALLOW_METHODS = (
     'OPTIONS',
     'PATCH',
     'POST',
-    'PUT', )
+    'PUT',
+)
 CORS_ALLOW_HEADERS = (
     'accept',
     'accept-encoding',
@@ -34,25 +43,22 @@ CORS_ALLOW_HEADERS = (
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
-    'Access-Control-Allow-Origin', )
+    'Access-Control-Allow-Origin',
+)
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    "corsheaders",
-    'rest_framework',
-    'rest_framework.authtoken',
-    'bank_api'
+    'whitenoise.runserver_nostatic', 'django.contrib.admin',
+    'django.contrib.auth', 'django.contrib.contenttypes',
+    'django.contrib.sessions', 'django.contrib.messages',
+    'django.contrib.staticfiles', "corsheaders", 'rest_framework',
+    'rest_framework.authtoken', 'bank_api'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -101,19 +106,22 @@ AUTH_USER_MODEL = 'bank_api.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Authentication for whole app
 # """
@@ -143,11 +151,14 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S %Z'
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
