@@ -1,5 +1,6 @@
 import dj_database_url
-
+import django_heroku
+django_heroku.settings(locals())
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -158,13 +159,12 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #location where django collect all static files
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static')
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
