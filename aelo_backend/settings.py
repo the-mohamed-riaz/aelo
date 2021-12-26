@@ -1,3 +1,6 @@
+import dj_database_url
+import django_heroku
+django_heroku.settings(locals())
 from pathlib import Path
 import os
 import dj_database_url
@@ -12,10 +15,7 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = [
-    "127.0.0.1", "localhost", "*.verce.app", '*.the-mohamed-riaz.com',
-    '.herokuapp.com'
-]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*.verce.app","aelo-backend.herokuapp.com"]
 CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:4200",
     "http://localhost:4200",
@@ -46,11 +46,17 @@ CORS_ALLOW_HEADERS = (
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic', 'django.contrib.admin',
-    'django.contrib.auth', 'django.contrib.contenttypes',
-    'django.contrib.sessions', 'django.contrib.messages',
-    'django.contrib.staticfiles', "corsheaders", 'rest_framework',
-    'rest_framework.authtoken', 'bank_api'
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    "corsheaders",
+    'rest_framework',
+    "whitenoise.runserver_nostatic",
+    'rest_framework.authtoken',
+    'bank_api'
 ]
 
 MIDDLEWARE = [
@@ -89,22 +95,13 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aelo_v0',
-        'USER': 'django',
-        'PASSWORD': 'password@1234',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-
-db_from_env = dj_database_url.config(conn_max_age=500)
+# }
+db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
 # custom auth model:
@@ -140,8 +137,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
 WHITENOISE_USE_FINDERS = True
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # """
 
 # Internationalization
@@ -173,3 +171,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#location where django collect all static files
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# location where you will store your static files
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
