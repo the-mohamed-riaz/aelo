@@ -103,7 +103,14 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'aelo_v0',
+        'USER': 'postgres',
+        'PASSWORD': 'pass1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
+
+        # 'ENGINE': 'django.db.backends.postgresql',
         # 'NAME': 'aelo',
         # 'USER':'riaz'
         # 'PASSWORD':'riaz1234',
