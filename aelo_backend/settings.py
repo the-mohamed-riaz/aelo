@@ -108,8 +108,8 @@ DATABASES = {
     # }
 
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        # 'ENGINE': 'django.db.backends.postgresql',
+        # "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'ENGINE': 'django.db.backends.postgresql',
         "NAME": 'aelo_v0',
         "HOST": "localhost", 
         "PORT": "5432",
