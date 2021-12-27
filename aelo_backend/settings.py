@@ -5,7 +5,6 @@ import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# import dj_database_url
 import dj_database_url
 
 
@@ -116,13 +115,14 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 #     }
 # }
 
+django_heroku.settings(locals())
 
 
 # DATABASE_URL="postgres://ehakfkfplehpyk:860ec4b0aad858be87a5b500ecf2c08c50e41ed9a2e3472763acc7f3ead9fca2@ec2-54-173-2-216.compute-1.amazonaws.com:5432/d9dt8gf6l68n5q"
 
 # db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default']=dj_database_url.config(conn_max_age=600)
-
+# DATABASES['default']=dj_database_url.config(conn_max_age=600)
+DATABASES = { 'default': dj_database_url.config() }
 # custom auth model:
 AUTH_USER_MODEL = 'bank_api.User'
 # Password validation
@@ -188,5 +188,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-django_heroku.settings(locals())
