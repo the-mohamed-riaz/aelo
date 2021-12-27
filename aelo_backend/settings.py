@@ -6,7 +6,7 @@ import django_heroku
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # import dj_database_url
-# import dj_database_url
+import dj_database_url
 
 
 SECRET_KEY = 'django-insecure--&9^#ktj#-l(g(38qsao_k-_j+n00(+suy1@cmclm%ump3$$af'
@@ -98,17 +98,16 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aelo_v0',
-        'USER': 'postgres',
-        'PASSWORD': 'pass1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'aelo_v0',
+#         'USER': 'postgres',
+#         'PASSWORD': 'pass1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
 
         # 'ENGINE': 'django.db.backends.postgresql',
         # 'NAME': 'aelo',
@@ -116,8 +115,13 @@ DATABASES = {
         # 'PASSWORD':'riaz1234',
         # 'HOST':'localhost',
         # 'PORT':'5432'
-    }
-}
+    # }
+# }
+
+DATABASE_URL="postgres://ehakfkfplehpyk:860ec4b0aad858be87a5b500ecf2c08c50e41ed9a2e3472763acc7f3ead9fca2@ec2-54-173-2-216.compute-1.amazonaws.com:5432/d9dt8gf6l68n5q"
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # custom auth model:
 AUTH_USER_MODEL = 'bank_api.User'
