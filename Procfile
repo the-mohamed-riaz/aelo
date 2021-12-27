@@ -1,1 +1,1 @@
-web: gunicorn aelo_backend.wsgi --log-file -
+web: gunicorn aelo_backend.wsgi

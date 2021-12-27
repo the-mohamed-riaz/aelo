@@ -1,11 +1,13 @@
-import dj_database_url
-import django_heroku
-django_heroku.settings(locals())
 from pathlib import Path
+
 import os
-import dj_database_url
+import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# import dj_database_url
+# import dj_database_url
+
 
 SECRET_KEY = 'django-insecure--&9^#ktj#-l(g(38qsao_k-_j+n00(+suy1@cmclm%ump3$$af'
 
@@ -15,7 +17,8 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*.verce.app","aelo-backend.herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*.verce.app","*.herokuapp.com"]
+
 CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:4200",
     "http://localhost:4200",
@@ -101,11 +104,11 @@ DATABASES['default'].update(db_from_env)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'aelo',
-        'USER':'riaz'
-        'PASSWORD':'riaz1234',
-        'HOST':'localhost',
-        'PORT':'5432'
+        # 'NAME': 'aelo',
+        # 'USER':'riaz'
+        # 'PASSWORD':'riaz1234',
+        # 'HOST':'localhost',
+        # 'PORT':'5432'
     }
 }
 
@@ -163,23 +166,26 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S %Z'
 
 USE_TZ = True
 
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+django_heroku.settings(locals())
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static')]
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+# MEDIA_URL = '/media/'
