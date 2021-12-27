@@ -102,12 +102,21 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 
 DATABASES = {
 
-    "default": {
-        "ENGINE" : "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
-    }
+    # "default": {
+    #     "ENGINE" : "django.db.backends.sqlite3",
+    #     "NAME": os.path.join(BASE_DIR, "db.sqlite3")
+    # }
 
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # 'ENGINE': 'django.db.backends.postgresql',
+        "NAME": 'aelo_v0',
+        "HOST": "localhost", 
+        "PORT": "5432",
+    }
 }
+
+
 
 DATABASE_URL="postgres://ehakfkfplehpyk:860ec4b0aad858be87a5b500ecf2c08c50e41ed9a2e3472763acc7f3ead9fca2@ec2-54-173-2-216.compute-1.amazonaws.com:5432/d9dt8gf6l68n5q"
 
