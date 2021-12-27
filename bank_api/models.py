@@ -33,7 +33,7 @@ class User(AbstractUser):
                           default=uuid.uuid4, editable=False)
 
     class Meta:
-        db_table = 'user_details'
+        # db_table = 'user_details'
         ordering = ['username']
 
     # def __str__(self):
@@ -47,7 +47,7 @@ class BankDetails(models.Model):
         max_length=40, null=False, blank=False, editable=True)
 
     class Meta:
-        db_table = 'user_bank_details'
+        # db_table = 'user_bank_details'
         ordering = ['username']
 
     def __str__(self):
@@ -63,7 +63,7 @@ class AccountBalance(models.Model):
         auto_now_add=True, primary_key=True)
 
     class Meta:
-        db_table = 'user_account_balance'
+        # db_table = 'user_account_balance'
         ordering = ['timestamp']
 
 
@@ -74,7 +74,7 @@ class UserOptions(models.Model):
         blank=False, null=False, max_length=100000, default="family,food,fuel,loan,smart_phone")
 
     class Meta:
-        db_table = 'user_category_option'
+        # db_table = 'user_category_option'
         ordering = ['username']
 
 
@@ -100,5 +100,5 @@ class BankTranscations(models.Model):
                                     verbose_name="Payment Mode", null=False, blank=False)
 
     class Meta:
-        db_table = 'user_transaction'
+        # db_table = 'user_transaction'
         ordering = ['modified']
