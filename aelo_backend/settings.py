@@ -101,21 +101,12 @@ WSGI_APPLICATION = 'aelo_backend.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'aelo_v0',
-#         'USER': 'postgres',
-#         'PASSWORD': 'pass1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
 
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'aelo',
-        # 'USER':'riaz'
-        # 'PASSWORD':'riaz1234',
-        # 'HOST':'localhost',
-        # 'PORT':'5432'
+    "default": {
+        "ENGINE" : "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
+
 }
 
 DATABASE_URL="postgres://ehakfkfplehpyk:860ec4b0aad858be87a5b500ecf2c08c50e41ed9a2e3472763acc7f3ead9fca2@ec2-54-173-2-216.compute-1.amazonaws.com:5432/d9dt8gf6l68n5q"
@@ -184,19 +175,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 django_heroku.settings(locals())
-
-
-
-
-# location where you will store your static files
-# STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static')]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-# MEDIA_URL = '/media/'
