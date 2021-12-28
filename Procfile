@@ -1,1 +1,1 @@
-web: gunicorn aelo_backend.wsgi
+web: gunicorn aelo_backend.wsgi --preload
