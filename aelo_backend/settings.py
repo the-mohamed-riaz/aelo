@@ -2,6 +2,12 @@ from pathlib import Path
 
 import os
 import django_heroku
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+DATABASE_URL=os.getenv('DB_URL')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -119,7 +125,7 @@ django_heroku.settings(locals())
 
 
 # DATABASE_URL="postgres://ehakfkfplehpyk:860ec4b0aad858be87a5b500ecf2c08c50e41ed9a2e3472763acc7f3ead9fca2@ec2-54-173-2-216.compute-1.amazonaws.com:5432/d9dt8gf6l68n5q"
-DATABASE_URL=$(heroku config:get DATABASE_URL -a aelo-backend-cs50) aelo_backend
+
 
 # db_from_env = dj_database_url.config(conn_max_age=600)
 # DATABASES['default']=dj_database_url.config(conn_max_age=600)
