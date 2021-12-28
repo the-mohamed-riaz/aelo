@@ -6,3 +6,6 @@ node_modules/
 .vercel
 .env
 env/
+
+bank_api/migrations/*
+!bank_api/migrations/__init__.py
