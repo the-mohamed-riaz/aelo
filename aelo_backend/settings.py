@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL=os.getenv('DB_URL')
+DATABASE_URL=os.getenv('DATABASE_URL')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
