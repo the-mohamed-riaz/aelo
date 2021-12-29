@@ -86,7 +86,7 @@ If you want to say **thank you** or/and support active development of `Aelo`:
 Together, we can make this project **better** every day! 😘
 
 ## 📹 Youtube Short video
-[check video](https://aelo.the-mohamed-riaz.com/login)
+[check video](https://youtu.be/PXQOGzezzMo)
 
 ## ⚠️ License
 
