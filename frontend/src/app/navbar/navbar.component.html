@@ -1,0 +1,22 @@
+<div class="nav-layout">
+    <div class="logo">
+        <img src="../../assets/logo.svg" alt="R logo">
+        <p>Aelo book</p>
+    </div>
+    <div class="content">
+        <div class="w-100">
+            <div *ngFor="let item of links" class="nav-item" [routerLink]="item.link" routerLinkActive="active">
+                <div class="nav-hover-eff"></div>
+                <div class="nav-icon"><i [class]="item.icon  + ' icon'"></i></div>
+                <div class="nav-text">{{item.text}}</div>
+            </div>
+        </div>
+        <div class="w-100">
+            <div class="nav-item" (click)="$event.preventDefault();routeTo('/logout')">
+                <div class="nav-hover-eff"></div>
+                <div class="nav-icon"><i class="sign-out icon"></i></div>
+                <div class="nav-text">Sign out</div>
+            </div>
+        </div>
+    </div>
+</div>
