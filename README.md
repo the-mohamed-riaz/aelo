@@ -78,7 +78,7 @@ Aelo is packed with features like
   
 ## ⭐️ Project assistance
 
-If you want to say **thank you** or/and support active development of `Create Go App CLI`:
+If you want to say **thank you** or/and support active development of `Aelo`:
 
 - Add a [GitHub Star](https://github.com/racyriaz/aelo) to the project.
 - Write interesting articles about project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or personal blog.
@@ -88,3 +88,4 @@ Together, we can make this project **better** every day! 😘
 ## ⚠️ License
 
 `Aelo` is free and open-source software licensed under the [GNU AGP v3.0 License](https://github.com/racyriaz/aelo/blob/stable-frontend/LICENSE).
+
