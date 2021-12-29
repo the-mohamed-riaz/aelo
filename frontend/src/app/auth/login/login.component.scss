@@ -7,6 +7,10 @@
     text-transform: capitalize;
 }
 
+.hideVisibility {
+    visibility: hidden;
+}
+
 .parentContainer {
     position: relative;
     overflow: hidden;
@@ -166,6 +170,9 @@
 
 // bootstrap breakpoints  576px, 768px, 992px, and 1200px
 @media (max-width: 576px) {
+    .hideVisibility {
+        display: none;
+    }
     .parentContainer {
         position: relative;
         .formsContainer {

@@ -1,6 +1,6 @@
 <div class="parentContainer">
     <div class="formsContainer" [ngClass]="{'reverseFlex': newUser}">
-        <form class="mt-3 mx-lg-4 mx-sm-2 login-form" [formGroup]="loginForm" *ngIf="!newUser">
+        <form class="mt-3 mx-lg-4 mx-sm-2 login-form" [formGroup]="loginForm" [ngClass]="{'hideVisibility': !newUser}">
             <mat-form-field appearance="standard" class="matField" *ngFor="let item of loginFormElement">
                 <mat-label>{{item.labelName}}</mat-label>
                 <input matInput [placeholder]="item.placeholder" [autocomplete]="item.autocomplete" [type]="item.type" [formControlName]="item.fcName">
@@ -11,7 +11,7 @@
                 <div (click)="switchForms()" class="switch mx-3">New user? Register here</div>
             </div>
         </form>
-        <form class="mt-3 mx-lg-4 mx-sm-2 register-form" [formGroup]="registrationForm" *ngIf="newUser">
+        <form class="mt-3 mx-lg-4 mx-sm-2 register-form" [formGroup]="registrationForm" [ngClass]="{'hideVisibility': newUser}">
             <mat-form-field appearance="standard" class="matField" *ngFor="let item of regFormElement">
                 <mat-label>{{item.labelName}}</mat-label>
                 <input matInput [placeholder]="item.placeholder" [type]="item.type" [autocomplete]="item.autocomplete" [formControlName]="item.fcName">

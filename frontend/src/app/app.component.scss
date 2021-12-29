@@ -1,6 +1,11 @@
-.outletContainer {
+.outletContainer,
+.mobile-content {
     width: calc(100vw - 250px - 2rem);
     height: 100%;
+}
+
+.mobile-content {
+    display: none;
 }
 
 // XX-small device (old phones)
@@ -8,12 +13,18 @@
     .outletContainer {
         display: none;
     }
+    .mobile-content {
+        display: block;
+    }
 }
 
 // X-Small devices (portrait phones, less than 576px)
 @media (min-width: 576px) {
     .outletContainer {
         display: none;
+    }
+    .mobile-content {
+        display: block;
     }
 }
 
