@@ -1,4 +1,17 @@
 db.sqlite3
+<<<<<<< HEAD
 aelo_backend/.env
 bank_api/migrations/*
 !bank_api/migrations/__init__.py
+=======
+*.csv
+*.pdf
+
+node_modules/
+.vercel
+.env
+env/
+
+bank_api/migrations/*
+!bank_api/migrations/__init__.py
+>>>>>>> e54be9a29dd639d599277d102d4dc9026f5925ed
