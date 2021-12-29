@@ -44,13 +44,25 @@ export class TimeSeriesComponent implements OnInit {
       }
     );
   }
+
+  refresh_chart_data() {
+    this.api.get_trans_time_series().subscribe(
+      (val) => {
+        this.series_data = this.splitData(val);
+        this.series = [
+          { name: "Account balance", data: this.series_data }
+        ]
+      });
+  }
+
   splitData(api_data: Array<$trans_chart>): Array<[number, number]> {
     let series: Array<[number, number]> = []
     let parse = "YYYY-MM-DD HH:mm:ss Z"
     api_data.forEach(
       (val: $trans_chart) => {
-        // console.log(moment(val.timestamp, parse).local());
-        series.push([moment(val.timestamp, parse).valueOf(), val.account_balance]);
+        console.log('true val :', val);
+        console.log(moment(val.timestamp, parse).local());
+        series.push([moment(val.timestamp, parse).local().valueOf(), val.account_balance]);
       }
     );
     // console.debug("completed spliting data for charts: ", series);
@@ -59,7 +71,7 @@ export class TimeSeriesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    setInterval(() => this.get_chart_data(), 3000);
+    setInterval(() => this.refresh_chart_data(), 3000);
   }
 
 
@@ -153,6 +165,16 @@ export class TimeSeriesComponent implements OnInit {
     };
     this.xaxis = {
       type: "datetime",
+      labels: {
+        format: "HH:mm",
+        datetimeUTC: false,
+        datetimeFormatter: {
+          year: 'yy',
+          month: "MMM 'YY",
+          day: 'dd MMM',
+          hour: 'HH:mm'
+        }
+      }
     };
     this.tooltip = {
       shared: false,
