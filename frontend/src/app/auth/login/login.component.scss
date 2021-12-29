@@ -164,12 +164,13 @@
 }
 
 // bootstrap breakpoints  576px, 768px, 992px, and 1200px
-@media only screen and (max-width: 576px) {
+@media (max-width: 576px) {
     .formsContainer {
         position: relative;
         left: -50%;
         width: 100%;
-        .login-container {
+        .login-form,
+        .register-form {
             margin-right: 0px;
             width: 500px;
             .matField {
@@ -179,6 +180,9 @@
             .other-btns {
                 width: 318px;
             }
+        }
+        .register-form {
+            top: 2rem;
         }
     }
     section#formHolder .form {
@@ -191,6 +195,7 @@
     .hideBG {
         right: 5px !important;
         bottom: 100% !important;
+        z-index: -1;
         // Brand Area
         .brand {
             box-shadow: none;
@@ -229,6 +234,7 @@
         padding: 0;
         div.brand {
             min-height: 200px !important;
+            z-index: -1;
             &.active {
                 min-height: 100vh !important;
             }

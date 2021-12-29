@@ -60,8 +60,8 @@ export class TimeSeriesComponent implements OnInit {
     let parse = "YYYY-MM-DD HH:mm:ss Z"
     api_data.forEach(
       (val: $trans_chart) => {
-        console.log('true val :', val);
-        console.log(moment(val.timestamp, parse).local());
+        // console.log('true val :', val);
+        // console.log(moment(val.timestamp, parse).local());
         series.push([moment(val.timestamp, parse).local().valueOf(), val.account_balance]);
       }
     );
