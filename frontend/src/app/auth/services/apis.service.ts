@@ -14,7 +14,7 @@ export interface $login_resp {
 export class ApisService {
 
   constructor(private http: HttpClient) {
-    console.log("current url: ", environment.apiUrl);
+    // console.log("Backend service url: ", environment.apiUrl);
   }
 
   registerUser(form: any): Observable<any> {

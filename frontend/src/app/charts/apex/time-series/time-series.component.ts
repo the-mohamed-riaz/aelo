@@ -30,17 +30,20 @@ export class TimeSeriesComponent implements OnInit {
   series_data!: Array<[number, number]>;
 
 
-  constructor(api: FetcherService) {
+  constructor(private api: FetcherService) {
     this.colors = ['#8CC63F', '#0090FF', '#00E396'];
-    api.get_trans_time_series().subscribe(
+    this.get_chart_data();
+  }
+
+  get_chart_data() {
+    this.api.get_trans_time_series().subscribe(
       (val) => {
-        console.log('received val: \n', val);
+        // console.log('received val: \n', val);
         this.series_data = this.splitData(val);
         this.initChartData()
       }
-    )
+    );
   }
-
   splitData(api_data: Array<$trans_chart>): Array<[number, number]> {
     let series: Array<[number, number]> = []
     let parse = "YYYY-MM-DD HH:mm:ss Z"
@@ -50,12 +53,13 @@ export class TimeSeriesComponent implements OnInit {
         series.push([moment(val.timestamp, parse).valueOf(), val.account_balance]);
       }
     );
-    console.debug("completed spliting data for charts: ", series);
+    // console.debug("completed spliting data for charts: ", series);
     return series;
   }
 
 
   ngOnInit(): void {
+    setInterval(() => this.get_chart_data(), 3000);
   }
 
 

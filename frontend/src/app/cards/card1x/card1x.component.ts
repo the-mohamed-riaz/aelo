@@ -48,7 +48,7 @@ export class Card1xComponent implements OnInit {
       (val) => {
         this.cash_in_flow = val.income;
         this.cash_out_flow = val.expense;
-        console.debug("number metrics\n,", this.cash_in_flow, this.cash_out_flow, "\n val: ", val);
+        // console.debug("number metrics\n,", this.cash_in_flow, this.cash_out_flow, "\n val: ", val);
       }
     )
   };
@@ -57,7 +57,7 @@ export class Card1xComponent implements OnInit {
   get_bk_details() {
     this.api.get_bk_details().subscribe(
       (val: bank_api_resp) => {
-        console.debug("val from bank details api", val);
+        // console.debug("val from bank details api", val);
         val ? this.provided_bk_details = true : this.provided_bk_details = false;
         if (this.provided_bk_details) {
           this.bank_balance = val.account_balance.toLocaleString();
@@ -65,7 +65,7 @@ export class Card1xComponent implements OnInit {
         }
       },
       err => {
-        console.debug("error from bank api", err);
+        // console.debug("error from bank api", err);
         this.provided_bk_details = false;
       }
     );
@@ -78,18 +78,18 @@ export class Card1xComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    // setInterval(() => this.get_bk_details(), 3000);
+    setInterval(() => this.get_bk_details(), 4000);
   }
 
   submitForm() {
     let form_data = this.generator.generateFormData(['username', 'bank_name', 'account_balance'], this.bank_form);
     this.api.send_bank_details(form_data).subscribe(
-      () => {
+      (val) => {
         this.get_bk_details();
-        console.log("-------- sending bank details ----------");
+        // console.log("-------- sending bank details ----------");
       },
       (err) => {
-        console.log("cannot send data, ", err);
+        // console.log("cannot send data, ", err);
       }
     )
   }

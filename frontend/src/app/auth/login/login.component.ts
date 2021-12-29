@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
                     this.switchForms();
                 },
                 (err) => {
-                    console.log("what is this: ", err);
+                    // console.log("what is this: ", err);
                     window.alert(err.error);
                     this.submission = err.error;
                     this.registrationForm.setErrors(err.error);
@@ -97,11 +97,11 @@ export class LoginComponent implements OnInit {
                 this.submission = "success";
                 this.cookie.set('tkn', next.token);
                 this.cookie.set('username', next.username);
-                console.log(next);
+                // console.log(next);
                 this.route.navigateByUrl('/transaction')
             },
             (err) => {
-                console.log("what is this: ", err);
+                // console.log("what is this: ", err);
                 window.alert(err.error);
                 this.submission = err.error;
                 this.loginForm.setErrors(err.error);
@@ -119,7 +119,7 @@ export function export_form_data(val: { username: string, password: string, full
     const formData = new FormData();
     for (const [key, value] of Object.entries(val)) {
         formData.append(key, value);
-        console.log(key, value);
+        // console.log(key, value);
     }
     return formData;
 }

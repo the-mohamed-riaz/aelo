@@ -19,7 +19,7 @@ export class SemanticDdComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("Got dd name: ", this.dd_name);
+    // console.log("Got dd name: ", this.dd_name);
     switch (this.dd_name) {
       case "trans_choice":
         this.options = this.constant.trans_choice;

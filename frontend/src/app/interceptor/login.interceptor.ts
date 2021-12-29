@@ -42,7 +42,7 @@ export class LoginInterceptor implements HttpInterceptor {
           reason: error && error.error && error.error.reason ? error.error.reason : '',
           status: error.status
         };
-        console.log("Error catched by interceptor\n", data);
+        // console.log("Error catched by interceptor\n", data);
         return throwError(error);
       })
     )

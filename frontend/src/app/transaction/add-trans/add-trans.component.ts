@@ -74,7 +74,7 @@ export class AddTransComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Array<$dropdown_option>) => {
       this.catergoryOptions = result;
-      console.log(result);
+      // console.log(result);
       let op_dt = "";
       for (let i in result) {
         op_dt += result[i].value + ',';
@@ -91,7 +91,7 @@ export class AddTransComponent implements OnInit {
   }
 
   editOptions(val: any) {
-    console.log(val);
+    // console.log(val);
   }
 
 
@@ -114,18 +114,18 @@ export class AddTransComponent implements OnInit {
     this.addForm.controls['username'].setValue(this.username);
     let parse_date = moment(this.addForm.controls['trans_date'].value).format("YYYY-MM-DD");
     this.addForm.controls['trans_date'].setValue(parse_date);
-    console.log("date: ", this.addForm.controls['trans_date'].value);
+    // console.log("date: ", this.addForm.controls['trans_date'].value);
     for (let key of this.formFields) {
       formData.append(key, this.addForm.controls[key].value);
-      console.debug(key, ':', this.addForm.controls[key].value);
+      // console.debug(key, ':', this.addForm.controls[key].value);
     }
     this.api.add_transaction(formData).subscribe(
       (next) => {
-        console.log("success: ", next);
+        // console.log("success: ", next);
         this.re_initialize_form();
         this._snackBar.open("Last transaction was noted succesfully!", "OK", { duration: 3000 });
       },
-      (err) => { console.log("Add form error", err); },
+      // (err) => { console.log("Add form error", err); },
       () => {
         this.addForm.reset();
         this.re_initialize_form();

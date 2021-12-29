@@ -71,7 +71,7 @@ export class RecentTransactionComponent implements OnInit {
         }
 
       },
-      (err) => console.log("err while fetching recent trans:\n", err)
+      // (err) => console.log("err while fetching recent trans:\n", err)
     );
   }
 

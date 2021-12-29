@@ -1,0 +1,4 @@
+db.sqlite3
+aelo_backend/.env
+bank_api/migrations/*
+!bank_api/migrations/__init__.py

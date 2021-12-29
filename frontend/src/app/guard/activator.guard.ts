@@ -19,7 +19,7 @@ export class ActivatorGuard implements CanActivate {
 
     this.http.get(environment.apiUrl + 'verify-token/', { params: getTokenParams(this.cookie.get('username'), this.cookie.get('tkn')) }).subscribe(
       (next) => {
-        console.log("can activate gaurd status:", next);
+        // console.log("can activate gaurd status:", next);
         this.respone = true;
       },
       (err) => {

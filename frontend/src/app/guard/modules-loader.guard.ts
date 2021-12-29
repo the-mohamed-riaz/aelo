@@ -21,7 +21,7 @@ export class ModulesLoaderGuard implements CanLoad {
     this.http.get(environment.apiUrl + 'verify-token/', { params: getTokenParams(this.cookie.get('username'), this.cookie.get('tkn')) }).subscribe(
       (next) => {
         this.response = true;
-        console.log("From modules loader:\n", "segments: ", segments, "route :", route);
+        // console.log("From modules loader:\n", "segments: ", segments, "route :", route);
       },
       (err) => {
         this.response = false;
