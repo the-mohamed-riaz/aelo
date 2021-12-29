@@ -6,6 +6,18 @@
 
 .mobile-content {
     display: none;
+    position: relative;
+    width: 100vw;
+    top: 40vh;
+    left: 2rem;
+    right: 1rem;
+    p {
+        margin: 0 1rem;
+    }
+}
+
+r-navbar {
+    display: block;
 }
 
 // XX-small device (old phones)
@@ -14,7 +26,13 @@
         display: none;
     }
     .mobile-content {
-        display: block;
+        display: grid;
+        place-content: center;
+        left: 1rem;
+        right: 3rem;
+    }
+    r-navbar {
+        display: none;
     }
 }
 
@@ -24,18 +42,62 @@
         display: none;
     }
     .mobile-content {
-        display: block;
+        display: grid;
+        place-content: center;
+    }
+    r-navbar {
+        display: none;
     }
 }
 
 // Small devices (landscape phones, less than 768px)
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+    .outletContainer {
+        display: block;
+    }
+    .mobile-content {
+        display: none;
+    }
+    r-navbar {
+        display: block;
+    }
+}
 
 // Medium devices (tablets, less than 992px)
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+    .outletContainer {
+        display: block;
+    }
+    .mobile-content {
+        display: none;
+    }
+    r-navbar {
+        display: block;
+    }
+}
 
 // Large devices (desktops, less than 1200px)
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+    .outletContainer {
+        display: block;
+    }
+    .mobile-content {
+        display: none;
+    }
+    r-navbar {
+        display: block;
+    }
+}
 
 // X-Large devices (large desktops, less than 1400px)
-@media (min-width: 1400px) {}
+@media (min-width: 1400px) {
+    .outletContainer {
+        display: block;
+    }
+    .mobile-content {
+        display: none;
+    }
+    r-navbar {
+        display: block;
+    }
+}
