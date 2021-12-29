@@ -25,6 +25,7 @@
             .switch {
                 margin: 1rem;
                 color: rgb(14, 14, 194);
+                text-align: right;
                 text-decoration: underline;
                 cursor: pointer;
             }
@@ -165,24 +166,35 @@
 
 // bootstrap breakpoints  576px, 768px, 992px, and 1200px
 @media (max-width: 576px) {
-    .formsContainer {
+    .parentContainer {
         position: relative;
-        left: -50%;
-        width: 100%;
-        .login-form,
-        .register-form {
-            margin-right: 0px;
-            width: 500px;
-            .matField {
-                width: 318px;
-                margin: 0px 1rem !important;
+        .formsContainer {
+            position: absolute;
+            top: 12vh;
+            left: 2vw;
+            width: 100%;
+            .login-form,
+            .register-form {
+                margin-right: 0px;
+                width: 500px;
+                .matField {
+                    width: 318px;
+                    margin: 0px 1rem !important;
+                }
+                .other-btns {
+                    width: 318px;
+                }
             }
-            .other-btns {
-                width: 318px;
+            .register-form .switch {
+                position: relative;
+                right: 1rem;
+                margin-right: 0;
             }
-        }
-        .register-form {
-            top: 2rem;
+            .login-form .switch {
+                position: relative;
+                left: 1rem;
+                margin-left: 0;
+            }
         }
     }
     section#formHolder .form {
