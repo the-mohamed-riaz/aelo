@@ -1,9 +1,8 @@
-import { CookieService } from 'ngx-cookie-service';
-import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { environment } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
+import { ApiService } from 'src/app/transaction/services/api.service';
 
 @Component({
   selector: 'material-table',
@@ -14,9 +13,9 @@ export class MatTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['type_of_trans', 'comment', 'amount', 'cat_of_trans', 'trans_date', 'trans_hour', 'payment_mode', 'id'];
   dataSource!: MatTableDataSource<$TableElement>;
   username: string;
-  constructor(private http: HttpClient, private cookie: CookieService) {
+  constructor(private api: ApiService, private cookie: CookieService) {
     this.username = this.cookie.get('username');
-    this.http.get<Array<$TableElement>>(environment.apiUrl + `history/?username=${this.username}`).subscribe(
+    this.api.get_history_of_all_trans().subscribe(
       (val) => {
         this.dataSource = new MatTableDataSource<$TableElement>(val);
         this.dataSource.paginator = this.paginator;
