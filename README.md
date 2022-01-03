@@ -85,6 +85,9 @@ If you want to say **thank you** or/and support active development of `Aelo`:
 
 Together, we can make this project **better** every day! 😘
 
+## 📹 Youtube Short video
+[check video](https://youtu.be/PXQOGzezzMo)
+
 ## ⚠️ License
 
 `Aelo` is free and open-source software licensed under the [GNU AGP v3.0 License](https://github.com/racyriaz/aelo/blob/stable-frontend/LICENSE).
